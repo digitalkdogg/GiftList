@@ -1,0 +1,1 @@
+<a class="style1" href="<?php echo $real_url; ?>"><?php echo $name; ?></a>

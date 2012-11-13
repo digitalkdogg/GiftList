@@ -1,0 +1,1 @@
+<?php echo "<div id = 'comment_wrapper'><img src='". base_url() . "public/img/comment_icon.png' />Comments for " . $title . ".....";
