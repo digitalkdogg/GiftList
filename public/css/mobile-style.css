@@ -400,11 +400,10 @@ text-align:center;
 	background: white;
 	background: rgba(255, 255, 255, 0.8);
 	border: 1px solid #555;
-	overflow:scroll;
+	display:none;
 	padding: 5px;
 	border-bottom-left-radius: 5px;
 	border-bottom-right-radius: 5px;
-	max-height:80px;
 	text-overflow: ellipsis;
 
 }

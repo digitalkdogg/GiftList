@@ -40,12 +40,17 @@ class Db_model extends CI_Model {
 		foreach ($query->result_array() as $row) :
 		$data = array (
 				'title' => $row['title'],
-				'content' => $row['content']
+				'content' => $row['content'],
+				'id' => 'reg_side_bar'
 				);
 				
 		if ($data['title'] == 'Quick List') {
 			$this->html_model->load_quick_list($data);
+		} else if ($data['title'] == 'New Features') {
+			$data['id']= 'new_feat_side_bar';
+			$this->load->view('side_bar', $data);
 		} else {
+			$data['id']= 'reg_side_bar';
 			$this->load->view('side_bar', $data);
 			}
 		endforeach;

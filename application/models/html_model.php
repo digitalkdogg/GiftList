@@ -34,7 +34,7 @@ class Html_model extends CI_Model {
 	function load_quick_list($data)
 	{
 		
-		$html= array('html' => "<div class = 'side_bar_wrapper'><div class = 'side_bar_header'>" . $data['title'] . "</div> <!-- end side_bar_header --><div class = 'side_bar_content'>");
+		$html= array('html' => "<div class = 'side_bar_wrapper'><div class = 'side_bar_header'>" . $data['title'] . "</div> <!-- end side_bar_header --><div class = 'side_bar_content' id = 'quick_list'>");
 		$this->load->view('print_html', $html);
 		$data = $this->db_model->get_quick_list();
 		foreach ($data as $row) :
