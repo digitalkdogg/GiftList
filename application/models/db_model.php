@@ -167,6 +167,7 @@ function print_share_popup()
 	 				->where ('status_id', 1)
 					->where ('owner_id', $owner_id)
 					->where ('taken_id', $taken);
+           $this->db->order_by("num", "asc");
 		$query = $this->db->get()->result();
 		return $query;
 	}

@@ -15,8 +15,7 @@
 |
 */
 //$config['base_url']	= 'http://www.techyconnection.com/xmas';
- //  $config['base_url'] = 'http://www.techyconnection.com/xmas/' ;
-   $config['base_url'] = 'http://linuxpc/GiftList/' ;
+  $config['base_url'] = 'http://localhost/xmas/' ;
 /*
 |--------------------------------------------------------------------------
 | Index File
@@ -28,6 +27,8 @@
 |
 */
 $config['index_page'] = 'list.php';
+
+//$config['PATH_INFO'] = '';
 
 /*
 |--------------------------------------------------------------------------

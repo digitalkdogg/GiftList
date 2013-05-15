@@ -1,1 +1,1 @@
-<?php echo "<li><a href = '" . $url . "' target = '_blank'>" . $title . "</a></li>";
+<?php echo "<li><a href = '" . $url . "' target = '_blank' alt = '" . $alt . "'>" . $title . "</a></li>";

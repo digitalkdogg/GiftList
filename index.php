@@ -3,16 +3,17 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Gift List</title>
+<link rel='stylesheet' media='screen' href='public/css/style.css'>
 <link rel='stylesheet' media='screen and (min-width: 1022px) and (max-width: 3800px)' href='public/css/style.css'>
 <link rel='stylesheet' type='text/css' media='only screen and (max-device-width: 1021px)' href='public/css/mobile-style.css' /> 
-<script src='http://linuxpc/GiftList//public/js/jquery.js' /></script> 
-<script type='text/javascript' src='http://linuxpc/GiftList//public/js/jquery-ui-min.js' /></script> 
-<script type='text/javascript' src = 'http://linuxpc/GiftList//public/js/menu_hover.js' /></script>
+<script src='public/js/jquery.js' /></script>
+<script type='text/javascript' src='public/js/jquery-ui-min.js' /></script>
+<script type='text/javascript' src = 'public/js/menu_hover.js' /></script>
 
 
- <script type = 'text/javascript' src = 'http://linuxpc/GiftList//public/js/form_validation.js' /></script> 
- <script type = 'text/javascript' src = 'http://linuxpc/GiftList//public/js/ajax_js.js' /></script> 
- <script type = 'text/javascript' src = 'http://linuxpc/GiftList//public/js/popup.js' /></script>
+ <script type = 'text/javascript' src = 'public/js/form_validation.js' /></script>
+ <script type = 'text/javascript' src = 'public/js/ajax_js.js' /></script>
+ <script type = 'text/javascript' src = 'public/js/popup.js' /></script>
  </head><body>
 <div id = "wrapper">
 	<div id = "header">
@@ -24,7 +25,7 @@
              </div> <!--end header_wrapper-->  
     </div> <!--End header --><div id = 'menu'>
     <center><a class='style1' href='#'>Home</a></center></div>
-	<div id = 'content'>
+	<br /><br /><div id = 'content'>
     <form action='' method='post' accept-charset='utf-8'>
     <input type = 'text' id = 'search_name' value = '' />
     <input type = 'submit' id = 'find_list' value = 'Find This Person'  />

@@ -4,8 +4,8 @@ $(document).ready(function() {
 		var name = $("#name").val(); 
 		var message = $('#message').val();
 		var gift_id = $('#gift_id').val();
+      var email_url = '../send_comment/' + gift_id;
 		date_time = make_date_time();
-		var email_url = '../send_comment/' + gift_id;
 		var url = '../add_comment/' + gift_id;
 		if ($("#name").val() && $("#message").val()) {
 		$('.comments_new').val('');
@@ -13,7 +13,7 @@ $(document).ready(function() {
   				type: "POST",
 				dataType: "json",
   				url: url,  
-  				data: {message: message, name: name},  
+  				data: {message: message, name: name},
  				success: function(data) {
 				var json = $.parseJSON(data);
 	   			if (data == 'true') {
@@ -25,7 +25,7 @@ $(document).ready(function() {
    					$('.comments:first').before("<div class='comments'>" + name + " - " + date_time + " - " + message + "</div>"); 
 					$('.comments:first').css('opacity' , '.2');
 					$('.comments:first').animate({opacity : 1.0}, 1000);
-				       $.ajax({
+               $.ajax({
   				      type: "POST",
 				     dataType: "json",
   				      url: email_url,
@@ -52,13 +52,12 @@ $(document).ready(function() {
 		var dataString = name + gift_id + email + message;
 		
 		var url = '../../send_email_admin/' + gift_id;
-		alert(url);
       
 		$.ajax({  
   				type: "POST",  
 				dataType: "json",
   				url: url,  
-				data: {email: email, message: message, name: name}, 
+  				data: {email: email, message: message, name: name}, 
   			    success: function(data) {
 					var json = $.parseJSON(data);
 					if (data.sent == 'yes') {
@@ -68,7 +67,7 @@ $(document).ready(function() {
 						$('#status').css('display', 'inline-block');
 						$('#status').css('opacity' , '.2');
 						$('#status').animate({opacity : 1.0}, 1000);
-                  $('#status').html("The email was sent successfully");
+                  $('#status').html("The email was sent successfully to "+ data.email);
 					}  else {
                   $('#status').css('display', 'inline-block');
 						$('#status').css('opacity' , '.2');
@@ -87,9 +86,7 @@ $(document).ready(function() {
 		var gift_id = $('#gift_id').val();
 		var email = $('#email').val();
 		var message = $('#message').val();
-		//var dataString = name + gift_id + email + message;
-		
-		var url = '../send_email/' + gift_id;
+		var url = '../../send_email/' + gift_id;
       
 		$.ajax({  
   				type: "POST",  
@@ -105,12 +102,12 @@ $(document).ready(function() {
 						$('#status').css('display', 'inline-block');
 						$('#status').css('opacity' , '.2');
 						$('#status').animate({opacity : 1.0}, 1000);
-                  $('#status').html("The email was sent successfully");
+                  $('#status').html("The email was sent successfully to "+ data.email);
 					}  else {
                   $('#status').css('display', 'inline-block');
 						$('#status').css('opacity' , '.2');
 						$('#status').animate({opacity : 1.0}, 1000);
-						$('#status').html("There was an issue submiting your email");
+						$('#status').html("There was an issue submiting your email " );
 
 					}
 				} 
@@ -124,7 +121,7 @@ $(document).ready(function() {
     var gift_id = $('#'+div_id+ ' #gift_id').val();
 	var email = $('#'+div_id+' #email').val();
 	var name = $('#'+div_id+' #name').val();
-	var url = '../send_share_email/' + gift_id;
+   var url = '../send_share_email/' + gift_id;
 	$.ajax({  
   		type: "POST",  
 		dataType: "json",
@@ -138,7 +135,7 @@ $(document).ready(function() {
 				$('span#status').css('display', 'inline-block');
 				$('span#status').css('opacity' , '.2');
 	     		$('span#status').animate({opacity : 1.0}, 1000);
-           		$('span#status').html("The email was sent successfully");
+           		$('span#status').html("The email was sent successfully to " + data.email);
 			} else {
 				$('span#status').css('display', 'inline-block');
 				$('span#status').css('opacity' , '.2');
@@ -149,8 +146,8 @@ $(document).ready(function() {
 	});
 	return false;
  });
- 
-$('.likes').click(function (e) {
+
+ $('.likes').click(function (e) {
 	//var like_id = $(this).('.like_text').attr("id");
 	like_id =($(this).children().attr("id"));
 	var num = like_id.substring(like_id.length,like_id.length-1);
@@ -172,18 +169,17 @@ $('.likes').click(function (e) {
 });
 
 $('#find_list').click(function () {
-	
 	var name = $('#search_name').val();	
 	url = 'find_list.php';
-	$('#search_name').val('');
 	$('#results').html('');
-	$.ajax({  
-  		type: "POST",  
+	$.ajax({
+  		type: "POST",
 		dataType: "json",
   		url: url,  
   		data: {name : name},
 		success: function(data) {
 			if (data.found == 'yes'){
+            $('#search_name').val('');
 				$('#results').html();
 				$.each(data, function (index, value) {
 					if ($.isNumeric(index)){
@@ -196,10 +192,9 @@ $('#find_list').click(function () {
 		}
 		});
 
-	
 	return false;
  });
- 
+
  $('#name').focus(function () {
 	$('p#status').html('');							
 });

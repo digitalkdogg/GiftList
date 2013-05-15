@@ -1,4 +1,4 @@
-<div style='background: white; padding: 10px; text-align: center;'>
+<div style='background: white; padding: 10px; width : 74.2%; border-bottom: 1px solid black; text-align: center;'>
 <P>Use this form to mark this item <b><?php echo $gift_title; ?> </b>as taken.  </P>
 <p> This will email the gift list admin that you have purchase this
 item </P>

@@ -119,11 +119,19 @@ function __construct()
 		endif;
 	}
 	
-	public function item_taken($gift_id)
+	public function item_taken($gift_id, $ownwer_name)
 	{
-		$owner = array ('first_name' => $this->session->userdata('owner_first_name'), 'last_name' => $this->session->userdata('owner_last_name'));
+		if ($this->session->userdata('owner_id')) :
+			$owner = array ('first_name' => $this->session->userdata('owner_first_name'), 'last_name' => $this->session->userdata('owner_last_name'), 'owner_id'=> $this->session->userdata('owner_id'));
+			$owner_id = $this->session->userdata('owner_id');
+		else : 
+			$owner = $this->db_model->get_owner_by_giftid($gift_id);
+			$owner_id = $owner['owner_id'];
+		endif;
 		$this->html_model->load_html_begin($owner);
-		$gift = $this->db_model->get_gift_by_giftid($gift_id,  $this->session->userdata('owner_id'));
+		
+		$gift = $this->db_model->get_gift_by_giftid($gift_id,  $owner_id);
+		//var_dump($gift->title);
 		$gift_title = array ('gift_title' => $gift->title);
 		$this->load->view('taken', $gift_title);
 		$this->email_form($gift_id, 1);

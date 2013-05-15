@@ -4,13 +4,13 @@ $name = $_POST['name'];
 
 list($fname, $lname) = split(' ', $name,2);
 
-$con = mysql_connect("linuxpc","Kevin","Squogg27");
+$con = mysql_connect("giftlistkb.db.5445564.hostedresource.com","giftlistkb","Squogg27");
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db("GiftList", $con);
+mysql_select_db("giftlistkb", $con);
 $return_arr = array();
 
 $fetch = mysql_query("select * from owner where first_name = '" . $name . "'"); 
@@ -41,7 +41,7 @@ while ($row = mysql_fetch_array($fetch, MYSQL_ASSOC)) {
     $row_array['id'] = $row['owner_id'];
     $row_array['first_name'] = $row['first_name'];
     $row_array['last_name'] = $row['last_name'];
-	$row_array['html'] = "<a href = 'index_gift.php/gift/" . $row['first_name'] . "'>" . $row['first_name'] . " " . $row['last_name'] . "</a>";
+	$row_array['html'] = "<a href = 'list.php/gift/" . $row['first_name'] . "'>" . $row['first_name'] . " " . $row['last_name'] . "</a>";
 
     array_push($return_arr,$row_array);
 }
