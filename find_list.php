@@ -1,16 +1,17 @@
 <?php
+var_dump('hi');
 $response = array();
 $name = $_POST['name'];
 
 list($fname, $lname) = split(' ', $name,2);
 
-$con = mysql_connect("giftlistkb.db.5445564.hostedresource.com","giftlistkb","Squogg27");
+$con = mysql_connect("localhost","Kevin","I not telling");
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db("giftlistkb", $con);
+mysql_select_db("GiftList", $con);
 $return_arr = array();
 
 $fetch = mysql_query("select * from owner where first_name = '" . $name . "'"); 
