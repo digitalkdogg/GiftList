@@ -1,7 +1,7 @@
 <?php
 
-echo "<link rel='stylesheet' media='screen and (min-width: 1022px) and (max-width: 3800px)' href='" . base_url() . "public/css/style.css' />"; 
-echo "<link rel='stylesheet' type='text/css' media='only screen and (min-width: 22px) and (max-device-width: 1021px)' href='" . base_url() . "public/css/mobile-style.css' />"; 
+echo "<link rel='stylesheet' media='screen and (min-width: 901px) and (max-width: 3800px)' href='" . base_url() . "public/css/style.css' />"; 
+echo "<link rel='stylesheet' type='text/css' media='only screen and (min-width: 22px) and (max-device-width: 900px)' href='" . base_url() . "public/css/mobile-style.css' />"; 
 echo "<!--[if IE]>";
 echo "<link rel='stylesheet' type='text/css' href='" . base_url() . "/public/css/style.css' />";
 echo "<![endif]-->";
