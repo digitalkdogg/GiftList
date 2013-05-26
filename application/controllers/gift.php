@@ -325,9 +325,10 @@ function __construct()
 	function send_mail_msg($message, $subject, $email, $to_email)
 	{
 	$config = array(
-    		'protocol' => 'smtp',
-			'smtp_host' => 'relay-hosting.secureserver.net',
-			'smtp_port' => '25',
+    		'protocol' => 'sendmail',
+			'mailpath' => '/usr/sbin/sendmail',
+			//'smtp_host' => 'relay-hosting.secureserver.net',
+			//'smtp_port' => '25',
     		'mailtype' => 'html',
    		 	'newline' => "\r\n",
     		'crlf' => "\n",
