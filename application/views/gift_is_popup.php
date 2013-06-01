@@ -1,8 +1,9 @@
+
 <?php 
 		echo "<div id = 'dets_" . $num . "' class = 'modal_window'>";
 	
 ?>
-
+<div class = 'closeme'>X</div>
 <div class = 'right_wrapper'>
 		
             	<div class = "gift_status">

@@ -27,7 +27,7 @@ class Html_model extends CI_Model {
 	
 	function load_html_close()
 	{
-	$html = array ('html' => "</div> <!--end content --></div> <!--end wrapper --></body></html>");
+	$html = array ('html' => "</div><div id = 'popup_wrapper'></div> <!--end content --></div> <!--end wrapper --></body></html>");
 	$this->load->view('print_html', $html);
 	}
 	

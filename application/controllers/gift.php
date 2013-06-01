@@ -7,7 +7,7 @@ function __construct()
 		$this->load->model('db_model');	
 		$this->load->model('html_model');
 		$this->load->model('gift_model');
-		$this->load->model('popup_model');
+		//$this->load->model('popup_model');
 		$this->load->library('session');
     }
 
@@ -24,7 +24,7 @@ function __construct()
 			if (!$owner==null) :
 				$this->html_model->load_html_begin($owner);
 				$this->gift_model->load_gift_item($owner);
-				$this->popup_model->load_gift_item($owner);
+				//$this->popup_model->load_gift_item($owner);
 				$this->html_model->load_html_close();
 			else: 
 				  redirect(base_url() , 'refresh');
@@ -36,27 +36,31 @@ function __construct()
 	public function display_gift_one_item($gift_id, $owner_name)
 	{
 		if($owner_name == $this->session->userdata('owner_first_name')):
-			$owner = array ('onwer_id' => $this->session->userdata('owner_id'), 'first_name' => $this->session->userdata('owner_first_name'), 'last_name' => $this->session->userdata('owner_last_name'));
+			$owner = array ('onwer_id' => $this->session->userdata('owner_id'), 
+							'first_name' => $this->session->userdata('owner_first_name'), 
+							'last_name' => $this->session->userdata('owner_last_name'), 
+							'user_name' => $this->session->userdata('owner_user_name'));
 		else:
 			$owner=$this->db_model->get_owner($owner_name);
 		endif;
 		$this->html_model->load_html_begin($owner);
 		$html = array ('html' => "<div id = 'content'>");
 		$this->load->view('print_html', $html);	
-		$gift_item = $this->db_model->get_gift_by_giftid($gift_id, $this->session->userdata('owner_id') );
+	    $gift_item = $this->db_model->get_gift_by_giftid($gift_id, $this->session->userdata('owner_id') );
+	    $gift_item->reff = '_one';
 		$this->load->view('gift', $gift_item);
 		$gift_links = $this->db_model->get_gift_links($gift_item->gift_id);
-			foreach ($gift_links as $link) :
-				$this->load->view('gift_link', $link);
-			endforeach;
+		 	foreach ($gift_links as $link) :
+		 		$this->load->view('gift_link', $link);
+		 	endforeach;
 		$this->load->view('link_wrapper_end');
-		$html=array('html' => "<div id='mask' class='close_modal'>");
-		$this->load->view('print_html', $html);	
+		// $html=array('html' => "");
+		// $this->load->view('print_html', $html);	
 		$html = array ('html' => "</div>");
 		$this->load->view('print_html', $html);	
 		$this->db_model->print_comments($gift_item->gift_id, 100);
-		$this->db_model->print_gift_popup();
-		$this->db_model->print_share_popup();
+		// $this->db_model->print_gift_popup();
+		// $this->db_model->print_share_popup();
 		$this->html_model->load_html_close();
 	}
 	
@@ -131,8 +135,9 @@ function __construct()
 		$this->html_model->load_html_begin($owner);
 		
 		$gift = $this->db_model->get_gift_by_giftid($gift_id,  $owner_id);
-		//var_dump($gift->title);
-		$gift_title = array ('gift_title' => $gift->title);
+		
+		$gift_title = array ('gift_title' => $gift->title, 'reff'=>'taken');
+		$gift->reff = 'taken';
 		$this->load->view('taken', $gift_title);
 		$this->email_form($gift_id, 1);
 		$this->html_model->load_html_close();

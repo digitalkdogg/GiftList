@@ -14,11 +14,15 @@ class Db_model extends CI_Model {
 	if (!$query==null) :
 	$data = array( 
 		'owner_id' => $query->owner_id,
+		'user_name' => $query->user_name,
 		'first_name' => $query->first_name,
 		'last_name' => $query->last_name,
 		'email' => $query->email
 	 );
-	 $newdata = array('owner_id'  => $data['owner_id'], 'owner_first_name' => $data['first_name'], 'owner_last_name' => $data['last_name']);
+	 $newdata = array('owner_id'  => $data['owner_id'], 
+	 				  'owner_user_name' => $data['user_name'],
+	 				  'owner_first_name' => $data['first_name'],
+	 				  'owner_last_name' => $data['last_name']);
 
 	$this->session->set_userdata($newdata);
 	return $data;
@@ -65,6 +69,7 @@ class Db_model extends CI_Model {
 		foreach ($gift_id as $gift):
 			$gift_item = $this->get_gift_item($gift->gift_id);
 			$gift_links = $this->get_gift_links($gift->gift_id);
+			$gift_item->reff = '';
 			$this->load->view('gift', $gift_item);
 			foreach ($gift_links as $link) :
 				$this->load->view('gift_link', $link);
@@ -75,40 +80,40 @@ class Db_model extends CI_Model {
 	}
 	
 	
-	function print_gift_popup()
-	{	
-		$owner_id = $this->session->userdata('owner_id');
-		$gift_id = $this->get_giftid_all($owner_id);
+// 	function print_gift_popup()
+// 	{	
+// 		$owner_id = $this->session->userdata('owner_id');
+// 		$gift_id = $this->get_giftid_all($owner_id);
 		
-		foreach ($gift_id as $gift):
-			$gift_item = $this->get_gift_item($gift->gift_id);
-			$gift_links = $this->get_gift_links($gift->gift_id);
-			$this->load->view('gift_is_popup', $gift_item, array('div' => 1));
-			foreach ($gift_links as $link) :
-				$this->load->view('gift_link', $link);
-			endforeach;
-			$this->load->view('link_wrapper_end');
-			$this->print_comments($gift->gift_id, 3);
-			$html= array('html'=>"<div class = 'gift_popup_area'><ul><li>
-							<a href = '"  .site_url() . "/comment/" . $gift->gift_id . "'>Comment On This Gift</a>  </li>
-           					<li><a class = ''>Share This Gift</a></li>
-							<li><a href = '" . site_url() . "/taken/" . $gift->gift_id . "'>Mark This Gift As Taken</a></li>
-            				</ul></div>");
-			$this->load->view('print_html', $html);	
-			$this->load->view('gift_end', array('div' => 1));			
-		endforeach;
-	}
+// 		foreach ($gift_id as $gift):
+// 			$gift_item = $this->get_gift_item($gift->gift_id);
+// 			$gift_links = $this->get_gift_links($gift->gift_id);
+// 			$this->load->view('gift_is_popup', $gift_item, array('div' => 1));
+// 			foreach ($gift_links as $link) :
+// 				$this->load->view('gift_link', $link);
+// 			endforeach;
+// 			$this->load->view('link_wrapper_end');
+// 			$this->print_comments($gift->gift_id, 3);
+// 			$html= array('html'=>"<div class = 'gift_popup_area'><ul><li>
+// 							<a href = '"  .site_url() . "/comment/" . $gift->gift_id . "'>Comment On This Gift</a>  </li>
+//            					<li><a class = ''>Share This Gift</a></li>
+// 							<li><a href = '" . site_url() . "/taken/" . $gift->gift_id . "'>Mark This Gift As Taken</a></li>
+//             				</ul></div>");
+// 			$this->load->view('print_html', $html);	
+// 			$this->load->view('gift_end', array('div' => 1));			
+// 		endforeach;
+// 	}
 	
-function print_share_popup()
-	{
-		$owner_id = $this->session->userdata('owner_id');
-		$gift_id = $this->get_giftid_all($owner_id);
+// function print_share_popup()
+// 	{
+// 		$owner_id = $this->session->userdata('owner_id');
+// 		$gift_id = $this->get_giftid_all($owner_id);
 		
-		foreach ($gift_id as $gift):
-		$gift_item = $this->get_gift_item($gift->gift_id);
-			$this->load->view('share_gift', $gift_item);
-		endforeach;
-	}
+// 		foreach ($gift_id as $gift):
+// 		$gift_item = $this->get_gift_item($gift->gift_id);
+// 			$this->load->view('share_gift', $gift_item);
+// 		endforeach;
+// 	}
 
 	
 	function print_comments($gift, $limit)
@@ -147,6 +152,19 @@ function print_share_popup()
 	else:
 		return false;
 	endif;
+	}
+
+	function get_gift_by_username_num($username, $num)
+	//returns one gift by the username and num....used in popup
+	{
+		$query = $this->db->from('gift')
+					->where('num', $num)
+					->where('user_name', $username)
+					->where('status_id', '1')
+					->join ('owner', 'gift.owner_id=owner.owner_id')
+					->join ('taken', 'taken.taken_id=gift.taken_id');
+		$query = $this->db->get()->row();
+		return $query;		
 	}
 
 	public function get_giftid_all($owner_id)
@@ -237,13 +255,16 @@ function print_share_popup()
 		foreach ($gift_id as $gift):
 			$gift_item = $this->get_gift_item($gift->gift_id);
 			$gift_links = $this->get_gift_links($gift->gift_id);
-			$this->load->view('gift', $gift_item, array('like_count' => 0));
+			$gift_item->reff = $status;
+			$gift_item->like_count = 0;
+			$this->load->view('gift', $gift_item);
 			foreach ($gift_links as $link) :
 				$this->load->view('gift_link', $link);
 			endforeach;
 			$this->load->view('link_wrapper_end');
 			$this->load->view('gift_end', array('div' => 1));
 		endforeach;
+		$this->html_model->load_html_close();
 	}
 	
 	public function get_giftlist_admin($owner_id)

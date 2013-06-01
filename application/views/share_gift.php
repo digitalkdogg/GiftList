@@ -1,6 +1,7 @@
 
 <?php
 echo "<div id = 'share_" . $num . "' class='modal_window' style='background: white;'>";
+echo "<div class = 'closeme'>X</div>";
 echo "<h2> Share " . $title . "</h2>" ;
 echo "<span style = 'color: red; display: none;' id = 'status'>Please enter both the name and email</span>";
 echo "<form action='' method='post' accept-charset='utf-8'>";
@@ -21,5 +22,4 @@ echo "<form action='' method='post' accept-charset='utf-8'>";
 	echo "<br /><br /><br /><br />";
 
 ?>
-<div id='mask' class='close_modal'></div>
 </div>

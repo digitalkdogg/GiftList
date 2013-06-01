@@ -8,9 +8,9 @@
 <div class = 'right_wrapper'>
 	<span class = "icons">
 		 
-			<?php echo "<a class = 'activate_modal' name = 'share_" . $num . "' href = '#'><img src='" . base_url() . "/public/img/share_icon.png' alt = 'Share' /></a>"; ?>
+			<?php echo "<a class = 'popmeup' id = 'share".$reff . "' name = '" .$num . "' href = 'share'><img src='" . base_url() . "/public/img/share_icon.png' alt = 'Share' /></a>"; ?>
 			<?php echo "<a href = '" . base_url() . "list.php/taken/" . $gift_id . '/' . $this->session->userdata('owner_first_name') . "'><img src='" . base_url() . "/public/img/purchased_icon.png' alt = 'buy' /></a>"; ?>
-			<?php echo "<a class = 'activate_modal' name = 'dets_" . $num . "' href = '#'><img src='" . base_url() . "/public/img/details_icon.png' alt = 'details' /></a>"; ?>        
+			<?php echo "<a class = 'popmeup' id = 'dets".$reff . "' name = '" . $num . "' href = 'dets'><img src='" . base_url() . "/public/img/details_icon.png' alt = 'details' /></a>"; ?>        
 			<?php echo "<a href = '" . base_url() . "list.php/comment/" . $gift_id . "'><img src='" . base_url() . "/public/img//comment_icon.png' alt = 'comment' /></a>"; ?>
         </span> 
             	<div class = "gift_status">
