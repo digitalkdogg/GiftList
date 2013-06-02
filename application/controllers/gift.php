@@ -7,7 +7,6 @@ function __construct()
 		$this->load->model('db_model');	
 		$this->load->model('html_model');
 		$this->load->model('gift_model');
-		//$this->load->model('popup_model');
 		$this->load->library('session');
     }
 
@@ -24,7 +23,6 @@ function __construct()
 			if (!$owner==null) :
 				$this->html_model->load_html_begin($owner);
 				$this->gift_model->load_gift_item($owner);
-				//$this->popup_model->load_gift_item($owner);
 				$this->html_model->load_html_close();
 			else: 
 				  redirect(base_url() , 'refresh');
