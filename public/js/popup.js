@@ -50,8 +50,12 @@
 
     function showPopup(data, num){
 		$('#popup_wrapper').append(JSON.parse(data));
-         divtop = window.pageYOffset+50;
-	     $('.modal_window').css({'display':'block', 'position': 'fix', 'top':divtop+'px', 'width': '80%', 'height': '10px'});
+        divtop = ($(window).height() / 2) -(500 / 2);
+
+        // divtop = window.pageYOffset+ ($(window).height() / 2) -(250);
+	    $('.modal_window').css({'display':'block', 'position': 'fixed', 'top':divtop+'px', 'width': '80%', 'height': '10px'});
+ 
+  
 	     $('.modal_window').animate({'height':'300px'}, 700, function () {$(this).css('height', 'auto')});
         // $('.modal_window').css('height', 'auto').animate('slow');
          $('body').css('overflow', 'hidden');
