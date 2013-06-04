@@ -12,7 +12,7 @@ class Html_model extends CI_Model {
 	$this->load->view('html_begin');
 	$this->load->view('css_jquery_files');
 	$this->load->view('body_header', $owner);
-	$html = array ( 'html' => "<div id = 'menu'><center>");
+	$html = array ( 'html' => "    <div id = 'menu'><center>");
 	$this->load->view('print_html', $html);
 	$data = $this->db_model->print_menu();
 	foreach ($data as $row) :
