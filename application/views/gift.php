@@ -11,14 +11,14 @@
     <div class = 'right_wrapper'>
 	    <span class = "icons">
 	    	<a class = 'popmeup' id = 'share<?php echo $reff; ?>' name = '<?php echo $num; ?>' href = 'share'><img src = '<?php echo base_url(); ?>/public/img/share_icon.png' alt = 'Share' /></a>
-	    	<a href = '<?php echo base_url(); ?>list.php/taken/<?php echo $gift_id . "/" . $this->session->userdata('owner_first_name'); ?>'><img src = '<?php echo base_url(); ?>/public/img/purchased_icon.png' alt = 'buy' /></a>
+	    	<a href = '<?php echo base_url(); ?>list.php/taken/<?php echo $gift_id . "/" . $this->session->userdata('owner_user_name'); ?>'><img src = '<?php echo base_url(); ?>/public/img/purchased_icon.png' alt = 'buy' /></a>
 	    	<a class = 'popmeup' id = 'dets<?php echo $reff; ?>' name = '<?php echo $num; ?>' href = 'dets'><img src = '<?php echo base_url(); ?>/public/img/details_icon.png' alt = 'Details' /></a>
 	    	<a href = '<?php echo base_url(); ?>list.php/comment/<?php echo $gift_id; ?>'><img src = '<?php echo base_url(); ?>/public/img/comment_icon.png' alt = 'Comment' /></a>
 	    </span> 
 	    <div class = "gift_status">
 	    	<p><?php echo $taken_text; ?></p>
 	    </div><!--end gif_status -->
-	    <a alt = 'email' href = '<?php echo base_url(); ?>/list.php/email_admin/<?php echo $gift_id . "/" . $this->session->userdata("owner_first_name"); ?>'>
+	    <a alt = 'email' href = '<?php echo base_url(); ?>/list.php/email_admin/<?php echo $gift_id . "/" . $this->session->userdata("owner_user_name"); ?>'>
 	    	<div class = 'gift_button'>
 	    	<span class = 'email'>
 	    		<img src = '<?php echo base_url(); ?>/public/img/email_icon.png' alt = 'email' />
@@ -29,7 +29,7 @@
 	</div> <!--end right wrapper -->
 
 	<div class = "gift_title">
-		<a href = '<?php echo site_url(); ?>/one_item/<?php echo $gift_id. "/" . $this->session->userdata('owner_first_name'); ?>'>
+		<a href = '<?php echo site_url(); ?>/one_item/<?php echo $gift_id. "/" . $this->session->userdata('owner_user_name'); ?>'>
 			<img src = '<?php echo base_url(); ?>public/num/<?php echo $num;?>.png' alt='<?php echo $num; ?>' /><?php echo $title;?></a>
 			<span class = 'likes'>
 				<span class = 'like_text' id = 'like_<?php echo $num;?>'><?php echo $this->db_model->get_likes_by_giftid($gift_id); ?></span>

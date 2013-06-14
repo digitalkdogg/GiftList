@@ -5,11 +5,16 @@ class Db_model extends CI_Model {
     {
         parent::__construct();
     }
-	
+
+/*
+	@purpose: get the owner information and save it to a session
+	@params : name
+	@return : array(owner_id, user_name, first_name, last_name, email)
+*/	
 	function get_owner($name)
 	{
 	$query = $this->db->from('owner')
-	 				->where ('first_name', $name);
+	 				->where ('user_name', $name);
 	$query = $this->db->get()->row();
 	if (!$query==null) :
 	$data = array( 
@@ -22,13 +27,19 @@ class Db_model extends CI_Model {
 	 $newdata = array('owner_id'  => $data['owner_id'], 
 	 				  'owner_user_name' => $data['user_name'],
 	 				  'owner_first_name' => $data['first_name'],
-	 				  'owner_last_name' => $data['last_name']);
+	 				  'owner_last_name' => $data['last_name'],
+	 				  'onwer_email'=> $data['email']);
 
 	$this->session->set_userdata($newdata);
 	return $data;
 	endif;
 	}
 	
+	/*
+	@purpose : gets all the menu items and returns it back to gift
+	@param: none
+	@return: resuts (select * from menu where status_id = 1)
+	*/
 	function print_menu()
 	{
 		$query = $this->db->from('menu')
@@ -36,6 +47,13 @@ class Db_model extends CI_Model {
 		$query = $this->db->get()->result();
 		return $query;
 	}
+
+	/*
+	@purpose: prints the sidebar in the gift list
+	@param : none
+	@return the series of quicklist in html output
+
+	*/
 	
 	function print_side_bar()
   	{
@@ -62,6 +80,13 @@ class Db_model extends CI_Model {
 		$this->load->view('print_html', $html);	
 	}
 	
+	/*
+	purpose : gets the gift items and returns the html including the gift links
+	param : none
+	return : html of gift items
+
+	*/
+
 	function print_gift_item()
 	{			
 		$owner_id = $this->session->userdata('owner_id');
@@ -115,6 +140,11 @@ class Db_model extends CI_Model {
 // 		endforeach;
 // 	}
 
+/*
+	@purpose: get the comments for the gift and return the html of that
+	@params: gift, limit (num rows to rturn)
+	@rturn : html of the comments for that gift
+*/
 	
 	function print_comments($gift, $limit)
 	{
@@ -139,6 +169,11 @@ class Db_model extends CI_Model {
 		endif;
 	}
 
+	/*
+	purpose : gets the gift info by giftId
+	params : gift_id, owner_id
+	return : row of gift
+	*/
 	function get_gift_by_giftid($gift_id, $owner_id)
 	{
 	$query = $this->db->from('gift')
@@ -154,8 +189,14 @@ class Db_model extends CI_Model {
 	endif;
 	}
 
+	/*
+	purpose : returns one gift by the username and num....used in popup
+	params : username and number
+	return : row of gift
+
+	*/
 	function get_gift_by_username_num($username, $num)
-	//returns one gift by the username and num....used in popup
+	//
 	{
 		$query = $this->db->from('gift')
 					->where('num', $num)
@@ -166,6 +207,12 @@ class Db_model extends CI_Model {
 		$query = $this->db->get()->row();
 		return $query;		
 	}
+
+	/*
+	@purpose: get gifts by the owner_id
+	@params : owner_id
+	@return: results of gift for the owner
+	*/
 
 	public function get_giftid_all($owner_id)
 	{	
@@ -178,6 +225,13 @@ class Db_model extends CI_Model {
 		return $query;
 	}
 	
+	/*
+	@purpos: get gifts that are taken for that owner
+	@params: owner_id and teken
+	@reutrn : results of taken gifts
+	*/
+
+
 	public function get_giftid_taken($owner_id, $taken)
 	{	
 				$this->db->select('gift_id');
@@ -190,6 +244,11 @@ class Db_model extends CI_Model {
 		return $query;
 	}
 	
+	/*
+	@purpose: get gift item 
+	@params: gift_id
+	@return: row of the gift
+	*/
 	public function get_gift_item($gift_id)
 	{
 		$this->db->select('*');
@@ -201,6 +260,11 @@ class Db_model extends CI_Model {
 		return $query;
 	}
 	
+	/*
+	@purpose : get likes for that gift
+	@params : gift_id
+	@return : query of like count
+	*/
 	public function get_likes_by_giftid($gift_id)
 	{
 	$this->db->select('*');
@@ -214,6 +278,12 @@ class Db_model extends CI_Model {
 	endif;
 	}
 	
+	/*
+	purpose: get the gift links for that gift
+	params : gift_id
+	return : results fo gift Links
+	*/
+
 	public function get_gift_links($gift_id) 
 	{
 		$this->db->select('*');
@@ -223,6 +293,11 @@ class Db_model extends CI_Model {
 		return $query;
 	}
 	
+	/*
+	@purpose: get the owner info by the gift Id
+	@params : gift_id
+	@return: row of owner info
+	*/
 	public function get_owner_by_giftid($gift_id)
 	{
 	$query = $this->db->from('gift')
@@ -237,6 +312,12 @@ class Db_model extends CI_Model {
 	
 	}
 	
+	/*
+	@purpose: get the data for the quick list
+	@paramas : none
+	@return: results order by num of gift items for owner
+	*/
+
 	public function get_quick_list()
 	{
 		$owner_id = $this->session->userdata('owner_id');
@@ -248,6 +329,11 @@ class Db_model extends CI_Model {
 		return $query;
 	}
 	
+	/*
+	@purpose : 
+
+	*/
+
 	public function get_gift_menu($status)
 	{
 		$owner_id = $this->session->userdata('owner_id');
@@ -266,6 +352,12 @@ class Db_model extends CI_Model {
 		endforeach;
 		$this->html_model->load_html_close();
 	}
+
+	/*
+	@purpose: get giftlist admin for that owner
+	@params: owner_id
+	@return: row of the giftlist admin
+	*/
 	
 	public function get_giftlist_admin($owner_id)
 	{			

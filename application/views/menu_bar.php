@@ -1,23 +1,23 @@
 <?php 
 switch ($name) {
 case 'Home' :
-	$home_url = site_url() . '/' . $url . '/' . $first_name; ?>
+	$home_url = site_url() . '/' . $url . '/' . $user_name; ?>
 
 	<a class = 'style1' alt = '<?php echo $alt; ?> ' href = '<?php echo $home_url; ?>'> <?php echo $name; ?> </a>
 <?php 
 	break;
 case 'Gift List Admin' :
-	$admin_url = site_url() . '/' . $url . '/' . $first_name; ?>
+	$admin_url = site_url() . '/' . $url . '/' . $user_name; ?>
 	<a class = 'style1' alt = '<?php echo $alt; ?>' href = '<?php echo $admin_url; ?> '> <?php echo $name; ?></a>
 <?php
 	break;
 case 'What Is Taken' :
-	$taken_url = site_url() . '/' . $url . '/1/' . $first_name; ?>
+	$taken_url = site_url() . '/' . $url . '/1/' . $user_name; ?>
 	<a class = 'style1' alt = '<?php echo $alt; ?>' href = '<?php echo $taken_url; ?>'><?php echo $name ?></a>
 <?php
 	break;
 case 'What Is Available' :
-	$available_url = site_url() . '/' . $url . '/2/' . $first_name;?>
+	$available_url = site_url() . '/' . $url . '/2/' . $user_name;?>
 	<a class = 'style1' alt = '<?php echo $alt; ?>' href = '<?php echo $available_url; ?>'><?php echo $name ?></a>
 
 <?php	

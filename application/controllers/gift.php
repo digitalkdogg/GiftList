@@ -3,6 +3,7 @@ class Gift extends CI_Controller {
 
 function __construct()
     {
+    	//construct: load the necessary models and libraries that are not auto loaded
         parent::__construct();
 		$this->load->model('db_model');	
 		$this->load->model('html_model');
@@ -16,8 +17,14 @@ function __construct()
 		//$this->display_gift('kevin');
 	}
 	
+	/*
+	@ Purpose : Display gift.  This is the main function when you come to someone's list
+	@ Returns : either to the base_url or someones list
+	@ 6/15/2013
+	*/
 	public function display_gift($name)
 	{
+
 		if (isset($name)):
 			$owner = $this->db_model->get_owner($name);
 			if (!$owner==null) :
@@ -30,6 +37,12 @@ function __construct()
 	
 		endif;
 	}
+
+	/*
+	@purpose: Display one gift item off of someones list
+	@parms : Gift_id, $owner_name
+	@Returns : one gift item displayed in someone list
+	*/
 	
 	public function display_gift_one_item($gift_id, $owner_name)
 	{
@@ -62,9 +75,16 @@ function __construct()
 		$this->html_model->load_html_close();
 	}
 	
+
+	/*
+	@Purpose: loads the comment form when click on new comment
+	@params : gift_id
+	@returns : the comment form so someone can make a comment.
+	*/
+
 	public function comment_form($gift_id)
 	{
-		$owner = array ('first_name' => $this->session->userdata('owner_first_name'), 'last_name' => $this->session->userdata('owner_last_name'));
+		$owner = array ('first_name' => $this->session->userdata('owner_first_name'), 'last_name' => $this->session->userdata('owner_last_name'), 'user_name'=>$this->session->userdata('owner_user_name'));
 		$this->html_model->load_html_begin($owner);
 		$html = array ('html' => "<p id = 'status' style = 'display: none;'>Staus goes here</p>");
 		$this->load->view('print_html', $html);	
@@ -75,6 +95,12 @@ function __construct()
 		$this->html_model->load_html_close();
 	}
 	
+	/*
+	@Purpose: Adds a comment to a gift item 
+	@param : gift_id, post[message], post[name]
+	@returns : Json true or null
+	*/
+
 	public function add_comment ($gift_id)
 	{
 		$this->load->helper('date');
@@ -96,24 +122,36 @@ function __construct()
 		}
 	}
 	
+	/*
+	@Purpose: Sends a email to the list owner when a new comment is made on their list
+	@params : gift_id
+	@return : ture
+	*/
+
 	public function send_comment_email($gift_id)
 	{
 	$owner = $this->db_model->get_owner_by_giftid($gift_id);
 	$gift = $this->db_model->get_gift_item($gift_id);
-	$message = "This is to inform you that you have a new comment on your gift_list item <a href = '" . site_url() . "/one_item/" . $gift_id . '/' . $owner->first_name . "'>" . $gift->title . "</a>";
+	$message = "This is to inform you that you have a new comment on your gift_list item <a href = '" . site_url() . "/one_item/" . $gift_id . '/' . $owner->user_name . "'>" . $gift->title . "</a>";
 	$send_to_owner=$this->send_mail_msg($message,
 										'New GiftList Comment', 
 	 									'giftlistadmin@techyconnection',
 										 $owner->email);
 	}
 
-	
+	/*
+	@purpose : not sure
+	@params : name
+	@return: 
+	*/
 	public function gift_list_admin($name)
 	{
 		$owner = $this->db_model->get_owner($name);
 		if ($this->session->userdata('owner_id')) :
 			$owner_id = $this->session->userdata('owner_id');
-			$owner = array ('first_name' => $this->session->userdata('owner_first_name'), 'last_name' => $this->session->userdata('owner_last_name'));
+			$owner = array ('first_name' => $this->session->userdata('owner_first_name'), 
+							'last_name' => $this->session->userdata('owner_last_name'), 
+							'user_name' => $this->session->userdata('owner_user_name'));
 			$this->html_model->load_html_begin($owner);
 			$admin = $this->db_model->get_giftlist_admin($owner_id);
 			$this->load->view('gift_list_admin', $admin);
@@ -121,10 +159,18 @@ function __construct()
 		endif;
 	}
 	
+	/*
+	@purpose: Display the taken form so that someone can mark an item as taken
+	@params: Gift_id, Owner_name
+	@return: taken view
+	*/
 	public function item_taken($gift_id, $ownwer_name)
 	{
 		if ($this->session->userdata('owner_id')) :
-			$owner = array ('first_name' => $this->session->userdata('owner_first_name'), 'last_name' => $this->session->userdata('owner_last_name'), 'owner_id'=> $this->session->userdata('owner_id'));
+			$owner = array ('first_name' => $this->session->userdata('owner_first_name'), 
+							'last_name' => $this->session->userdata('owner_last_name'),
+							 'owner_id'=> $this->session->userdata('owner_id'),
+							 'user_name'=>$this->session->userdata('owner_user_name'));
 			$owner_id = $this->session->userdata('owner_id');
 		else : 
 			$owner = $this->db_model->get_owner_by_giftid($gift_id);
@@ -141,6 +187,11 @@ function __construct()
 		$this->html_model->load_html_close();
 	}
 	
+	/*
+	@purpose: display the email form
+	@params : gift_id, email address
+	@return : true
+	*/
 	function email_form($gift_id, $email)
 	{
 		$html = array ('html' => "<div id = 'content'>");
@@ -148,6 +199,11 @@ function __construct()
 		$this->load->view('email_form', array('gift_id'=>$gift_id, 'email' => $email));
 	}
 	
+	/*
+	@purpose: update the taken status when someone marks an item as taken
+	@params : gift_id
+	return : true	
+	*/
 	function update_taken_status($gift_id)
 	{
 		$data = array(
@@ -156,6 +212,11 @@ function __construct()
 		$this->db->update('gift', $data); 
 	
 	}
+	/*
+	@purpose:update like count for a gift Id
+	@params : gift_id
+	@return : true
+	*/
 	
 	function update_likes($gift_id)
 	{
@@ -194,6 +255,12 @@ function __construct()
 		endif;
 	}
 	
+	/*
+	@purpose: prepare email to be sent on share gift
+	@params : gift_id
+	@return : json response
+
+	*/
 	function send_share_email($gift_id)
 	{
 			$this->load->helper('email');
@@ -205,12 +272,12 @@ function __construct()
 			$owner = $this->db_model->get_owner_by_giftid($gift_id);
 			$subject = $owner->first_name . ' ' . $owner->last_name . ' share request';
 			$message= $name . " would like to share this with you";
-			$email= 'giftlistadmin@techyconnection.com';
+			$email= 'giftlistadmin@presentsr4.me';
 			$gift_item = $this->db_model->get_gift_item($gift_id);
 			$gift_links = $this->db_model->get_gift_links($gift_id);
 			
 			$message .= "<div style='background:#f9f9f9; margin:10px; padding: 10px; border: 3px dashed green;'><div style='background:#f9f9f9;'>";
-			$message .= "<a href = '" . site_url() . '/one_item/' . $gift_id . '/' . $owner->first_name . "'>";
+			$message .= "<a href = '" . site_url() . '/one_item/' . $gift_id . '/' . $owner->user_name . "'>";
 			$message .="<div style='border-bottom:1px solid black;'><span style='font-size:21px; color:red; font-weight:bold;'>" . $gift_item->num . " -  </span>";
 			$message .="<span style='font-size: 18px; color:red; font-weight:bold;'>" . $gift_item->title. "</span></div><div style=border-bottom:solid 1px black;>";
 			$message .= "<span style='font-size: 14px; color: #333; padding-top:20px; margin-bottom: 20px;'><br />". $gift_item->description . "<br /><br /></span>";
@@ -227,7 +294,11 @@ function __construct()
 				echo json_encode($response);
 			endif;
 	}
-	
+	/*
+	@purpose : send an email to gift list admin
+	@params : gift_id, post['email'], post['message'], post['name']
+	@return : true or json response
+	*/
 	function send_email($gift_id)
 	{
 		$this->load->helper('email');
@@ -262,10 +333,18 @@ function __construct()
 		endif;
 	} 
 	
+	/*
+	@purpose: display gift list base on status
+	@params: status 1 or 2, owner_name
+	@return : list of items 
+	*/
 	function menu_taken($status, $owner_name)
 	{
-		if ($this->session->userdata('owner_first_name') == $owner_name) {
-			$owner = array ('first_name' => $this->session->userdata('owner_first_name'), 'last_name' => $this->session->userdata('owner_last_name'), 'owner_id' => $this->session->userdata('owner_id'));
+		if ($this->session->userdata('owner_user_name') == $owner_name) {
+			$owner = array ('first_name' => $this->session->userdata('owner_first_name'), 
+							'last_name' => $this->session->userdata('owner_last_name'),
+							'owner_id' => $this->session->userdata('owner_id'),
+							'user_name' => $this->session->userdata('owner_user_name'));
 		} else {
 			$owner=$this->db_model->get_owner($owner_name);
 		}
@@ -275,11 +354,19 @@ function __construct()
 			$this->db_model->get_gift_menu($status);		
 		
 	}
-	
+	/*
+	purpose: prepare to send to gift list admin
+	params: gift_id, owner_name
+	return: view admin email
+	*/
+
 	function email_admin($gift_id, $owner_name)
 	{
-		if ($this->session->userdata('owner_first_name')==$owner_name):
-			$owner = array ('owner_id' => $this->session->userdata('owner_id'), 'first_name' => $this->session->userdata('owner_first_name'), 'last_name' => $this->session->userdata('owner_last_name'));
+		if ($this->session->userdata('owner_user_name')==$owner_name):
+			$owner = array ('owner_id' => $this->session->userdata('owner_id'), 
+							'first_name' => $this->session->userdata('owner_first_name'), 
+							'last_name' => $this->session->userdata('owner_last_name'),
+							'user_name'=> $this->session->userdata('owner_user_name'));
 			$owner_name = $this->session->userdata('owner_first_name');
 		else:
 			$owner=$this->db_model->get_owner($owner_name);
@@ -292,6 +379,11 @@ function __construct()
 		$this->email_form($gift_id, '2');
 	}
 	
+	/*
+	purpose: send the email to gift list admin
+	params: gift_id, post[email], post[message], post[name]
+	return: true or json response
+	*/
 	function send_email_admin($gift_id)
 	{
 		$this->load->helper('email');
@@ -325,13 +417,17 @@ function __construct()
 		endif;
 	}
 
+	/*
+	@purpose: sends off the actually email
+	@params: message, subject, email, to-email
+	return: json repsonse
+	*/
+
 	function send_mail_msg($message, $subject, $email, $to_email)
 	{
 	$config = array(
     		'protocol' => 'sendmail',
 			'mailpath' => '/usr/sbin/sendmail',
-			//'smtp_host' => 'relay-hosting.secureserver.net',
-			//'smtp_port' => '25',
     		'mailtype' => 'html',
    		 	'newline' => "\r\n",
     		'crlf' => "\n",
