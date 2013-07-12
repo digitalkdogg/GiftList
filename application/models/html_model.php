@@ -11,6 +11,7 @@ class Html_model extends CI_Model {
 	{
 	$this->load->view('html_begin');
 	$this->load->view('css_jquery_files');
+	//$this->load->view('css_jquery_files');
 	$this->load->view('body_header', $owner);
 	$html = array ( 'html' => "    <div id = 'menu'><center>");
 	$this->load->view('print_html', $html);
@@ -25,10 +26,15 @@ class Html_model extends CI_Model {
 	$this->load->view('print_html', $html);	
 	}
 	
-	function load_html_close()
+	function load_html_close($dashboard=null)
 	{
 	$html = array ('html' => "</div><div id = 'popup_wrapper'></div> <!--end content --></div> <!--end wrapper --></body></html>");
-	$this->load->view('print_html', $html);
+	if ($dashboard=='true') :
+		$content = $this->load->view('print_html', $html, true);
+		return $content;
+	else :
+		$this->load->view('print_html', $html);
+	endif;
 	}
 	
 	function load_quick_list($data)

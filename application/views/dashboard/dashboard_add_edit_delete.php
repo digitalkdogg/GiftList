@@ -1,0 +1,1 @@
+<span class = 'delete'>delete</span><span class='edit'>Edit</span><span class = 'add'>Add</span>

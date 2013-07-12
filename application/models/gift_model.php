@@ -6,11 +6,10 @@ class Gift_model extends CI_Model {
         parent::__construct();
     }
 	
-	function load_gift_item($owner)
+	function load_content_begin()
 	{
 	$html = array ('html' => "<div id = 'content'>");
-	$this->load->view('print_html', $html);	
-	$this->db_model->print_gift_item();
+	$content = $this->load->view('print_html', $html);	
 	}
 	
 	function load_gift_not_found()

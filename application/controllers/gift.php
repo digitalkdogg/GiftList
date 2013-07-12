@@ -29,7 +29,8 @@ function __construct()
 			$owner = $this->db_model->get_owner($name);
 			if (!$owner==null) :
 				$this->html_model->load_html_begin($owner);
-				$this->gift_model->load_gift_item($owner);
+				$this->gift_model->load_content_begin();
+				$this->db_model->print_gift_item();
 				$this->html_model->load_html_close();
 			else: 
 				  redirect(base_url() , 'refresh');

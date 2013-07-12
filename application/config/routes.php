@@ -56,6 +56,8 @@ $route["send_email_admin/(.*)"] = 'gift/send_email_admin/$1';
 $route["send_share_email/(.*)"] = 'gift/send_share_email/$1';
 $route["send_email/(.*)"] = 'gift/send_email/$1';
 $route["likes/(.*)"] = 'gift/update_likes/$1';
+
+$route["dashboard/(.*)"] = 'dashboard/index/$1';
 $route['404_override'] = '';
 
 

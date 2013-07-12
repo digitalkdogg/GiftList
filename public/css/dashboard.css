@@ -1,0 +1,43 @@
+.item_wrapper{
+  border: 1px solid black; 
+  width: 100%;
+  border-radius:10px;
+  margin: 5px 0;
+}
+
+.list {
+  margin:0 20px;
+}
+
+.down {
+   transform:rotate(90deg);
+  -webkit-transform:rotate(90deg);
+  -ms-transform:rotate(90deg);
+  -moz-transform:rotate(90deg);
+}
+
+.link {
+	margin-left: 10px;
+	font-size: .8em;
+}
+
+.edit, .delete, .add {
+	font-size:12px;
+	float:right;
+	margin: 0 10px 0px 10px;
+}
+
+.items {
+  background: white;
+  position: relative;
+  top: 40px;
+  margin: 10px 10%;
+  padding: 20px 10%;
+  }
+
+  .dash_title {
+    margin-left: -50px;
+    font-size: 18px;
+    font-weight: bold;
+    border-bottom: 1px solid black;
+  }

@@ -34,6 +34,23 @@ class Db_model extends CI_Model {
 	return $data;
 	endif;
 	}
+
+
+	/*
+	@pupose : gets all the list for that owner
+	@param : owner_id
+	@returns : array of lists for that owner
+	*/
+	function get_list_for_owner($owner_id)
+	{
+		$query = $this->db->select('list.*')
+					->from('list')
+					->where('list.owner_id', $owner_id)
+					->where('list.status_id', '1')
+					->join ('owner', 'owner.owner_id=list.owner_id');
+		$query = $this->db->get()->result();
+		return $query;		
+	}
 	
 	/*
 	@purpose : gets all the menu items and returns it back to gift
@@ -211,12 +228,29 @@ class Db_model extends CI_Model {
 	/*
 	@purpose: get gifts by the owner_id
 	@params : owner_id
-	@return: results of gift for the owner
+	@return: results of gift_id's for the owner
 	*/
 
 	public function get_giftid_all($owner_id)
 	{	
 				$this->db->select('gift_id');
+				$this->db->from('gift')
+	 				->where ('status_id', 1)
+					->where ('owner_id', $owner_id);
+				$this->db->order_by("num", "asc"); 
+		$query = $this->db->get()->result();
+		return $query;
+	}
+
+	/*
+	@purpose: get gift items by the owner_id
+	@params: owner_id
+	@return: results of gift_items for the owner
+	*/
+
+	public function get_giftitems_all($owner_id)
+	{
+		//$this->db->select('gift_id');
 				$this->db->from('gift')
 	 				->where ('status_id', 1)
 					->where ('owner_id', $owner_id);
@@ -230,8 +264,6 @@ class Db_model extends CI_Model {
 	@params: owner_id and teken
 	@reutrn : results of taken gifts
 	*/
-
-
 	public function get_giftid_taken($owner_id, $taken)
 	{	
 				$this->db->select('gift_id');
@@ -367,6 +399,21 @@ class Db_model extends CI_Model {
 		return $query;
 	}
 	
+	/*
+	@purpose : get the gift items for that list
+	@params : list_id
+	@return : results of list items
+	*/
+	public function get_giftitems_list($list_id)
+	{
+		$query = $this->db->select('gift.*')
+				->from('gift')
+				->join('gift_list', 'gift_list.gift_id = gift.gift_id')
+				->join('list', 'list.list_id = gift_list.list_id')
+				->where ('list.list_id', $list_id)
+				->where ('gift.status_id', 1);
+		return $this->db->get()->result();
+	}
 
 } // end db_model class
 ?>

@@ -440,7 +440,7 @@ border-top: 1px solid black;
 
       
 .modal_window{  
-    position:absolute;  important so we can position it on center later */  
+    position:absolute;  /*important so we can position it on center later */  
     display:none; /* don't show it */   
 	border: 3px solid black;
     color:#333;  
