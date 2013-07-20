@@ -4,7 +4,7 @@
 <?php 
 $i = 0;
 foreach ($span as $option) : 
-	echo "<span class = '".$option."'>".$option."</span>";
+	echo "<span class = '".$option." icon-pencil'></span>";
 	endforeach;
 	$span = null;
 ?>

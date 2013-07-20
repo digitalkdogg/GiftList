@@ -27,6 +27,10 @@
 	margin: 0 10px 0px 10px;
 }
 
+.edit:hover, .delete:hover, .add:hover {
+  color: #79a8bd;
+}
+
 .items {
   background: white;
   position: relative;
