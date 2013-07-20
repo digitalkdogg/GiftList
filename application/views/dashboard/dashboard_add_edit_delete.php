@@ -4,7 +4,7 @@
 <?php 
 $i = 0;
 foreach ($span as $option) : 
-	echo "<span class = '".$option." icon-pencil'></span>";
+	echo "<a href = '#' class = '".$option." icon-pencil'></a>";
 	endforeach;
 	$span = null;
 ?>

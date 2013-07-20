@@ -5,6 +5,14 @@
   margin: 5px 0;
 }
 
+.item_wrapper img {
+  vertical-align: middle;
+}
+
+.item {
+  line-height:20px;
+}
+
 .list {
   margin:0 20px;
 }
@@ -22,13 +30,10 @@
 }
 
 .edit, .delete, .add {
-	font-size:12px;
+	font-size:16px;
 	float:right;
 	margin: 0 10px 0px 10px;
-}
-
-.edit:hover, .delete:hover, .add:hover {
-  color: #79a8bd;
+  color: black;
 }
 
 .items {
