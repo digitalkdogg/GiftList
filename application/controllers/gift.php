@@ -33,7 +33,7 @@ function __construct()
 				$this->db_model->print_gift_item();
 				$this->html_model->load_html_close();
 			else: 
-				  redirect(base_url() , 'refresh');
+				redirect(base_url() , 'refresh');
 			endif;
 	
 		endif;

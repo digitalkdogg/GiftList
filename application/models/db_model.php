@@ -415,5 +415,62 @@ class Db_model extends CI_Model {
 		return $this->db->get()->result();
 	}
 
+	/*
+	@purpose : get the list info for a list id
+	@params : list_id
+	@return :return one list
+	*/
+	public function get_list_by_listid ($id, $data)
+	{
+		//$gift_id = $this->db->get()->result();
+		$list = array (
+				 'gift_id' => null,
+				'list_id' => $id
+			);
+		$this->db->insert('gift_list', $list);
+		$gift_id = $this->db->insert_id();
+
+		$gift = array(
+			'gift_id' => $gift_id ,
+   			'title' => $data['title'] ,
+   			'description' => $data['desc'] ,
+   			'num' => $data['num'],
+   			'image' => $data['image'],
+   			'owner_id' => $data['owner'],
+   			'status_id' => 1,
+   			'taken_id' => 2
+		);
+		$this->db->insert('gift', $gift); 
+	}
+
+	/*
+	@purpose : get the owner info from a list id
+	@params : list_id
+	@return :return one owner
+	*/
+	public function get_owner_by_listid ($id)
+	{
+		$query = $this->db->select('owner.owner_id, owner.user_name')
+				->from('owner')
+				->join('list', 'list.owner_id = owner.owner_id')
+				->where ('list.list_id', $id);
+		return $this->db->get()->result();
+	}
+
+		/*
+	@purpose : get the next number from the gift table for a list
+	@params : list_id
+	@return :return one num
+	*/
+	public function get_next_num_for_list ($id)
+	{
+		$query = $this->db->select('max(gift.num)+1 as num')
+				->from('gift')
+				->join('gift_list', 'gift_list.gift_id = gift.gift_id')
+				->where ('gift_list.list_id', $id)
+				->where('gift.status_id', '1');
+		return $this->db->get()->result();
+	}
+
 } // end db_model class
 ?>

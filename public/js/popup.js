@@ -37,7 +37,7 @@
 		});
     });   
 
-    function showPopup(data, num){
+    function showPopup(data){
 		$('#popup_wrapper').append(JSON.parse(data));
         divtop = ($(window).height() / 2) -(500 / 2);
 	    $('.modal_window').css({'display':'block', 'position': 'fixed', 'top':divtop+'px', 'width': '80%', 'height': '10px'});

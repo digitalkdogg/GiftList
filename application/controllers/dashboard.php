@@ -26,7 +26,7 @@ class Dashboard extends CI_Controller {
 		 		foreach ($list_items as $list) :
 		 			$items = $this->db_model->get_giftitems_list($list->list_id);
 
-		 			$content .= $this->load->view('dashboard/dashboard_gift_start', array('title' => $list->title), true);
+		 			$content .= $this->load->view('dashboard/dashboard_gift_start', array('title' => $list->title, 'list_id'=>$list->list_id), true);
 		 			foreach ($items as $item) :
 		 				$content .= $this->load->view('dashboard/dashboard_gift_dets', array('items' => $item), true);
 		 			endforeach;
@@ -61,6 +61,43 @@ class Dashboard extends CI_Controller {
 		else:
 			redirect(base_url(), 'refresh');
 		endif;
+	}
+
+	public function get_dashboard_add_form() 
+	{
+
+		$id = $_POST['list_id']; 
+	//	$options = [];
+		//$options = null;
+		$owner = $this->db_model->get_owner_by_listid ($id);
+		$list_num = $this->db_model->get_next_num_for_list($id);
+		for ($i = $list_num[0]->num; $i <= 20; $i++) {
+			$options[$i] = $i;
+		}
+
+		//$options = array('1'=>'1', '2'=>'2', '3'=>'3');
+		$inputs = array('1'=>array('name'=>'title', 'type'=>'text', 'value'=>'Title :', 'options'=>null), 
+						'2'=>array('name'=>'desc', 'type'=>'text', 'value'=>'Description :'),
+						'3'=>array('name'=>'num', 'type'=>'dropdown', 'value'=>'List Number :', 'options' => $options),
+						'4'=>array('name'=>'image', 'type'=>'image', 'value'=>'Image :', 'options'=>null)
+						);
+
+		$data = array('id' => $id, 'owner'=>$owner, 
+			'inputs'=>$inputs, 
+			'form_title'=>'Add New Item');
+		
+		$content =$this->load->view('dashboard/add_form', $data, true);
+		
+		echo json_encode($content);
+	}
+
+	public function add_gift($id) 
+	{
+		$data = $this->input->post();
+		$this->db_model->get_list_by_listid ($id, $data);
+		$owner = $this->db_model->get_owner_by_listid ($id);
+		redirect(site_url() . '/dashboard/' . $owner[0]->user_name , 'refresh');
+		//echo "<a href = '" . site_url() . "/dashboard/" . $owner[0]->user_name . ">test</a>";
 	}
 
 

@@ -58,6 +58,8 @@ $route["send_email/(.*)"] = 'gift/send_email/$1';
 $route["likes/(.*)"] = 'gift/update_likes/$1';
 
 $route["dashboard/(.*)"] = 'dashboard/index/$1';
+$route["dash_add_form"] = 'dashboard/get_dashboard_add_form';
+$route["dash_add_gift/(.*)"] = 'dashboard/add_gift/$1';
 $route['404_override'] = '';
 
 
