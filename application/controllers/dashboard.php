@@ -135,6 +135,7 @@ class Dashboard extends CI_Controller {
 
 
 		$id = $_POST['list_id']; 
+		$action = $_POST['action'];
 
 		$owner = $this->db_model->get_owner_by_listid ($id);
 
@@ -164,7 +165,7 @@ class Dashboard extends CI_Controller {
 
 			'form_title'=>'Add New Item',
 
-			'action' => 'dash_add_gift/' . $id );
+			'action' => $action . '/' . $id );
 
 		
 

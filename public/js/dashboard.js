@@ -17,7 +17,7 @@ $(document).ready(function () {
 	 	type: "POST",
      	dataType: "html",
 	     url: '../dash_add_form',
-	     data: {'list_id': id},
+	     data: {'list_id': id, 'action': 'dash_add_gift'},
 	     failure: function() {alert ('bad');},
          success: function(return_data)  {
          	if (return_data) {
