@@ -459,6 +459,42 @@ class Db_model extends CI_Model {
 	}
 
 	/*
+	@purpose : update the list for that liist_id
+	@params : list_id
+	@return :true or false
+	*/
+	public function update_list_by_listid ($id, $data)
+	{
+		$this->db->from('list')
+				->where('list_id', $id);
+	$object = array(
+               'title' => $data['title'],
+               'creation_date' => $data['date'],
+               'last_updated_date' => date('Y-m-d H:i:s')
+            );
+		$this->db->update('list', $object); 
+		return $this->db->affected_rows();
+	}
+
+		/*
+	@purpose : remove the list for that liist_id
+	@params : list_id
+	@return :true or false
+	*/
+	public function remove_list_by_listid ($id)
+	{
+	$this->db->from('list')
+				->where('list_id', $id);
+	$object = array(
+               'status_id' => 2,
+               'last_updated_date' => date('Y-m-d H:i:s')
+            );
+	$this->db->update('list', $object); 
+	return $this->db->affected_rows();
+
+	}
+
+	/*
 	@purpose : get the owner info from a list id
 	@params : list_id
 	@return :return one owner

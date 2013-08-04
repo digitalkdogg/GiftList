@@ -46,7 +46,7 @@ class Dashboard extends CI_Controller {
 
 		 		$content .= "<div id = 'gifts' class = 'items'>";
 
-		 		$content .= "<div class = 'dash_title'>Gifts</div>";
+		 		$content .= "<div class = 'dash_title'>Lists</div>";
 
 		 		foreach ($list_items as $list) :
 
@@ -182,21 +182,28 @@ class Dashboard extends CI_Controller {
 
 
 	public function add_gift($id) 
-
 	{
-
 		$data = $this->input->post();
-
 		$this->db_model->get_list_by_listid ($id, $data);
-
 		$owner = $this->db_model->get_owner_by_listid ($id);
-
 		redirect(site_url() . '/dashboard/' . $owner[0]->user_name , 'refresh');
-
-		//echo "<a href = '" . site_url() . "/dashboard/" . $owner[0]->user_name . ">test</a>";
-
 	}
 
+	public function edit_gift($id) 
+	{
+		$data = $this->input->post();
+		$result = $this->db_model->update_list_by_listid ($id, $data);
+		$owner = $this->db_model->get_owner_by_listid ($id);
+		redirect(site_url() . '/dashboard/' . $owner[0]->user_name , 'refresh');
+	}
+
+	public function delete_gift($id) 
+	{
+		$data = $this->input->post();
+		$result = $this->db_model->remove_list_by_listid ($id);
+		$owner = $this->db_model->get_owner_by_listid ($id);
+		redirect(site_url() . '/dashboard/' . $owner[0]->user_name , 'refresh');
+	}
 
 
 
