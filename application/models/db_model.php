@@ -52,6 +52,21 @@ class Db_model extends CI_Model {
 		return $query;		
 	}
 	
+
+	/*
+	@pupose : gets one list for that list_id
+	@param : list_id
+	@returns : one list
+	*/
+	function get_list_for_listid($list_id)
+	{
+		$query = $this->db->from('list')
+					->where('list.list_id', $list_id)
+					->where('list.status_id', '1');
+		$query = $this->db->get()->result();
+		return $query;		
+	}
+
 	/*
 	@purpose : gets all the menu items and returns it back to gift
 	@param: none

@@ -129,52 +129,54 @@ class Dashboard extends CI_Controller {
 
 
 	public function get_dashboard_add_form() 
-
 	{
-
-
-
 		$id = $_POST['list_id']; 
 		$action = $_POST['action'];
-
 		$owner = $this->db_model->get_owner_by_listid ($id);
+		switch ($action) {
+			case 'dash_add_gift' :
+				$list_num = $this->db_model->get_next_num_for_list($id);
+				for ($i = $list_num[0]->num; $i <= 20; $i++) {
+					$options[$i] = $i;
+				}
 
-		$list_num = $this->db_model->get_next_num_for_list($id);
-
-		for ($i = $list_num[0]->num; $i <= 20; $i++) {
-
-			$options[$i] = $i;
-
-		}
-
-		$inputs = array('1'=>array('name'=>'title', 'type'=>'text', 'value'=>'Title :', 'options'=>null), 
-
-						'2'=>array('name'=>'desc', 'type'=>'text', 'value'=>'Description :'),
-
-						'3'=>array('name'=>'num', 'type'=>'dropdown', 'value'=>'List Number :', 'options' => $options),
-
-						'4'=>array('name'=>'image', 'type'=>'image', 'value'=>'Image :', 'options'=>null)
-
+				$inputs = array('1'=>array('name'=>'title', 'type'=>'text', 'value'=>'Title :', 'options'=>null, 'text_value'=>''), 
+						'2'=>array('name'=>'desc', 'type'=>'text', 'value'=>'Description :', 'text_value'=>''),
+						'3'=>array('name'=>'num', 'type'=>'dropdown', 'value'=>'List Number :', 'options' => $options, 'text_value'=>''),
+						'4'=>array('name'=>'image', 'type'=>'image', 'value'=>'Image :', 'options'=>null, 'text_value'=>'')
 						);
+				$form_title = 'Add New Gift Item';
+				$btn = "Add Gift Item!";
+				break;
 
+			case 'dash_edit_gift' :
+				$list = $this->db_model->get_list_for_listid($id);
+				$inputs = array('1'=>array('name'=>'title', 'type'=>'text', 'value'=>'Title :', 'options'=>null, 'text_value'=>$list[0]->title), 
+						'2'=>array('name'=>'date', 'type'=>'text', 'value'=>'Create Date :', 'text_value'=>$list[0]->creation_date)
+						);
+				
+				$form_title = 'Edit Gift List';
+				$btn = "Edit List!";
+				break;
 
+			case 'dash_delete_gift' :
+				$list = $this->db_model->get_list_for_listid($id);
+				$inputs = array('1'=>array('name'=>'title', 'type'=>'text', 'value'=>'Title :', 'options'=>null, 'text_value'=>$list[0]->title), 
+						'2'=>array('name'=>'date', 'type'=>'text', 'value'=>'Create Date :', 'text_value'=>$list[0]->creation_date)
+						);
+				$form_title = 'Remove Gift List';
+				$btn = "Remove List!";
 
+				break;
+		}
+		
 		$data = array('id' => $id, 'owner'=>$owner, 
-
-			'inputs'=>$inputs, 
-
-			'form_title'=>'Add New Item',
-
-			'action' => $action . '/' . $id );
-
-		
-
+					 	'inputs'=>$inputs, 
+						'form_title'=> $form_title,
+						'action' => $action . '/' . $id,
+						'btn' => $btn);
 		$content =$this->load->view('dashboard/add_form', $data, true);
-
-		
-
 		echo json_encode($content);
-
 	}
 
 

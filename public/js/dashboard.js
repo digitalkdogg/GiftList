@@ -30,7 +30,48 @@ $(document).ready(function () {
          	 });
      }
 	 });
- //  	showPopup('data', '2');
+  });
+
+    $('.edit').click(function (e) {
+    e.preventDefault();
+    id = $(this).siblings('span').data('id');
+    $.ajax({
+    type: "POST",
+      dataType: "html",
+       url: '../dash_add_form',
+       data: {'list_id': id, 'action': 'dash_edit_gift'},
+       failure: function() {alert ('bad');},
+         success: function(return_data)  {
+          if (return_data) {
+               showPopup(return_data);
+               $('#wrapper').css('opacity', '1');
+             }
+           $('.closeme').on('click', function (event) {
+            closePopup();
+           });
+     }
+   });
+  });
+
+  $('.delete').click(function (e) {
+    e.preventDefault();
+    id = $(this).siblings('span').data('id');
+    $.ajax({
+    type: "POST",
+      dataType: "html",
+       url: '../dash_add_form',
+       data: {'list_id': id, 'action': 'dash_delete_gift'},
+       failure: function() {alert ('bad');},
+         success: function(return_data)  {
+          if (return_data) {
+               showPopup(return_data);
+               $('#wrapper').css('opacity', '1');
+             }
+           $('.closeme').on('click', function (event) {
+            closePopup();
+           });
+     }
+   });
   });
 
   });

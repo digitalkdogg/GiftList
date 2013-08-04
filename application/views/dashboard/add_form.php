@@ -7,7 +7,6 @@
 <?php
 
 	 echo form_open($action);
-
 	foreach ($inputs as $input) {
 
 		switch ($input['type']) {
@@ -16,7 +15,7 @@
 
 				echo form_label($input['value'], $input['name']);
 
-				echo form_input($input['name'], '') . '<br />';
+				echo form_input($input['name'], $input['text_value']) . '<br />';
 
 			break;
 
@@ -44,7 +43,7 @@
 
 	echo form_hidden('owner', $owner['0']->owner_id);
 
-	echo form_submit('submit', 'Add Item!');
+	echo form_submit('submit', $btn);
 
 	echo form_close();
 
