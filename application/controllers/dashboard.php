@@ -46,13 +46,11 @@ class Dashboard extends CI_Controller {
 
 		 		$content .= "<div id = 'gifts' class = 'items'>";
 
-		 		$content .= "<div class = 'dash_title'>Lists</div>";
+		 		$content .= "<div class = 'dash_title'>Lists<button class='gift' data-id = ". $owner['owner_id'] .">New Gift List</button></div>";
 
 		 		foreach ($list_items as $list) :
 
 		 			$items = $this->db_model->get_giftitems_list($list->list_id);
-
-
 
 		 			$content .= $this->load->view('dashboard/dashboard_gift_start', array('title' => $list->title, 'list_id'=>$list->list_id), true);
 
@@ -168,6 +166,12 @@ class Dashboard extends CI_Controller {
 				$btn = "Remove List!";
 
 				break;
+			case 'dash_add_list' :
+				
+				$inputs = array('1'=>array('name'=>'title', 'type'=>'text', 'value'=>'Title :', 'options'=>null, 'text_value'=>''));
+				$form_title = 'Add New List';
+				$btn = 'Add List!';
+				break;
 		}
 		
 		$data = array('id' => $id, 'owner'=>$owner, 
@@ -179,6 +183,13 @@ class Dashboard extends CI_Controller {
 		echo json_encode($content);
 	}
 
+	public function add_list($id) 
+	{
+		$data = $this->input->post();
+		$list = $this->db_model->insert_list ($id, $data);
+		$owner = $this->db_model->get_owner_by_listid ($id);
+		redirect(site_url() . '/dashboard/' . $owner[0]->user_name , 'refresh');
+	}
 
 
 	public function add_gift($id) 

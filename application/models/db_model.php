@@ -430,6 +430,25 @@ class Db_model extends CI_Model {
 		return $this->db->get()->result();
 	}
 
+
+	/*
+	@purpose : insert a list into the list table
+	@params : owner_id, data
+	@return :return true or false
+	*/
+	public function insert_list ($id, $data)
+	{
+		$list = array (
+				 'list_id' => null,
+				'title' => $data['title'],
+				'status_id' => '1',
+				'owner_id' => $id,
+				'creation_date' => date('Y-m-d H:i:s'),
+				'last_updated_date' => date('Y-m-d H:i:s')
+			);
+		$this->db->insert('list', $list);
+		return $this->db->affected_rows();
+	}
 	/*
 	@purpose : get the list info for a list id
 	@params : list_id
