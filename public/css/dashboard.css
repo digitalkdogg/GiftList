@@ -138,4 +138,5 @@ form {
 
 .right, .left {
   display:inline-table;
+  line-height: 37px;
 }

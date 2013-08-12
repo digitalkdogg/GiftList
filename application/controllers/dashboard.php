@@ -22,9 +22,12 @@ class Dashboard extends CI_Controller {
 
 
 
-	public function index ($name) 
+	public function index ($name = null) 
 
 	{
+		if ($name==null) {
+			 redirect('/', 'refresh');
+		}
 		
 		$session_data = ($this->session->all_userdata());
 	
@@ -126,13 +129,20 @@ $this->session->unset_userdata('login');
 	public function logmein()
 	{
 
+		$owner = $this->db_model->get_owner($_POST['user_name']);
+		$post_password = md5($_POST['password']);
+		if ($owner['password']==$post_password) {
 		$newdata = array(
                    'login'  => 'true',
                    'login_user' => $_POST['user_name']
                );
 
 		$this->session->set_userdata($newdata);
-		 redirect('/dashboard/' . $newdata['login_user'], 'refresh');
+	    redirect('/dashboard/' . $newdata['login_user'], 'refresh');
+	} else {
+		$this->session->unset_userdata('login');
+		return json_encode(array('login', 'true'));
+	}
 
 	}
 

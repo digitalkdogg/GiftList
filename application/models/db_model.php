@@ -20,6 +20,7 @@ class Db_model extends CI_Model {
 	$data = array( 
 		'owner_id' => $query->owner_id,
 		'user_name' => $query->user_name,
+		'password' => $query->password,
 		'first_name' => $query->first_name,
 		'last_name' => $query->last_name,
 		'email' => $query->email
