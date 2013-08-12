@@ -25,10 +25,12 @@ class Dashboard extends CI_Controller {
 	public function index ($name) 
 
 	{
-
+		
+		$session_data = ($this->session->all_userdata());
+	
 		$owner = $this->db_model->get_owner($name);
 
-		if (!$owner==null) :
+		
 
 		    $content = $this->load->view('html_begin', '', true);
 
@@ -38,7 +40,7 @@ class Dashboard extends CI_Controller {
 
 		 	$content .= "<div id = 'content'>";
 
-		
+			if (isset($session_data['login'])):
 
 		 	$list_items = $this->db_model->get_list_for_owner($owner['owner_id']);
 
@@ -106,7 +108,9 @@ class Dashboard extends CI_Controller {
 
 		 	endif; 
 
-
+			else:
+				$content .= $this->load->view('dashboard/login_form', '', true);
+			endif;
 
 		 	$content .= $this->html_model->load_html_close('true');
 
@@ -115,15 +119,22 @@ class Dashboard extends CI_Controller {
 			$this->load->view('print_html', $html);
 
 			//echo $content;
-
-		else:
-
-			redirect(base_url(), 'refresh');
-
-		endif;
-
+$this->session->unset_userdata('login');
+	
 	}
 
+	public function logmein()
+	{
+
+		$newdata = array(
+                   'login'  => 'true',
+                   'login_user' => $_POST['user_name']
+               );
+
+		$this->session->set_userdata($newdata);
+		 redirect('/dashboard/' . $newdata['login_user'], 'refresh');
+
+	}
 
 
 	public function get_dashboard_add_form() 

@@ -1,61 +1,141 @@
 .item_wrapper{
+
   border: 1px solid black; 
+
   width: 100%;
+
   border-radius:10px;
+
   margin: 5px 0;
+
 }
+
+
 
 .item_wrapper img {
+
   vertical-align: middle;
+
 }
+
+
 
 .item {
+
   line-height:20px;
+
 }
+
+
 
 .list {
+
   margin:0 20px;
+
 }
+
+
 
 .down {
+
    transform:rotate(90deg);
+
   -webkit-transform:rotate(90deg);
+
   -ms-transform:rotate(90deg);
+
   -moz-transform:rotate(90deg);
+
 }
+
+
 
 .link {
+
 	margin-left: 10px;
+
 	font-size: .8em;
+
 }
+
+
 
 .edit, .delete, .add {
+
 	font-size:16px;
+
 	float:right;
+
 	margin: 0 10px 0px 10px;
+
   color: black;
+
 }
 
+
+
 .items {
+
   background: white;
+
   position: relative;
+
   top: 40px;
+
   margin: 10px 10%;
+
   padding: 20px 10%;
+
   }
+
+
 
   .dash_title {
+
     margin-left: -50px;
+
     font-size: 18px;
+
     font-weight: bold;
+
     border-bottom: 1px solid black;
+
   }
 
+
+
   .dash_title button {
+
   float: right;
+
   margin: 0 5px 5px 0;
+
   border-radius: 10px;
+
   border: 1px solid green;
+
   font-weight: bold;
+
   cursor:pointer;
+
+}
+
+.login {
+  border-radius: 10px;
+  background: white;
+  top: 30px;
+  position: relative;
+}
+
+form {
+  background:none;
+}
+
+.login_title {
+  background: red;
+  height: 30px;
+}
+
+.right, .left {
+  display:inline-table;
 }
