@@ -140,3 +140,8 @@ form {
   display:inline-table;
   line-height: 37px;
 }
+
+.message {
+  color: red;
+  height: 20px;
+}

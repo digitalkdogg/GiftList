@@ -75,7 +75,7 @@ $(document).ready(function () {
   });
 
     $('button.gift').click(function (e) {
-
+      alert('hi');
     e.preventDefault();
     id = $(this).data('id');
    // id = $(this).siblings('span').data('id');
@@ -96,5 +96,29 @@ $(document).ready(function () {
      }
    });
   });
+
+    $('#login_submit').click(function (e) {
+      e.preventDefault();
+      $.ajax({
+        type: "POST",
+        dataType: "JSON",
+        url: '../logmein',
+        data: {'user_name': $('input[name=user_name]').val(), 'password': $('input[name=password]').val()},
+        failure: function() {alert ('bad');},
+        success: function(data) {
+          var json = $.parseJSON(data);
+          if (data.login == 'true') {
+            $('.message').text(data.message);
+            window.location.href = window.location.pathname;
+          } else {
+            $('.message').text(data.message);
+          }
+      }
+      });
+    });
+
+    $('input[name=user_name]').focus(function () {
+       $('.message').text();
+    });
 
   });
