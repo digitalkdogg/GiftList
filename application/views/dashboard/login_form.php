@@ -3,7 +3,7 @@
 <?php 
 $this->load->helper('url');
 $attributes = array('class' => 'login_form', 'id' => 'myform');
-	echo form_open(base_url() . 'list.php/logmein', $attributes);
+	echo form_open(base_url() . '', $attributes);
 	echo '<div class= "left">';
 	echo form_label('User Name : ', 'name'). '<br />';
 	echo form_label('password : ', 'password');
@@ -12,9 +12,11 @@ $attributes = array('class' => 'login_form', 'id' => 'myform');
 	echo form_password('password', '');
 	echo '</div><div>';
 
-	echo form_submit('submit', 'Login');
-	echo form_submit('cancel', 'Cancel');
+	$sub_attr = array('type' => 'submit', 'value'=>'Submit!', 'id' => 'login_submit');
+	echo form_submit ($sub_attr);
+	//echo form_cancel('cancel', 'Cancel');
 	echo '</div>';
+	echo '<div class = "message"></div>';
 	echo form_close();
 ?>
 </div>
