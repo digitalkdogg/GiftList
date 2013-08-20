@@ -76,6 +76,29 @@ $(document).ready(function () {
    });
   });
 
+   $('.item>.delete').click(function (e) {
+    e.preventDefault();
+    gift_id = $(this).parent().data('id');
+    id = $(this).parent().parent().siblings('h3').children('span').data('id');
+   
+    $.ajax({
+    type: "POST",
+      dataType: "html",
+       url: '../dash_add_form',
+       data: {'list_id': id, 'gift_id':gift_id, 'action': 'dash_delete_gift_item'},
+       failure: function() {alert ('bad');},
+         success: function(return_data)  {
+          if (return_data) {
+               showPopup(return_data);
+               $('#wrapper').css('opacity', '1');
+             }
+           $('.closeme').on('click', function (event) {
+            closePopup();
+           });
+     }
+   });
+  });
+
   $('.delete').click(function (e) {
     e.preventDefault();
     id = $(this).siblings('span').data('id');

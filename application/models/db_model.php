@@ -534,6 +534,23 @@ class Db_model extends CI_Model {
 	 	$this->db->update('gift', $object); 
 		return $this->db->affected_rows();
 	}
+			/*
+	@purpose : remove the giftitem for that gift_id
+	@params : gift_id
+	@return :true or false
+	*/
+	public function remove_gift_by_giftid ($id)
+	{
+	$this->db->from('gift')
+				->where('gift_id', $id);
+	$object = array(
+               'status_id' => 2
+            );
+	$this->db->update('gift', $object); 
+	return $this->db->affected_rows();
+
+	}
+
 
 	/*
 	@purpose : get the owner info from a list id

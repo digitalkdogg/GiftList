@@ -223,6 +223,23 @@ class Dashboard extends CI_Controller {
 					$form_title = 'Edit Gift Item';
 					$btn = "Edit Gift Item!";
 					break;
+
+				case 'dash_delete_gift_item' :
+					$id = $_POST['gift_id'];
+					$list_id = $_POST['list_id']; 
+					$owner = $this->db_model->get_owner_by_listid ($list_id);
+					
+					$gift_id = $_POST['gift_id'];
+					$list = $this->db_model->get_gift_by_giftid($gift_id, $owner[0]->owner_id);
+					$inputs = array('1'=>array('name'=>'title', 'type'=>'text', 'value'=>'Title :', 'options'=>null, 'text_value'=>$list->title), 
+							'2'=>array('name'=>'description', 'type'=>'text', 'value'=>'Description :', 'text_value'=>$list->description),
+							'3'=>array('name'=>'image', 'type'=>'image', 'value'=>'Image :', 'text_value'=>$list->image),
+							'4'=>array('name'=>'num', 'type'=>'text', 'value'=>'Number :', 'text_value'=>$list->num)
+							);
+					
+					$form_title = 'Remove Gift Item';
+					$btn = "Remove This Gift Item!";
+					break;
 			}
 			
 			$data = array('id' => $id, 'owner'=>$owner, 
@@ -290,6 +307,17 @@ class Dashboard extends CI_Controller {
 			$owner = $this->db_model->get_owner_by_listid ($id);
 			redirect(site_url() . '/dashboard/' . $owner[0]->user_name , 'refresh');
 		endif;
+	}
+
+	public function delete_gift_item($id) 
+	{
+		$session_data = ($this->session->all_userdata());
+		if (isset($session_data['login'])):
+			$data = $this->input->post();
+			$owner = $this->db_model->get_owner_by_giftid($id);
+			$result = $this->db_model->remove_gift_by_giftid ($id);
+			redirect(site_url() . '/dashboard/' . $owner->user_name , 'refresh');
+		 endif;
 	}
 
 
