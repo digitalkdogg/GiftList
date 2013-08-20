@@ -61,6 +61,7 @@ $route["dashboard/(.*)"] = 'dashboard/index/$1';
 $route["dash_add_form"] = 'dashboard/get_dashboard_add_form';
 $route["dash_add_gift/(.*)"] = 'dashboard/add_gift/$1';
 $route["dash_edit_gift/(.*)"] = 'dashboard/edit_gift/$1';
+$route["dash_edit_gift_item/(.*)"] = 'dashboard/edit_gift_item/$1';
 $route["dash_delete_gift/(.*)"] = 'dashboard/delete_gift/$1';
 $route["dash_add_list/(.*)"] = 'dashboard/add_list/$1';
 $route["logmein"] = "dashboard/logmein";

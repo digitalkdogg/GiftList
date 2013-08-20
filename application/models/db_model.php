@@ -514,6 +514,27 @@ class Db_model extends CI_Model {
 
 	}
 
+
+	/*
+	@purpose : update the giftitem for that gift_id
+	@params : gift_id
+	@return :true or false
+	*/
+	public function update_gift_by_giftid ($id, $data)
+	{
+		$this->db->from('gift')
+				->where('gift_id', $id);
+		
+	 $object = array(
+               'title' => $data['title'],
+               'description' => $data['description'],
+               'num' => $data['num'],
+               'image' => $data['image']
+            );
+	 	$this->db->update('gift', $object); 
+		return $this->db->affected_rows();
+	}
+
 	/*
 	@purpose : get the owner info from a list id
 	@params : list_id
