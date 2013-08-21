@@ -134,7 +134,7 @@ class Dashboard extends CI_Controller {
 	{
 		$owner = $this->db_model->get_owner($_POST['user_name']);
 		if ($owner) {
-			$post_password = md5($_POST['password']);
+			$post_password = $_POST['password'];
 			if ($owner['password']==$post_password) {
 				$newdata = array(
 	                   'login'  => 'true',

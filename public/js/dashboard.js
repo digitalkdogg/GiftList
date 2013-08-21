@@ -145,11 +145,13 @@ $(document).ready(function () {
 
     $('#login_submit').click(function (e) {
       e.preventDefault();
+      password = $('input[name=password]').val();
+      //alert(CryptoJS.MD5($('input[name=password]').val()));
       $.ajax({
         type: "POST",
         dataType: "JSON",
         url: '../logmein',
-        data: {'user_name': $('input[name=user_name]').val(), 'password': $('input[name=password]').val()},
+        data: {'user_name': $('input[name=user_name]').val(), 'password': CryptoJS.MD5(password).toString()},
         failure: function() {alert ('bad');},
         success: function(data) {
           var json = $.parseJSON(data);

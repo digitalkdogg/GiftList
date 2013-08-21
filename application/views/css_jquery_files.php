@@ -15,4 +15,5 @@
 <script type = 'text/javascript' src = '<?php echo base_url(); ?>/public/js/form_validation.js'></script>
 <script type = 'text/javascript' src = '<?php echo base_url(); ?>/public/js/ajax_js.js'></script>
 <script type = 'text/javascript' src = '<?php echo base_url(); ?>/public/js/popup.js'></script>
-<script type = 'text/javascript' src = '<?php echo base_url(); ?>/public/js/dashboard.js'></script></head>
+<script type = 'text/javascript' src = '<?php echo base_url(); ?>/public/js/dashboard.js'></script>
+<script type = 'text/javascript' src = '<?php echo base_url(); ?>/public/js/crypt.js'></script></head>
