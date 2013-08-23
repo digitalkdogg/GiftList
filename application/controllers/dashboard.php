@@ -19,56 +19,51 @@ class Dashboard extends CI_Controller {
 
 	public function index ($name = null) 
 	{
-		if ($name==null) {
-			 redirect('/', 'refresh');
-		}
 		$session_data = ($this->session->all_userdata());
 		$owner = $this->db_model->get_owner($name);
-		$content = $this->load->view('html_begin', '', true);
-		$content .= $this->load->view('css_jquery_files', array('dashboard'=>true), true);
-		$content .= $this->load->view('body_header', array('first_name'=>$owner['first_name'],
-			'last_name'=>$owner['last_name'],
-			'user_name'=> $owner['user_name'],
-			'header_title'=>'Dashboard'), true);
-	
-	 	$content .= "<div id = 'content'>";
-		if (isset($session_data['login'])):
-		 	$list_items = $this->db_model->get_list_for_owner($owner['owner_id']);
-		 	if ($list_items) :
-		 		$content .= "<div id = 'gifts' class = 'items'>";
-		 		$content .= "<div class = 'dash_title'>Lists<button class='gift' data-id = ". $owner['owner_id'] .">New Gift List</button></div>";
-		 		foreach ($list_items as $list) :
-		 			$items = $this->db_model->get_giftitems_list($list->list_id);
-		 			$content .= $this->load->view('dashboard/dashboard_gift_start', array('title' => $list->title, 'list_id'=>$list->list_id), true);
-		 			foreach ($items as $item) :
-		 				$content .= $this->load->view('dashboard/dashboard_gift_dets', array('items' => $item), true);
+		if ($name==null) :
+			$content = $this->load->view('dashboard/dashboard_home', array('owner'=>$owner), true);
+	 	 	$content .= $this->load->view('dashboard/login_form', '', true);
+	    else:	
+	    	$content = $this->load->view('dashboard/dashboard_home', array('owner'=>$owner), true);
+	 		$content .= "<div id = 'content'>";
+			if (isset($session_data['login'])):
+		 		$list_items = $this->db_model->get_list_for_owner($owner['owner_id']);
+		 		if ($list_items) :
+		 			$content .= "<div id = 'gifts' class = 'items'>";
+		 			$content .= "<div class = 'dash_title'>Lists<button class='gift' data-id = ". $owner['owner_id'] .">New Gift List</button></div>";
+		 			foreach ($list_items as $list) :
+		 				$items = $this->db_model->get_giftitems_list($list->list_id);
+		 				$content .= $this->load->view('dashboard/dashboard_gift_start', array('title' => $list->title, 'list_id'=>$list->list_id), true);
+		 				foreach ($items as $item) :
+		 					$content .= $this->load->view('dashboard/dashboard_gift_dets', array('items' => $item), true);
+		 				endforeach;
+		 				$content .="</div><!--end item --></div><!--end item wrapper> -->";
 		 			endforeach;
+		 			$content .= "</div><!--end class items -->";
+		 		endif;
+
+		 		if ($owner):
+		 			$content .= "<div id = 'owner' class = 'items'>";
+		 			$content .= "<div class = 'dash_title'>Owner Info</div>";
+		 			$content .= $this->load->view('dashboard/dashboard_gift_start', array('title' => $owner['user_name']), true);
+		 			$content .= $this->load->view('dashboard/dashboard_owner_dets', array('owner'=>$owner), true);
 		 			$content .="</div><!--end item --></div><!--end item wrapper> -->";
-		 		endforeach;
-		 		$content .= "</div><!--end class items -->";
-		 	endif;
+		 			$content .= "</div><!--end class items -->";	
+		 		endif;
 
-		 	if ($owner):
-		 		$content .= "<div id = 'owner' class = 'items'>";
-		 		$content .= "<div class = 'dash_title'>Owner Info</div>";
-		 		$content .= $this->load->view('dashboard/dashboard_gift_start', array('title' => $owner['user_name']), true);
-		 		$content .= $this->load->view('dashboard/dashboard_owner_dets', array('owner'=>$owner), true);
-		 		$content .="</div><!--end item --></div><!--end item wrapper> -->";
-		 		$content .= "</div><!--end class items -->";	
-		 	endif;
-
-		 	$admin = $this->db_model->get_giftlist_admin($owner['owner_id']);
-			if($admin) :
-				$content .= "<div id = 'admin' class = 'items'>";
-		 		$content .= "<div class = 'dash_title'>Gift List Admin</div>";
-		 		$content .= $this->load->view('dashboard/dashboard_gift_start', array('title' => $admin->first_name.' '. $admin->last_name), true);
-		 		$content .= $this->load->view('dashboard/dashboard_admin_dets', array('admin'=>$admin), true);
-		 		$content .="</div><!--end item --></div><!--end item wrapper> -->";
-		 		$content .= "</div><!--end class items -->";	
-		 	endif; 
-
-		else:
-			$content .= $this->load->view('dashboard/login_form', '', true);
+		 		$admin = $this->db_model->get_giftlist_admin($owner['owner_id']);
+				if($admin) :
+					$content .= "<div id = 'admin' class = 'items'>";
+		 			$content .= "<div class = 'dash_title'>Gift List Admin</div>";
+		 			$content .= $this->load->view('dashboard/dashboard_gift_start', array('title' => $admin->first_name.' '. $admin->last_name), true);
+		 			$content .= $this->load->view('dashboard/dashboard_admin_dets', array('admin'=>$admin), true);
+		 			$content .="</div><!--end item --></div><!--end item wrapper> -->";
+		 			$content .= "</div><!--end class items -->";	
+		 		endif; 
+			else:
+				$content .= $this->load->view('dashboard/login_form', '', true);
+			endif;
 		endif;
 		$content .= $this->html_model->load_html_close('true');
 		$html = array ('html' => $content);

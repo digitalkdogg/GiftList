@@ -121,7 +121,6 @@ $(document).ready(function () {
   });
 
     $('button.gift').click(function (e) {
-      alert('hi');
     e.preventDefault();
     id = $(this).data('id');
    // id = $(this).siblings('span').data('id');
@@ -150,14 +149,14 @@ $(document).ready(function () {
       $.ajax({
         type: "POST",
         dataType: "JSON",
-        url: '../logmein',
+        url: 'logmein',
         data: {'user_name': $('input[name=user_name]').val(), 'password': CryptoJS.MD5(password).toString()},
         failure: function() {alert ('bad');},
         success: function(data) {
           var json = $.parseJSON(data);
           if (data.login == 'true') {
             $('.message').text(data.message);
-            window.location.href = window.location.pathname;
+            window.location.href = window.location.href + '/' + $('input[name=user_name]').val();
           } else {
             $('.message').text(data.message);
           }
