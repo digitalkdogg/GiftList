@@ -112,6 +112,24 @@ class Db_model extends CI_Model {
 		$html = array ('html' => "</div><!--end side bar -->");
 		$this->load->view('print_html', $html);	
 	}
+
+/*
+	@purpose: get the contents for the sidebar of a certain type
+	@param : sidebar type
+	@return the contents from the db for that side bar type
+
+	*/
+	
+	function get_side_bar_type($type)
+  	{
+		$this->db->from('side_bar')
+	 		->where ('type_id', 2)
+	 		->where ('status_id', 1);
+		$this->db->order_by("side_bar_id", "asc"); 
+		$query = $this->db->get()->result_array();
+		return $query;
+	}
+
 	
 	/*
 	purpose : gets the gift items and returns the html including the gift links
@@ -136,48 +154,6 @@ class Db_model extends CI_Model {
 			$this->load->view('gift_end', array('div' => 1));
 		endforeach;
 	}
-	
-	
-// 	function print_gift_popup()
-// 	{	
-// 		$owner_id = $this->session->userdata('owner_id');
-// 		$gift_id = $this->get_giftid_all($owner_id);
-		
-// 		foreach ($gift_id as $gift):
-// 			$gift_item = $this->get_gift_item($gift->gift_id);
-// 			$gift_links = $this->get_gift_links($gift->gift_id);
-// 			$this->load->view('gift_is_popup', $gift_item, array('div' => 1));
-// 			foreach ($gift_links as $link) :
-// 				$this->load->view('gift_link', $link);
-// 			endforeach;
-// 			$this->load->view('link_wrapper_end');
-// 			$this->print_comments($gift->gift_id, 3);
-// 			$html= array('html'=>"<div class = 'gift_popup_area'><ul><li>
-// 							<a href = '"  .site_url() . "/comment/" . $gift->gift_id . "'>Comment On This Gift</a>  </li>
-//            					<li><a class = ''>Share This Gift</a></li>
-// 							<li><a href = '" . site_url() . "/taken/" . $gift->gift_id . "'>Mark This Gift As Taken</a></li>
-//             				</ul></div>");
-// 			$this->load->view('print_html', $html);	
-// 			$this->load->view('gift_end', array('div' => 1));			
-// 		endforeach;
-// 	}
-	
-// function print_share_popup()
-// 	{
-// 		$owner_id = $this->session->userdata('owner_id');
-// 		$gift_id = $this->get_giftid_all($owner_id);
-		
-// 		foreach ($gift_id as $gift):
-// 		$gift_item = $this->get_gift_item($gift->gift_id);
-// 			$this->load->view('share_gift', $gift_item);
-// 		endforeach;
-// 	}
-
-/*
-	@purpose: get the comments for the gift and return the html of that
-	@params: gift, limit (num rows to rturn)
-	@rturn : html of the comments for that gift
-*/
 	
 	function print_comments($gift, $limit)
 	{

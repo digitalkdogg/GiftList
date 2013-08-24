@@ -42,6 +42,7 @@
 $route['default_controller'] = 'gift/display_gift/$1'; //Our default Controller
 //$route['default_controller'] = 'welcome';
 
+$route["logout"] = 'dashboard/logout';
 $route["comment/(.*)"] = 'gift/comment_form/$1';
 $route["send_comment/(.*)"] = 'gift/send_comment_email/$1';
 $route["gift/(.*)"] = 'gift/display_gift/$1';

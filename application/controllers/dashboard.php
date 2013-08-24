@@ -26,6 +26,13 @@ class Dashboard extends CI_Controller {
 	 	 	$content .= $this->load->view('dashboard/login_form', '', true);
 	    else:	
 	    	$content = $this->load->view('dashboard/dashboard_home', array('owner'=>$owner), true);
+       		$side_bar = $this->db_model->get_side_bar_type(2);
+       		$content .= "<div id = 'side_bar'>";
+       		foreach ($side_bar as $result):
+       			$side_bar = array('id'=>$result['side_bar_id'], 'title'=>$result['title'], 'content'=>$result['content']);
+	 			$content .= $this->load->view('side_bar', $side_bar, true);
+	 		endforeach;
+			$content .= "</div>";
 	 		$content .= "<div id = 'content'>";
 			if (isset($session_data['login'])):
 		 		$list_items = $this->db_model->get_list_for_owner($owner['owner_id']);
@@ -260,6 +267,15 @@ class Dashboard extends CI_Controller {
 			$result = $this->db_model->remove_gift_by_giftid ($id);
 			redirect(site_url() . '/dashboard/' . $owner->user_name , 'refresh');
 		 endif;
+	}
+
+	public function logout() 
+	{
+		$this->session->unset_userdata('login');
+		$this->session->unset_userdata('login_user');
+		$this->load->helper('url');
+		 redirect('/dashboard/', 'refresh');
+
 	}
 
  }//end dashboard class
