@@ -147,3 +147,14 @@ form {
   color: red;
   height: 20px;
 }
+
+.links {
+  border-top: 1px dashed #999;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.links a {
+  font-size: 12px;
+  font-weight: normal;
+}

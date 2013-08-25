@@ -171,6 +171,8 @@ class Dashboard extends CI_Controller {
 					
 					$form_title = 'Edit Gift Item';
 					$btn = "Edit Gift Item!";
+					$links = $this->db_model->get_gift_links($id);
+
 					break;
 
 				case 'dash_delete_gift_item' :
@@ -195,7 +197,8 @@ class Dashboard extends CI_Controller {
 						 	'inputs'=>$inputs, 
 							'form_title'=> $form_title,
 							'action' => $action . '/' . $id,
-							'btn' => $btn);
+							'btn' => $btn,
+							'link'=> $links);
 			$content =$this->load->view('dashboard/add_form', $data, true);
 			echo json_encode($content);
 		endif;
@@ -267,6 +270,16 @@ class Dashboard extends CI_Controller {
 			$result = $this->db_model->remove_gift_by_giftid ($id);
 			redirect(site_url() . '/dashboard/' . $owner->user_name , 'refresh');
 		 endif;
+	}
+
+	public function addGiftlink()
+	{
+		$data['gift_id']=$_POST['id'];;
+		$data['alt']=$_POST['title'];
+		$data['title']=$_POST['title'];;
+		$data['url']=$_POST['url'];;
+		$rows = $this->db_model->insert_gift_link ($data['gift_id'], $data);
+		echo json_encode($rows);
 	}
 
 	public function logout() 

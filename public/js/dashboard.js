@@ -72,6 +72,9 @@ $(document).ready(function () {
            $('.closeme').on('click', function (event) {
             closePopup();
            });
+           $('.links .add').on('click', function (event) {
+              addGiftLink($(this).parent().data('id'));
+           });
      }
    });
   });
@@ -168,4 +171,21 @@ $(document).ready(function () {
        $('.message').text();
     });
 
-  });
+function addGiftLink (id) {
+  gift_title = $('input[name=gift_title]').val();
+  gift_url = $('input[name=gift_url]').val()
+   $.ajax({
+        type: "POST",
+        dataType: "JSON",
+        url: '../addGiftLink',
+        data: {'title': gift_title, 'url': gift_url, 'id':id},
+        failure: function() {alert ('bad');},
+        success: function(data) {
+          if (data > 0) {
+            $('.links a:first').prepend("<a href = '" + gift_url + "'>" + gift_title + "</a><br />").fadeIn('slow');
+          } 
+        }
+      });
+}
+});
+

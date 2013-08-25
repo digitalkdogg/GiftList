@@ -426,6 +426,25 @@ class Db_model extends CI_Model {
 		$this->db->insert('list', $list);
 		return $this->db->affected_rows();
 	}
+
+	/*
+	@purpose : insert a giftlink into the giftlink table
+	@params : data, giftlinkid
+	@return :return true or false
+	*/
+	public function insert_gift_link ($id, $data)
+	{
+		$list = array (
+				 'link_id' => null,
+				'alt' => $data['alt'],
+				'title' => $data['title'],
+				'url' => $data['url'],
+				'gift_id' => $data['gift_id']
+			);
+		$this->db->insert('gift_link', $list);
+		return $this->db->affected_rows();
+	}
+
 	/*
 	@purpose : get the list info for a list id
 	@params : list_id
