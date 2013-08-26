@@ -19,7 +19,7 @@
 		}	
 	}
 
-	if(isset($link)) {
+	if($link!='') {
 		echo "<p class = 'links' data-id = '".$id . "'>Gift Links<br />";
 		foreach ($link as $giftlink) {
 			echo "<a href = '" . $giftlink->url . "'>" . $giftlink->title. "</a><br />";

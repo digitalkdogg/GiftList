@@ -148,7 +148,7 @@ $(document).ready(function () {
     $('#login_submit').click(function (e) {
       e.preventDefault();
       password = $('input[name=password]').val();
-      //alert(CryptoJS.MD5($('input[name=password]').val()));
+      $('.message').text('Connecting!');
       $.ajax({
         type: "POST",
         dataType: "JSON",
@@ -156,10 +156,11 @@ $(document).ready(function () {
         data: {'user_name': $('input[name=user_name]').val(), 'password': CryptoJS.MD5(password).toString()},
         failure: function() {alert ('bad');},
         success: function(data) {
+          $('.message').text('');
           var json = $.parseJSON(data);
           if (data.login == 'true') {
             $('.message').text(data.message);
-            window.location.href = window.location.href + '/' + $('input[name=user_name]').val();
+            window.location.href = 'load_dashboard/' + $('input[name=user_name]').val();
           } else {
             $('.message').text(data.message);
           }

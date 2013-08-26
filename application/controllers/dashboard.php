@@ -13,42 +13,47 @@ class Dashboard extends CI_Controller {
 		$this->load->model('html_model');
 		$this->load->model('gift_model');
 		$this->load->library('session');
+		
     }
 
 
 
-	public function index ($name = null) 
+	public function index () 
 	{
-		$session_data = ($this->session->all_userdata());
-		$owner = $this->db_model->get_owner($name);
-		if ($name==null) :
-			$content = $this->load->view('dashboard/dashboard_home', array('owner'=>$owner), true);
-	 	 	$content .= $this->load->view('dashboard/login_form', '', true);
-	    else:	
-	    	$content = $this->load->view('dashboard/dashboard_home', array('owner'=>$owner), true);
-       		$side_bar = $this->db_model->get_side_bar_type(2);
-       		$content .= "<div id = 'side_bar'>";
-       		foreach ($side_bar as $result):
+		$content = $this->load->view('dashboard/dashboard_home', '', true);	
+		$content .= $this->load->view('dashboard/login_form', '', true);
+		echo $content;
+//$this->session->unset_userdata('login');
+	
+	}
+
+	public function load_dashboard($name) {
+		 $session_data = ($this->session->all_userdata());
+		 $owner = $this->db_model->get_owner($name);	
+	     $content = $this->load->view('dashboard/dashboard_home', array('owner'=>$owner), true);
+       	 $side_bar = $this->db_model->get_side_bar_type(2);
+       	 $content .= "<div id = 'side_bar'>";
+        	foreach ($side_bar as $result):
        			$side_bar = array('id'=>$result['side_bar_id'], 'title'=>$result['title'], 'content'=>$result['content']);
-	 			$content .= $this->load->view('side_bar', $side_bar, true);
-	 		endforeach;
-			$content .= "</div>";
-	 		$content .= "<div id = 'content'>";
-			if (isset($session_data['login'])):
-		 		$list_items = $this->db_model->get_list_for_owner($owner['owner_id']);
-		 		if ($list_items) :
-		 			$content .= "<div id = 'gifts' class = 'items'>";
-		 			$content .= "<div class = 'dash_title'>Lists<button class='gift' data-id = ". $owner['owner_id'] .">New Gift List</button></div>";
-		 			foreach ($list_items as $list) :
-		 				$items = $this->db_model->get_giftitems_list($list->list_id);
-		 				$content .= $this->load->view('dashboard/dashboard_gift_start', array('title' => $list->title, 'list_id'=>$list->list_id), true);
-		 				foreach ($items as $item) :
-		 					$content .= $this->load->view('dashboard/dashboard_gift_dets', array('items' => $item), true);
-		 				endforeach;
-		 				$content .="</div><!--end item --></div><!--end item wrapper> -->";
-		 			endforeach;
-		 			$content .= "</div><!--end class items -->";
-		 		endif;
+	  			$content .= $this->load->view('side_bar', $side_bar, true);
+			endforeach;
+		 	$content .= "</div>";
+	  		$content .= "<div id = 'content'>";
+		 	if ($session_data['login_user']==$name):
+		  		$list_items = $this->db_model->get_list_for_owner($owner['owner_id']);
+		  		if ($list_items) :
+		  			$content .= "<div id = 'gifts' class = 'items'>";
+		  			$content .= "<div class = 'dash_title'>Lists<button class='gift' data-id = ". $owner['owner_id'] .">New Gift List</button></div>";
+		  			foreach ($list_items as $list) :
+		  				$items = $this->db_model->get_giftitems_list($list->list_id);
+		  				$content .= $this->load->view('dashboard/dashboard_gift_start', array('title' => $list->title, 'list_id'=>$list->list_id), true);
+		  				foreach ($items as $item) :
+		  					$content .= $this->load->view('dashboard/dashboard_gift_dets', array('items' => $item), true);
+		  				endforeach;
+		  				$content .="</div><!--end item --></div><!--end item wrapper> -->";
+		  			endforeach;
+		  			$content .= "</div><!--end class items -->";
+		  		endif;
 
 		 		if ($owner):
 		 			$content .= "<div id = 'owner' class = 'items'>";
@@ -59,7 +64,7 @@ class Dashboard extends CI_Controller {
 		 			$content .= "</div><!--end class items -->";	
 		 		endif;
 
-		 		$admin = $this->db_model->get_giftlist_admin($owner['owner_id']);
+		  		$admin = $this->db_model->get_giftlist_admin($owner['owner_id']);
 				if($admin) :
 					$content .= "<div id = 'admin' class = 'items'>";
 		 			$content .= "<div class = 'dash_title'>Gift List Admin</div>";
@@ -68,18 +73,14 @@ class Dashboard extends CI_Controller {
 		 			$content .="</div><!--end item --></div><!--end item wrapper> -->";
 		 			$content .= "</div><!--end class items -->";	
 		 		endif; 
-			else:
-				$content .= $this->load->view('dashboard/login_form', '', true);
-			endif;
-		endif;
-		$content .= $this->html_model->load_html_close('true');
-		$html = array ('html' => $content);
-		$this->load->view('print_html', $html);
-
-			//echo $content;
-//$this->session->unset_userdata('login');
-	
+		 	else:
+		 		redirect('dashboard', 'refresh');
+		 endif;
+		 $content .= $this->html_model->load_html_close('true');
+		 $html = array ('html' => $content);
+		 $this->load->view('print_html', $html);
 	}
+
 
 	public function logmein()
 	{
@@ -106,6 +107,7 @@ class Dashboard extends CI_Controller {
 	public function get_dashboard_add_form() 
 	{
 		$session_data = ($this->session->all_userdata());
+		$links = '';
 		if (isset($session_data['login'])): 
 			$action = $_POST['action'];
 			switch ($action) {
@@ -211,7 +213,7 @@ class Dashboard extends CI_Controller {
 			$data = $this->input->post();
 			$list = $this->db_model->insert_list ($id, $data);
 			$owner = $this->db_model->get_owner_by_listid ($id);
-			redirect(site_url() . '/dashboard/' . $owner[0]->user_name , 'refresh');
+			redirect(site_url() . '/load_dashboard/' . $session_data['login_user'] , 'refresh');
 		endif;
 	}
 
@@ -223,7 +225,7 @@ class Dashboard extends CI_Controller {
 			$data = $this->input->post();
 			$this->db_model->get_list_by_listid ($id, $data);
 			$owner = $this->db_model->get_owner_by_listid ($id);
-			redirect(site_url() . '/dashboard/' . $owner[0]->user_name , 'refresh');
+			redirect(site_url() . '/load_dashboard/' . $session_data['login_user'] , 'refresh');
 		endif;
 	}
 
@@ -234,7 +236,7 @@ class Dashboard extends CI_Controller {
 			$data = $this->input->post();
 			$result = $this->db_model->update_list_by_listid ($id, $data);
 			$owner = $this->db_model->get_owner_by_listid ($id);
-			redirect(site_url() . '/dashboard/' . $owner[0]->user_name , 'refresh');
+			redirect(site_url() . '/load_dashboard/' . $session_data['login_user'] , 'refresh');
 		endif;
 	}
 
@@ -245,7 +247,7 @@ class Dashboard extends CI_Controller {
 			$data = $this->input->post();
 			$result = $this->db_model->update_gift_by_giftid ($id, $data);
 			$owner = $this->db_model->get_owner_by_giftid($id);
-			redirect(site_url() . '/dashboard/' . $owner->user_name , 'refresh');
+			redirect(site_url() . '/load_dashboard/' . $session_data['login_user'] , 'refresh');
 		 endif;
 	}
 
@@ -257,7 +259,7 @@ class Dashboard extends CI_Controller {
 			$data = $this->input->post();
 			$result = $this->db_model->remove_list_by_listid ($id);
 			$owner = $this->db_model->get_owner_by_listid ($id);
-			redirect(site_url() . '/dashboard/' . $owner[0]->user_name , 'refresh');
+			redirect(site_url() . '/load_dashboard/' . $session_data['login_user'] , 'refresh');
 		endif;
 	}
 
@@ -268,7 +270,7 @@ class Dashboard extends CI_Controller {
 			$data = $this->input->post();
 			$owner = $this->db_model->get_owner_by_giftid($id);
 			$result = $this->db_model->remove_gift_by_giftid ($id);
-			redirect(site_url() . '/dashboard/' . $owner->user_name , 'refresh');
+			redirect(site_url() . '/load_dashboard/' . $session_data['login_user'] , 'refresh');
 		 endif;
 	}
 
