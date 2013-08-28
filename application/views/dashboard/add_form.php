@@ -19,14 +19,17 @@
 		}	
 	}
 
-	if($link!='') {
+	if(isset($link)) {
 		echo "<p class = 'links' data-id = '".$id . "'>Gift Links<br />";
 		foreach ($link as $giftlink) {
 			echo "<a href = '" . $giftlink->url . "'>" . $giftlink->title. "</a><br />";
 		}
 		echo form_input('gift_title', '');
 		echo form_input('gift_url', '');
-		echo "<a class = 'add icon-pencil' href = '#'></a><br /></p>";
+		echo "<a class = 'add icon-pencil' href = '#'></a>";
+		echo "<a class = 'edit icon-pencil' href = '#'></a>";
+		echo "<a class = 'delete icon-pencil' href = '#'></a>";
+		echo "<br /></p>";
 	}
 
 	
