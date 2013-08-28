@@ -107,7 +107,7 @@ class Dashboard extends CI_Controller {
 	public function get_dashboard_add_form() 
 	{
 		$session_data = ($this->session->all_userdata());
-		$links = '';
+		$links = null;
 		if (isset($session_data['login'])): 
 			$action = $_POST['action'];
 			switch ($action) {
