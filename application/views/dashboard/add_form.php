@@ -21,14 +21,15 @@
 
 	if(isset($link)) {
 		echo "<p class = 'links' data-id = '".$id . "'>Gift Links<br />";
-		foreach ($link as $giftlink) {
-			echo "<a href = '" . $giftlink->url . "'>" . $giftlink->title. "</a><br />";
+		foreach ($link as $key=>$giftlink) {
+			echo "<a class = 'edit icon-pencil' data-id = '".$giftlink->link_id . "' href = '#'></a>";
+			echo "<a class = 'delete icon-pencil' data-id = '".$giftlink->link_id . "' href = '#'></a>";
+			echo "<a class = 'link_".$giftlink->link_id."' href = '" . $giftlink->url . "'>" . $giftlink->title. "</a>";
+			echo "<br />";
 		}
 		echo form_input('gift_title', '');
 		echo form_input('gift_url', '');
-		echo "<a class = 'add icon-pencil' href = '#'></a>";
-		echo "<a class = 'edit icon-pencil' href = '#'></a>";
-		echo "<a class = 'delete icon-pencil' href = '#'></a>";
+		echo "<a class = 'add icon-pencil form' href = '#'></a>";
 		echo "<br /></p>";
 	}
 

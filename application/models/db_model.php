@@ -446,6 +446,36 @@ class Db_model extends CI_Model {
 	}
 
 	/*
+	@purpose : update a giftlink in the giftlink table
+	@params : data, giftlinkid
+	@return :return true or false
+	*/
+	public function update_gift_link ($id, $data)
+	{
+		$list = array (
+				 'link_id' => $id,
+				'alt' => $data['alt'],
+				'title' => $data['title'],
+				'url' => $data['url'],
+				'gift_id' => $data['gift_id']
+			);
+		$this->db->where('link_id', $id);
+		$this->db->update('gift_link', $list);
+		return $this->db->affected_rows();
+	}
+
+		/*
+	@purpose : delete a giftlink from the giftlink table
+	@params : giftlinkid
+	@return :return true or false
+	*/
+	public function delete_gift_link ($id)
+	{
+		$this->db->delete('gift_link', array('link_id' => $id)); 
+		return $this->db->affected_rows();
+	}
+
+	/*
 	@purpose : get the list info for a list id
 	@params : list_id
 	@return :return one list

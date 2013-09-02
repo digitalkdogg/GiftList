@@ -276,11 +276,29 @@ class Dashboard extends CI_Controller {
 
 	public function addGiftlink()
 	{
-		$data['gift_id']=$_POST['id'];;
+		$data['gift_id']=$_POST['id'];
 		$data['alt']=$_POST['title'];
-		$data['title']=$_POST['title'];;
-		$data['url']=$_POST['url'];;
+		$data['title']=$_POST['title'];
+		$data['url']=$_POST['url'];
 		$rows = $this->db_model->insert_gift_link ($data['gift_id'], $data);
+		echo json_encode($rows);
+	}
+
+	public function editGiftlink()
+	{
+		$data['id']=$_POST['id'];
+		$data['alt']=$_POST['title'];
+		$data['title']=$_POST['title'];
+		$data['url']=$_POST['url'];
+		$data['gift_id']=$_POST['giftid'];
+		$rows = $this->db_model->update_gift_link ($data['id'], $data);
+		echo json_encode($rows);
+	}
+
+	public function deleteGiftlink()
+	{
+		$data['id']=$_POST['id'];
+		$rows = $this->db_model->delete_gift_link ($data['id']);
 		echo json_encode($rows);
 	}
 

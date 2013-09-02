@@ -57,7 +57,6 @@ $(document).ready(function () {
     e.preventDefault();
     gift_id = $(this).parent().data('id');
     id = $(this).parent().parent().siblings('h3').children('span').data('id');
-   
     $.ajax({
     type: "POST",
       dataType: "html",
@@ -75,6 +74,37 @@ $(document).ready(function () {
            $('.links .add').on('click', function (event) {
               addGiftLink($(this).parent().data('id'));
            });
+           $('.links .edit').on('click', function (event) {
+            event.preventDefault();
+            var id = $(this).data('id');
+            $('input[name=gift_title]').val($('.link_'+id).text());
+            $('input[name=gift_url]').val($('.link_'+id).attr('href'));
+            $('.add.icon-pencil.form').hide();
+            $('.edit.icon-pencil.form').hide();
+            $('.delete.icon-pencil.form').hide();
+            $('input[name=gift_url]').after("<a class = 'edit icon-pencil form' href = '#'></a>");
+            $('.edit.icon-pencil.form').click(function () {
+                var giftid = $(this).parent().data('id');
+                editGiftLink(id, giftid);
+              });
+           });
+           $('.links .delete').on('click', function (event) {
+              event.preventDefault();
+              var id = $(this).data('id');
+              $('input[name=gift_title]').val($('.link_'+id).text());
+              $('input[name=gift_url]').val($('.link_'+id).attr('href'));
+              $('.add.icon-pencil.form').hide();
+              $('.edit.icon-pencil.form').hide();
+              $('.delete.icon-pencil.form').hide();
+              $('input[name=gift_url]').after("<a class = 'delete icon-pencil form' href = '#'></a>");
+            $('.delete.icon-pencil.form').click(function () {
+                var giftid = $(this).parent().data('id');
+                deleteGiftLink(id, giftid);
+              });
+           });
+           
+          
+
      }
    });
   });
@@ -185,6 +215,54 @@ function addGiftLink (id) {
           if (data > 0) {
             $('.links a:first').prepend("<a href = '" + gift_url + "'>" + gift_title + "</a><br />").fadeIn('slow');
           } 
+        }
+      });
+}
+
+function editGiftLink (id, giftid) {
+  gift_title = $('input[name=gift_title]').val();
+  gift_url = $('input[name=gift_url]').val()
+   $.ajax({
+        type: "POST",
+        dataType: "JSON",
+        url: '../editGiftLink',
+        data: {'title': gift_title, 'url': gift_url, 'id':id, 'giftid': giftid},
+        failure: function() {alert ('bad');},
+        success: function(data) {
+          if (data > 0) {
+            $('.link_'+id).attr('href', gift_url);
+            $('.link_'+id).text(gift_title);
+            $('.add.icon-pencil.form').hide();
+            $('.edit.icon-pencil.form').hide();
+            $('.delete.icon-pencil.form').hide();
+            $('input[name=gift_url]').val('');
+            $('input[name=gift_title]').val('');
+            $('input[name=gift_url]').after("<a class = 'add icon-pencil form' href = '#'></a>");
+           } 
+        }
+      });
+}
+
+function deleteGiftLink (id, giftid) {
+  gift_title = $('input[name=gift_title]').val();
+  gift_url = $('input[name=gift_url]').val()
+   $.ajax({
+        type: "POST",
+        dataType: "JSON",
+        url: '../dashboard/deleteGiftLink',
+        data: {'id':id},
+        failure: function() {alert ('bad');},
+        success: function(data) {
+          if (data > 0) {
+             $('.link_'+id).hide();
+            $('a[data-id='+id+']').hide();
+            $('.add.icon-pencil.form').hide();
+            $('.edit.icon-pencil.form').hide();
+            $('.delete.icon-pencil.form').hide();
+            $('input[name=gift_url]').val('');
+            $('input[name=gift_title]').val('');
+            $('input[name=gift_url]').after("<a class = 'add icon-pencil form' href = '#'></a>");
+           } 
         }
       });
 }
