@@ -22,20 +22,24 @@ function __construct()
 	@ Returns : either to the base_url or someones list
 	@ 6/15/2013
 	*/
-	public function display_gift($name)
+	public function display_gift($name, $list_id)
 	{
-
-		if (isset($name)):
-			$owner = $this->db_model->get_owner($name);
-			if (!$owner==null) :
-				$this->html_model->load_html_begin($owner);
-				$this->gift_model->load_content_begin();
-				$this->db_model->print_gift_item();
-				$this->html_model->load_html_close();
-			else: 
-				redirect(base_url() , 'refresh');
+		$giftowner = $this->db_model->get_list_owner_for_list($list_id);
+		if ($giftowner[0]->user_name == $name) :
+			$gift = $this->db_model->get_giftitems_list($list_id);
+			if (isset($name)):
+				$owner = $this->db_model->get_owner($name);
+				if (!$owner==null) :
+					$this->html_model->load_html_begin($owner);
+					$this->gift_model->load_content_begin();
+					$this->db_model->print_gift_item($gift);
+					$this->html_model->load_html_close();
+				else: 
+					redirect(base_url() , 'refresh');
+				endif;
 			endif;
-	
+		else:
+			echo "Gift List Not Found";
 		endif;
 	}
 

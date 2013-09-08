@@ -52,6 +52,21 @@ class Db_model extends CI_Model {
 		$query = $this->db->get()->result();
 		return $query;		
 	}
+
+		/*
+	@pupose : gets all the list and owner info for that list
+	@param : list_id
+	@returns : array of lists
+	*/
+	function get_list_owner_for_list($list_id)
+	{
+		$query = $this->db->from('list')
+					->where('list.list_id', $list_id)
+					->where('list.status_id', '1')
+					->join ('owner', 'owner.owner_id=list.owner_id');
+		$query = $this->db->get()->result();
+		return $query;		
+	}
 	
 
 	/*
@@ -138,11 +153,10 @@ class Db_model extends CI_Model {
 
 	*/
 
-	function print_gift_item()
+	function print_gift_item($gifts)
 	{			
 		$owner_id = $this->session->userdata('owner_id');
-		$gift_id = $this->get_giftid_all($owner_id);
-		foreach ($gift_id as $gift):
+		foreach ($gifts as $gift):
 			$gift_item = $this->get_gift_item($gift->gift_id);
 			$gift_links = $this->get_gift_links($gift->gift_id);
 			$gift_item->reff = '';
@@ -215,23 +229,6 @@ class Db_model extends CI_Model {
 					->join ('taken', 'taken.taken_id=gift.taken_id');
 		$query = $this->db->get()->row();
 		return $query;		
-	}
-
-	/*
-	@purpose: get gifts by the owner_id
-	@params : owner_id
-	@return: results of gift_id's for the owner
-	*/
-
-	public function get_giftid_all($owner_id)
-	{	
-				$this->db->select('gift_id');
-				$this->db->from('gift')
-	 				->where ('status_id', 1)
-					->where ('owner_id', $owner_id);
-				$this->db->order_by("num", "asc"); 
-		$query = $this->db->get()->result();
-		return $query;
 	}
 
 	/*
