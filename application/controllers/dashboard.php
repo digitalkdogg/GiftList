@@ -119,10 +119,10 @@ class Dashboard extends CI_Controller {
 						$options[$i] = $i;
 					}
 
-					$inputs = array('1'=>array('name'=>'title', 'type'=>'text', 'value'=>'Title :', 'options'=>null, 'text_value'=>''), 
-							'2'=>array('name'=>'desc', 'type'=>'text', 'value'=>'Description :', 'text_value'=>''),
-							'3'=>array('name'=>'num', 'type'=>'dropdown', 'value'=>'List Number :', 'options' => $options, 'text_value'=>''),
-							'4'=>array('name'=>'image', 'type'=>'image', 'value'=>'Image :', 'options'=>null, 'text_value'=>'')
+					$inputs = array('1'=>array('name'=>'title', 'type'=>'text', 'label_value'=>'Title :', 'options'=>null, 'value'=>''), 
+							'2'=>array('name'=>'desc', 'type'=>'textarea', 'label_value'=>'Description :', 'value'=>'', 'cols'=>'80', 'rows'=>'5'),
+							'3'=>array('name'=>'num', 'type'=>'dropdown', 'label_value'=>'List Number :', 'options' => $options, 'value'=>'', 'selected'=>$list_num),
+							'4'=>array('name'=>'image', 'type'=>'image', 'label_value'=>'Image :', 'options'=>null, 'value'=>'')
 							);
 					$form_title = 'Add New Gift Item';
 					$btn = "Add Gift Item!";
@@ -132,8 +132,8 @@ class Dashboard extends CI_Controller {
 					$id = $_POST['list_id']; 
 					$owner = $this->db_model->get_owner_by_listid ($id);
 					$list = $this->db_model->get_list_for_listid($id);
-					$inputs = array('1'=>array('name'=>'title', 'type'=>'text', 'value'=>'Title :', 'options'=>null, 'text_value'=>$list[0]->title), 
-							'2'=>array('name'=>'date', 'type'=>'text', 'value'=>'Create Date :', 'text_value'=>$list[0]->creation_date)
+					$inputs = array('1'=>array('name'=>'title', 'type'=>'text', 'label_value'=>'Title :', 'options'=>null, 'value'=>$list[0]->title), 
+							'2'=>array('name'=>'date', 'type'=>'text', 'label_value'=>'Create Date :', 'text_value'=>$list[0]->creation_date)
 							);
 					
 					$form_title = 'Edit Gift List';
@@ -144,8 +144,8 @@ class Dashboard extends CI_Controller {
 					$id = $_POST['list_id']; 
 					$owner = $this->db_model->get_owner_by_listid ($id);
 					$list = $this->db_model->get_list_for_listid($id);
-					$inputs = array('1'=>array('name'=>'title', 'type'=>'text', 'value'=>'Title :', 'options'=>null, 'text_value'=>$list[0]->title), 
-							'2'=>array('name'=>'date', 'type'=>'text', 'value'=>'Create Date :', 'text_value'=>$list[0]->creation_date)
+					$inputs = array('1'=>array('name'=>'title', 'type'=>'text', 'label_value'=>'Title :', 'options'=>null, 'value'=>$list[0]->title), 
+							'2'=>array('name'=>'date', 'type'=>'text', 'label_value'=>'Create Date :', 'text_value'=>$list[0]->creation_date)
 							);
 					$form_title = 'Remove Gift List';
 					$btn = "Remove List!";
@@ -154,7 +154,7 @@ class Dashboard extends CI_Controller {
 				case 'dash_add_list' :
 					$id = $_POST['list_id']; 
 					$owner = $this->db_model->get_owner_by_listid ($id);
-					$inputs = array('1'=>array('name'=>'title', 'type'=>'text', 'value'=>'Title :', 'options'=>null, 'text_value'=>''));
+					$inputs = array('1'=>array('name'=>'title', 'type'=>'text', 'label_value'=>'Title :', 'options'=>null, 'value'=>''));
 					$form_title = 'Add New List';
 					$btn = 'Add List!';
 					break;
@@ -162,13 +162,17 @@ class Dashboard extends CI_Controller {
 					$id = $_POST['gift_id'];
 					$list_id = $_POST['list_id']; 
 					$owner = $this->db_model->get_owner_by_listid ($list_id);
+				
+					for ($i = 1; $i <= 20; $i++) {
+						$options[$i] = $i;
+					}
 					
 					$gift_id = $_POST['gift_id'];
 					$list = $this->db_model->get_gift_by_giftid($gift_id, $owner[0]->owner_id);
-					$inputs = array('1'=>array('name'=>'title', 'type'=>'text', 'value'=>'Title :', 'options'=>null, 'text_value'=>$list->title), 
-							'2'=>array('name'=>'description', 'type'=>'text', 'value'=>'Description :', 'text_value'=>$list->description),
-							'3'=>array('name'=>'image', 'type'=>'image', 'value'=>'Image :', 'text_value'=>$list->image),
-							'4'=>array('name'=>'num', 'type'=>'text', 'value'=>'Number :', 'text_value'=>$list->num)
+					$inputs = array('1'=>array('name'=>'title', 'type'=>'text', 'label_value'=>'Title :', 'options'=>null, 'value'=>$list->title), 
+							'2'=>array('name'=>'description', 'type'=>'textarea', 'label_value'=>'Description :', 'value'=>$list->description , 'cols'=>'80', 'rows'=>'5'),
+							'3'=>array('name'=>'image', 'type'=>'image', 'label_value'=>'Image :', 'value'=>$list->image),
+							'4'=>array('name'=>'num', 'type'=>'dropdown', 'label_value'=>'Number :', 'value'=>$list->num, 'options' => $options, 'selected'=>$list->num)
 							);
 					
 					$form_title = 'Edit Gift Item';
@@ -184,10 +188,10 @@ class Dashboard extends CI_Controller {
 					
 					$gift_id = $_POST['gift_id'];
 					$list = $this->db_model->get_gift_by_giftid($gift_id, $owner[0]->owner_id);
-					$inputs = array('1'=>array('name'=>'title', 'type'=>'text', 'value'=>'Title :', 'options'=>null, 'text_value'=>$list->title), 
-							'2'=>array('name'=>'description', 'type'=>'text', 'value'=>'Description :', 'text_value'=>$list->description),
-							'3'=>array('name'=>'image', 'type'=>'image', 'value'=>'Image :', 'text_value'=>$list->image),
-							'4'=>array('name'=>'num', 'type'=>'text', 'value'=>'Number :', 'text_value'=>$list->num)
+					$inputs = array('1'=>array('name'=>'title', 'type'=>'text', 'label_value'=>'Title :', 'options'=>null, 'value'=>$list->title), 
+							'2'=>array('name'=>'description', 'type'=>'textarea', 'label_value'=>'Description :', 'value'=>$list->description, 'cols'=>'80', 'rows'=>'5'),
+							'3'=>array('name'=>'image', 'type'=>'image', 'label_value'=>'Image :', 'value'=>$list->image),
+							'4'=>array('name'=>'num', 'type'=>'text', 'label_value'=>'Number :', 'value'=>$list->num)
 							);
 					
 					$form_title = 'Remove Gift Item';

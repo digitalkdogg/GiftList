@@ -598,7 +598,7 @@ class Db_model extends CI_Model {
 		$query = $this->db->select('max(gift.num)+1 as num')
 				->from('gift')
 				->join('gift_list', 'gift_list.gift_id = gift.gift_id')
-				->where ('gift_list.list_id', $id)
+				->where ('gift.gift_id', $id)
 				->where('gift.status_id', '1');
 		return $this->db->get()->result();
 	}

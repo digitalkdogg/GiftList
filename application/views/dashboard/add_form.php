@@ -6,16 +6,23 @@
 	foreach ($inputs as $input) {
 		switch ($input['type']) {
 			case 'text':
-				echo form_label($input['value'], $input['name']);
-				echo form_input($input['name'], $input['text_value']) . '<br />';
+				//var_dump($input);
+				echo form_label($input['label_value'], $input['name']);
+				echo form_input($input). '<br />';
+				//echo form_input($input['name'], $input['value']) . '<br />';
 			break;
 			case 'image':
-				echo form_label($input['value'], $input['name']);
+				echo form_label($input['label_value'], $input['name']);
 				echo form_upload($input['name'], '') . '<br />';
 			break;
 			case 'dropdown':
-				echo form_label($input['value'], $input['name']);
-				echo form_dropdown('num', $input['options'], '1') . '<br />';
+				echo form_label($input['label_value'], $input['name']);
+				echo form_dropdown('num', $input['options'], $input['selected']) . '<br />';
+			break;
+			case 'textarea':
+				echo form_label($input['label_value'], $input['name']);
+				echo form_textarea($input). '<br />';
+			break;
 		}	
 	}
 
