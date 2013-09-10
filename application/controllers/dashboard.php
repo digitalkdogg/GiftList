@@ -46,7 +46,7 @@ class Dashboard extends CI_Controller {
 		  			$content .= "<div class = 'dash_title'>Lists<button class='gift' data-id = ". $owner['owner_id'] .">New Gift List</button></div>";
 		  			foreach ($list_items as $list) :
 		  				$items = $this->db_model->get_giftitems_list($list->list_id);
-		  				$content .= $this->load->view('dashboard/dashboard_gift_start', array('title' => $list->title, 'list_id'=>$list->list_id), true);
+		  				$content .= $this->load->view('dashboard/dashboard_gift_start', array('title' => $list->title, 'list_id'=>$list->list_id, 'class'=>'gift'), true);
 		  				foreach ($items as $item) :
 		  					$content .= $this->load->view('dashboard/dashboard_gift_dets', array('items' => $item), true);
 		  				endforeach;
@@ -58,7 +58,7 @@ class Dashboard extends CI_Controller {
 		 		if ($owner):
 		 			$content .= "<div id = 'owner' class = 'items'>";
 		 			$content .= "<div class = 'dash_title'>Owner Info</div>";
-		 			$content .= $this->load->view('dashboard/dashboard_gift_start', array('title' => $owner['user_name']), true);
+		 			$content .= $this->load->view('dashboard/dashboard_owner_start', array('title' => $owner['user_name'], 'class'=>'owner'), true);
 		 			$content .= $this->load->view('dashboard/dashboard_owner_dets', array('owner'=>$owner), true);
 		 			$content .="</div><!--end item --></div><!--end item wrapper> -->";
 		 			$content .= "</div><!--end class items -->";	
@@ -68,7 +68,7 @@ class Dashboard extends CI_Controller {
 				if($admin) :
 					$content .= "<div id = 'admin' class = 'items'>";
 		 			$content .= "<div class = 'dash_title'>Gift List Admin</div>";
-		 			$content .= $this->load->view('dashboard/dashboard_gift_start', array('title' => $admin->first_name.' '. $admin->last_name), true);
+		 			$content .= $this->load->view('dashboard/dashboard_admin_start', array('title' => $admin->first_name.' '. $admin->last_name, 'class'=>'admin'), true);
 		 			$content .= $this->load->view('dashboard/dashboard_admin_dets', array('admin'=>$admin), true);
 		 			$content .="</div><!--end item --></div><!--end item wrapper> -->";
 		 			$content .= "</div><!--end class items -->";	
