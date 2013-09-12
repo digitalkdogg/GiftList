@@ -112,6 +112,7 @@ class Dashboard extends CI_Controller {
 			$action = $_POST['action'];
 			switch ($action) {
 				case 'dash_add_gift' :
+					$actionurl = $action . '/' . $id;
 					$id = $_POST['list_id']; 
 					$owner = $this->db_model->get_owner_by_listid ($id);
 					$list_num = $this->db_model->get_next_num_for_list($id);
@@ -129,6 +130,7 @@ class Dashboard extends CI_Controller {
 					break;
 
 				case 'dash_edit_gift' :
+					$actionurl = $action . '/' . $id;
 					$id = $_POST['list_id']; 
 					$owner = $this->db_model->get_owner_by_listid ($id);
 					$list = $this->db_model->get_list_for_listid($id);
@@ -141,6 +143,7 @@ class Dashboard extends CI_Controller {
 					break;
 
 				case 'dash_delete_gift' :
+					$actionurl = $action . '/' . $id;
 					$id = $_POST['list_id']; 
 					$owner = $this->db_model->get_owner_by_listid ($id);
 					$list = $this->db_model->get_list_for_listid($id);
@@ -152,6 +155,7 @@ class Dashboard extends CI_Controller {
 
 					break;
 				case 'dash_add_list' :
+					$actionurl = $action . '/' . $id;
 					$id = $_POST['list_id']; 
 					$owner = $this->db_model->get_owner_by_listid ($id);
 					$inputs = array('1'=>array('name'=>'title', 'type'=>'text', 'label_value'=>'Title :', 'options'=>null, 'value'=>''));
@@ -159,6 +163,7 @@ class Dashboard extends CI_Controller {
 					$btn = 'Add List!';
 					break;
 				case 'dash_edit_gift_item' :
+					$actionurl = $action . '/' . $id;
 					$id = $_POST['gift_id'];
 					$list_id = $_POST['list_id']; 
 					$owner = $this->db_model->get_owner_by_listid ($list_id);
@@ -182,6 +187,7 @@ class Dashboard extends CI_Controller {
 					break;
 
 				case 'dash_delete_gift_item' :
+					$actionurl = $action . '/' . $id;
 					$id = $_POST['gift_id'];
 					$list_id = $_POST['list_id']; 
 					$owner = $this->db_model->get_owner_by_listid ($list_id);
@@ -197,12 +203,26 @@ class Dashboard extends CI_Controller {
 					$form_title = 'Remove Gift Item';
 					$btn = "Remove This Gift Item!";
 					break;
+
+				case 'dash_edit_owner':
+					$actionurl = $action;
+					$id = $_POST['list_id'];
+					$list_id = $_POST['list_id'];
+					$owner = $this->db_model->get_owner_by_listid ($list_id);
+					$inputs = array('1'=>array('name'=>'first_name', 'type'=>'text', 'label_value'=>'First Name :', 'value'=>$owner[0]->first_name),
+						'2'=>array('name'=>'last_name', 'type'=>'text', 'label_value'=>'Last Name :', 'value'=>$owner[0]->last_name),
+						'3'=>array('name'=>'email', 'type'=>'text', 'label_value'=>'Email :', 'value'=>$owner[0]->email, 'size'=>'40'),
+						'4'=>array('name'=>'password', 'type'=>'text', 'label_value'=>'password :', 'value'=>'*************', 'size'=>'40'),
+						);
+					$form_title = 'Edit Owner Information';
+					$btn = 'Update Owner';
+					break;
 			}
 			
 			$data = array('id' => $id, 'owner'=>$owner, 
 						 	'inputs'=>$inputs, 
 							'form_title'=> $form_title,
-							'action' => $action . '/' . $id,
+							'action' => $actionurl,
 							'btn' => $btn,
 							'link'=> $links);
 			$content =$this->load->view('dashboard/add_form', $data, true);
@@ -297,6 +317,18 @@ class Dashboard extends CI_Controller {
 		$data['gift_id']=$_POST['giftid'];
 		$rows = $this->db_model->update_gift_link ($data['id'], $data);
 		echo json_encode($rows);
+	}
+
+	public function edit_owner()
+	 {
+	 	$session_data = ($this->session->all_userdata());
+	 	$data['owner_id']=$_POST['owner'];
+	 	$data['first_name']=$_POST['first_name'];
+	 	$data['last_name']=$_POST['last_name'];
+	 	$data['email']=$_POST['email'];
+	 	$rows = $this->db_model->update_owner_info($data);
+		//echo json_encode($rows);
+		redirect(site_url() . '/load_dashboard/' . $session_data['login_user'] , 'refresh');
 	}
 
 	public function deleteGiftlink()

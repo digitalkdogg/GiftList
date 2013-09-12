@@ -556,6 +556,27 @@ class Db_model extends CI_Model {
 	 	$this->db->update('gift', $object); 
 		return $this->db->affected_rows();
 	}
+
+	/*
+	@purpose : update the owner
+	@params : data
+	@return :true or false
+	*/
+	public function update_owner_info ($data)
+	{
+		$this->db->from('owner')
+				->where('owner_id', $data['owner_id']);
+		
+	 $object = array(
+               'first_name' => $data['first_name'],
+               'last_name' => $data['last_name'],
+               'email' => $data['email']
+            );
+	 	$this->db->update('owner', $object); 
+		return $this->db->affected_rows();
+	}
+
+
 			/*
 	@purpose : remove the giftitem for that gift_id
 	@params : gift_id
@@ -581,8 +602,8 @@ class Db_model extends CI_Model {
 	*/
 	public function get_owner_by_listid ($id)
 	{
-		$query = $this->db->select('owner.owner_id, owner.user_name')
-				->from('owner')
+		//$query = // $this->db->select('owner.owner_id, owner.user_name')
+		$query = $this->db->from('owner')
 				->join('list', 'list.owner_id = owner.owner_id')
 				->where ('list.list_id', $id);
 		return $this->db->get()->result();

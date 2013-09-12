@@ -69,6 +69,7 @@ $route["dash_add_list/(.*)"] = 'dashboard/add_list/$1';
 $route["logmein"] = "dashboard/logmein";
 $route["addGiftLink"] = "dashboard/addGiftLink";
 $route["editGiftLink"] = "dashboard/editGiftLink";
+$route["dash_edit_owner"] = "dashboard/edit_owner";
 $route['404_override'] = '';
 
 
