@@ -576,6 +576,25 @@ class Db_model extends CI_Model {
 		return $this->db->affected_rows();
 	}
 
+	/*
+	@purpose : update the admin info
+	@params : data
+	@return :true or false
+	*/
+	public function update_admin_info ($data)
+	{
+		$this->db->from('admin')
+				->where('admin_id', $data['admin_id']);
+		
+	 $object = array(
+               'first_name' => $data['first_name'],
+               'last_name' => $data['last_name'],
+               'email' => $data['email']
+            );
+	 	$this->db->update('admin', $object); 
+		return $this->db->affected_rows();
+	}
+
 
 			/*
 	@purpose : remove the giftitem for that gift_id

@@ -70,6 +70,7 @@ $route["logmein"] = "dashboard/logmein";
 $route["addGiftLink"] = "dashboard/addGiftLink";
 $route["editGiftLink"] = "dashboard/editGiftLink";
 $route["dash_edit_owner"] = "dashboard/edit_owner";
+$route["dash_edit_admin"] = "dashboard/edit_admin";
 $route['404_override'] = '';
 
 

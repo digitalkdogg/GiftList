@@ -217,6 +217,21 @@ class Dashboard extends CI_Controller {
 					$form_title = 'Edit Owner Information';
 					$btn = 'Update Owner';
 					break;
+
+				case 'dash_edit_admin':
+					$actionurl = $action;
+					$id = $_POST['list_id'];
+					$list_id = $_POST['list_id'];
+					$owner = $this->db_model->get_owner_by_listid ($list_id);
+					$admin = $this->db_model->get_giftlist_admin($owner[0]->owner_id);
+					$inputs = array('1'=>array('name'=>'id', 'type'=>'text', 'label_value'=>'Id :', 'value'=>$admin->admin_id, 'size'=>'5'),
+						'2'=>array('name'=>'first_name', 'type'=>'text', 'label_value'=>'First Name :', 'value'=>$admin->first_name),
+						'3'=>array('name'=>'last_name', 'type'=>'text', 'label_value'=>'Last Name :', 'value'=>$admin->last_name),
+						'4'=>array('name'=>'email', 'type'=>'text', 'label_value'=>'Email :', 'value'=>$admin->email, 'size'=>'40')
+						);
+					$form_title = 'Edit Owner Information';
+					$btn = 'Update Owner';
+					break;
 			}
 			
 			$data = array('id' => $id, 'owner'=>$owner, 
@@ -327,6 +342,18 @@ class Dashboard extends CI_Controller {
 	 	$data['last_name']=$_POST['last_name'];
 	 	$data['email']=$_POST['email'];
 	 	$rows = $this->db_model->update_owner_info($data);
+		//echo json_encode($rows);
+		redirect(site_url() . '/load_dashboard/' . $session_data['login_user'] , 'refresh');
+	}
+
+	public function edit_admin()
+	 {
+	 	$session_data = ($this->session->all_userdata());
+	 	$data['admin_id']=$_POST['id'];
+	 	$data['first_name']=$_POST['first_name'];
+	 	$data['last_name']=$_POST['last_name'];
+	 	$data['email']=$_POST['email'];
+		$rows = $this->db_model->update_admin_info($data);
 		//echo json_encode($rows);
 		redirect(site_url() . '/load_dashboard/' . $session_data['login_user'] , 'refresh');
 	}
