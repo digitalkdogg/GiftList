@@ -11,12 +11,14 @@ $(document).ready(function () {
   });
 
   $('.add').click(function (e) {
+
   	e.preventDefault();
   	id = $(this).siblings('span').data('id');
+    url = 'http://' + window.location.hostname + '/giftlist/list.php/dash_add_form';
   	$.ajax({
 	 	type: "POST",
      	dataType: "html",
-	     url: '../dash_add_form',
+	     url: url,
 	     data: {'list_id': id, 'action': 'dash_add_gift'},
 	     failure: function() {alert ('bad');},
          success: function(return_data)  {
@@ -34,11 +36,12 @@ $(document).ready(function () {
 
     $('h3.gift>.edit').click(function (e) {
     e.preventDefault();
+    url = 'http://' + window.location.hostname + '/giftlist/list.php/dash_add_form';
     id = $(this).siblings('span').data('id');
     $.ajax({
     type: "POST",
       dataType: "html",
-       url: '../dash_add_form',
+       url: url,
        data: {'list_id': id, 'action': 'dash_edit_gift'},
        failure: function() {alert ('bad');},
          success: function(return_data)  {
@@ -55,12 +58,13 @@ $(document).ready(function () {
 
   $('.item>.edit').click(function (e) {
     e.preventDefault();
+    url = 'http://' + window.location.hostname + '/giftlist/list.php/dash_add_form';
     gift_id = $(this).parent().data('id');
     id = $(this).parent().parent().siblings('h3').children('span').data('id');
     $.ajax({
     type: "POST",
       dataType: "html",
-       url: '../dash_add_form',
+       url: url,
        data: {'list_id': id, 'gift_id':gift_id, 'action': 'dash_edit_gift_item'},
        failure: function() {alert ('bad');},
          success: function(return_data)  {
@@ -111,13 +115,14 @@ $(document).ready(function () {
 
    $('.item>.delete').click(function (e) {
     e.preventDefault();
+    url = 'http://' + window.location.hostname + '/giftlist/list.php/dash_add_form';
     gift_id = $(this).parent().data('id');
     id = $(this).parent().parent().siblings('h3').children('span').data('id');
    
     $.ajax({
     type: "POST",
       dataType: "html",
-       url: '../dash_add_form',
+       url: url,
        data: {'list_id': id, 'gift_id':gift_id, 'action': 'dash_delete_gift_item'},
        failure: function() {alert ('bad');},
          success: function(return_data)  {
@@ -134,11 +139,12 @@ $(document).ready(function () {
 
   $('h3.gift>.delete').click(function (e) {
     e.preventDefault();
+    url = 'http://' + window.location.hostname + '/giftlist/list.php/dash_add_form';
     id = $(this).siblings('span').data('id');
     $.ajax({
     type: "POST",
       dataType: "html",
-       url: '../dash_add_form',
+       url: url,
        data: {'list_id': id, 'action': 'dash_delete_gift'},
        failure: function() {alert ('bad');},
          success: function(return_data)  {
@@ -156,11 +162,12 @@ $(document).ready(function () {
     $('button.gift').click(function (e) {
     e.preventDefault();
     id = $(this).data('id');
+    url = 'http://' + window.location.hostname + '/giftlist/list.php/dash_add_form';
    // id = $(this).siblings('span').data('id');
     $.ajax({
     type: "POST",
       dataType: "html",
-       url: '../dash_add_form',
+       url: url,
        data: {'list_id': id, 'action': 'dash_add_list'},
        failure: function() {alert ('bad');},
          success: function(return_data)  {
@@ -177,12 +184,13 @@ $(document).ready(function () {
 
     $('#login_submit').click(function (e) {
       e.preventDefault();
+      url = 'http://' + window.location.hostname + '/giftlist/list.php/logmein';
       password = $('input[name=password]').val();
       $('.message').text('Connecting!');
       $.ajax({
         type: "POST",
         dataType: "JSON",
-        url: 'logmein',
+        url: url,
         data: {'user_name': $('input[name=user_name]').val(), 'password': CryptoJS.MD5(password).toString()},
         failure: function() {alert ('bad');},
         success: function(data) {
@@ -200,11 +208,12 @@ $(document).ready(function () {
 
  $('h3.owner>.edit').click(function (e) {
     e.preventDefault();
+    url = 'http://' + window.location.hostname + '/giftlist/list.php/dash_add_form';
     id = $(this).siblings('span').data('id');
     $.ajax({
     type: "POST",
       dataType: "html",
-       url: '../dash_add_form',
+       url: url,
        data: {'list_id': id, 'action': 'dash_edit_owner'},
        failure: function() {alert ('bad');},
          success: function(return_data)  {
@@ -220,7 +229,8 @@ $(document).ready(function () {
   });
 
  $('h3.owner>.delete').click(function (e) {
-     e.preventDefault();
+    e.preventDefault();
+    url = 'http://' + window.location.hostname + '/giftlist/list.php/dash_add_form';
     id = $(this).siblings('span').data('id');
     $.ajax({
     type: "POST",
@@ -243,11 +253,12 @@ $(document).ready(function () {
 
  $('h3.admin>.edit').click(function (e) {
     e.preventDefault();
+    url = 'http://' + window.location.hostname + '/giftlist/list.php/dash_add_form';
     id = $(this).siblings('span').data('id');
     $.ajax({
     type: "POST",
       dataType: "html",
-       url: '../dash_add_form',
+       url: url,
        data: {'list_id': id, 'action': 'dash_edit_admin'},
        failure: function() {alert ('bad');},
          success: function(return_data)  {
@@ -262,27 +273,6 @@ $(document).ready(function () {
    });
   });
 
-  $('h3.admin>.delete').click(function (e) {
-     e.preventDefault();
-     alert('admin delete');
-   //  id = $(this).siblings('span').data('id');
-   //  $.ajax({
-   //  type: "POST",
-   //    dataType: "html",
-   //     url: '../dash_add_form',
-   //     data: {'list_id': id, 'action': 'dash_edit_gift'},
-   //     failure: function() {alert ('bad');},
-   //       success: function(return_data)  {
-   //        if (return_data) {
-   //             showPopup(return_data);
-   //             $('#wrapper').css('opacity', '1');
-   //           }
-   //         $('.closeme').on('click', function (event) {
-   //          closePopup();
-   //         });
-   //   }
-   // });
-  });
 
     $('input[name=user_name]').focus(function () {
        $('.message').text();
@@ -291,10 +281,11 @@ $(document).ready(function () {
 function addGiftLink (id) {
   gift_title = $('input[name=gift_title]').val();
   gift_url = $('input[name=gift_url]').val()
+  url = 'http://' + window.location.hostname + '/giftlist/list.php/addGiftLink';
    $.ajax({
         type: "POST",
         dataType: "JSON",
-        url: '../addGiftLink',
+        url: url,
         data: {'title': gift_title, 'url': gift_url, 'id':id},
         failure: function() {alert ('bad');},
         success: function(data) {
@@ -307,11 +298,12 @@ function addGiftLink (id) {
 
 function editGiftLink (id, giftid) {
   gift_title = $('input[name=gift_title]').val();
-  gift_url = $('input[name=gift_url]').val()
+  gift_url = $('input[name=gift_url]').val();
+  url = 'http://' + window.location.hostname + '/giftlist/list.php/editGiftLink';
    $.ajax({
         type: "POST",
         dataType: "JSON",
-        url: '../editGiftLink',
+        url: url,
         data: {'title': gift_title, 'url': gift_url, 'id':id, 'giftid': giftid},
         failure: function() {alert ('bad');},
         success: function(data) {
@@ -331,11 +323,12 @@ function editGiftLink (id, giftid) {
 
 function deleteGiftLink (id, giftid) {
   gift_title = $('input[name=gift_title]').val();
-  gift_url = $('input[name=gift_url]').val()
+  gift_url = $('input[name=gift_url]').val();
+  url = 'http://' + window.location.hostname + '/giftlist/list.php/deleteGiftLink';
    $.ajax({
         type: "POST",
         dataType: "JSON",
-        url: '../dashboard/deleteGiftLink',
+        url: url,
         data: {'id':id},
         failure: function() {alert ('bad');},
         success: function(data) {
