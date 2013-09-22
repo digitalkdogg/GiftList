@@ -113,8 +113,8 @@ class Dashboard extends CI_Controller {
 			$action = $_POST['action'];
 			switch ($action) {
 				case 'dash_add_gift' :
+					$id = $_POST['list_id'];
 					$actionurl = $action . '/' . $id;
-					$id = $_POST['list_id']; 
 					$owner = $this->db_model->get_owner_by_listid ($id);
 					$list_num = $this->db_model->get_next_num_for_list($id);
 					for ($i = $list_num[0]->num; $i <= 20; $i++) {
@@ -124,7 +124,8 @@ class Dashboard extends CI_Controller {
 					$inputs = array('1'=>array('name'=>'title', 'type'=>'text', 'label_value'=>'Title :', 'options'=>null, 'value'=>''), 
 							'2'=>array('name'=>'desc', 'type'=>'textarea', 'label_value'=>'Description :', 'value'=>'', 'cols'=>'80', 'rows'=>'5'),
 							'3'=>array('name'=>'num', 'type'=>'dropdown', 'label_value'=>'List Number :', 'options' => $options, 'value'=>'', 'selected'=>$list_num),
-							'4'=>array('name'=>'image', 'type'=>'image', 'label_value'=>'Image :', 'options'=>null, 'value'=>'')
+							'4'=>array('name'=>'image', 'type'=>'image', 'label_value'=>'Image :', 'options'=>null, 'value'=>''),
+							'5'=>array('name'=>'img', 'type'=>'hidden', 'label_value'=>'', 'value'=>'')
 							);
 					$form_title = 'Add New Gift Item';
 					$btn = "Add Gift Item!";
@@ -262,10 +263,11 @@ class Dashboard extends CI_Controller {
 	{
 		$session_data = ($this->session->all_userdata());
 		if (isset($session_data['login'])):
+			var_dump($this->input->post());
 			$data = $this->input->post();
 			$this->db_model->get_list_by_listid ($id, $data);
 			$owner = $this->db_model->get_owner_by_listid ($id);
-			redirect(site_url() . '/load_dashboard/' . $session_data['login_user'] , 'refresh');
+			//redirect(site_url() . '/load_dashboard/' . $session_data['login_user'] , 'refresh');
 		endif;
 	}
 

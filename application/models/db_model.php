@@ -492,7 +492,7 @@ class Db_model extends CI_Model {
    			'title' => $data['title'] ,
    			'description' => $data['desc'] ,
    			'num' => $data['num'],
-   			'image' => $data['image'],
+   			'image' => $data['img'],
    			'owner_id' => $data['owner'],
    			'status_id' => 1,
    			'taken_id' => 2
