@@ -43,6 +43,22 @@ function __construct()
 		endif;
 	}
 
+		/*
+	@ Purpose : Display list.  this is display when some tries to load a list without a list id
+	@ Returns : either to the base_url or someones list collection
+	*/
+	public function display_list($name) 
+	{
+		$owner = $this->db_model->get_owner($name);
+		if (!$owner==null) :
+			$this->html_model->load_html_begin($owner);
+			$this->gift_model->load_content_begin();
+			$lists = $this->db_model->get_list_for_owner($owner['owner_id']);
+			$this->load->view('gift_list', array('lists' => $lists, 'user_name'=>$owner['user_name']));
+			$this->html_model->load_html_close();
+		endif;
+	}
+
 	/*
 	@purpose: Display one gift item off of someones list
 	@parms : Gift_id, $owner_name

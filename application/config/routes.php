@@ -46,6 +46,7 @@ $route["logout"] = 'dashboard/logout';
 $route["comment/(.*)"] = 'gift/comment_form/$1';
 $route["send_comment/(.*)"] = 'gift/send_comment_email/$1';
 $route["gift/(.*)/(.*)"] = 'gift/display_gift/$1/$2';
+$route["gift/(.*)"] = 'gift/display_list/$1';
 $route["taken/(.*)"] = 'gift/item_taken/$1';
 $route["one_item/(.*)"] = 'gift/display_gift_one_item/$1';
 $route["menu_taken/(.*)"] = 'gift/menu_taken/$1';
