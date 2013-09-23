@@ -113,8 +113,8 @@ class Dashboard extends CI_Controller {
 			$action = $_POST['action'];
 			switch ($action) {
 				case 'dash_add_gift' :
+					$id = $_POST['list_id'];
 					$actionurl = $action . '/' . $id;
-					$id = $_POST['list_id']; 
 					$owner = $this->db_model->get_owner_by_listid ($id);
 					$list_num = $this->db_model->get_next_num_for_list($id);
 					for ($i = $list_num[0]->num; $i <= 20; $i++) {
@@ -124,15 +124,16 @@ class Dashboard extends CI_Controller {
 					$inputs = array('1'=>array('name'=>'title', 'type'=>'text', 'label_value'=>'Title :', 'options'=>null, 'value'=>''), 
 							'2'=>array('name'=>'desc', 'type'=>'textarea', 'label_value'=>'Description :', 'value'=>'', 'cols'=>'80', 'rows'=>'5'),
 							'3'=>array('name'=>'num', 'type'=>'dropdown', 'label_value'=>'List Number :', 'options' => $options, 'value'=>'', 'selected'=>$list_num),
-							'4'=>array('name'=>'image', 'type'=>'image', 'label_value'=>'Image :', 'options'=>null, 'value'=>'')
+							'4'=>array('name'=>'image', 'type'=>'image', 'label_value'=>'Image :', 'options'=>null, 'value'=>''),
+							'5'=>array('name'=>'img', 'type'=>'hidden', 'label_value'=>'', 'value'=>'')
 							);
 					$form_title = 'Add New Gift Item';
 					$btn = "Add Gift Item!";
 					break;
 
 				case 'dash_edit_gift' :
-					$actionurl = $action . '/' . $id;
 					$id = $_POST['list_id']; 
+					$actionurl = $action . '/' . $id;
 					$owner = $this->db_model->get_owner_by_listid ($id);
 					$list = $this->db_model->get_list_for_listid($id);
 					$inputs = array('1'=>array('name'=>'title', 'type'=>'text', 'label_value'=>'Title :', 'options'=>null, 'value'=>$list[0]->title), 
@@ -144,8 +145,8 @@ class Dashboard extends CI_Controller {
 					break;
 
 				case 'dash_delete_gift' :
-					$actionurl = $action . '/' . $id;
 					$id = $_POST['list_id']; 
+					$actionurl = $action . '/' . $id;
 					$owner = $this->db_model->get_owner_by_listid ($id);
 					$list = $this->db_model->get_list_for_listid($id);
 					$inputs = array('1'=>array('name'=>'title', 'type'=>'text', 'label_value'=>'Title :', 'options'=>null, 'value'=>$list[0]->title), 
@@ -164,8 +165,8 @@ class Dashboard extends CI_Controller {
 					$btn = 'Add List!';
 					break;
 				case 'dash_edit_gift_item' :
-					$actionurl = $action . '/' . $id;
 					$id = $_POST['gift_id'];
+					$actionurl = $action . '/' . $id;
 					$list_id = $_POST['list_id']; 
 					$owner = $this->db_model->get_owner_by_listid ($list_id);
 				
@@ -178,7 +179,8 @@ class Dashboard extends CI_Controller {
 					$inputs = array('1'=>array('name'=>'title', 'type'=>'text', 'label_value'=>'Title :', 'options'=>null, 'value'=>$list->title), 
 							'2'=>array('name'=>'description', 'type'=>'textarea', 'label_value'=>'Description :', 'value'=>$list->description , 'cols'=>'80', 'rows'=>'5'),
 							'3'=>array('name'=>'image', 'type'=>'image', 'label_value'=>'Image :', 'value'=>$list->image),
-							'4'=>array('name'=>'num', 'type'=>'dropdown', 'label_value'=>'Number :', 'value'=>$list->num, 'options' => $options, 'selected'=>$list->num)
+							'4'=>array('name'=>'num', 'type'=>'dropdown', 'label_value'=>'Number :', 'value'=>$list->num, 'options' => $options, 'selected'=>$list->num),
+							'5'=>array('name'=>'img', 'type'=>'hidden', 'label_value'=>'', 'value'=>'')
 							);
 					
 					$form_title = 'Edit Gift Item';
@@ -188,8 +190,8 @@ class Dashboard extends CI_Controller {
 					break;
 
 				case 'dash_delete_gift_item' :
-					$actionurl = $action . '/' . $id;
 					$id = $_POST['gift_id'];
+					$actionurl = $action . '/' . $id;
 					$list_id = $_POST['list_id']; 
 					$owner = $this->db_model->get_owner_by_listid ($list_id);
 					
@@ -265,7 +267,7 @@ class Dashboard extends CI_Controller {
 			$data = $this->input->post();
 			$this->db_model->get_list_by_listid ($id, $data);
 			$owner = $this->db_model->get_owner_by_listid ($id);
-			redirect(site_url() . '/load_dashboard/' . $session_data['login_user'] , 'refresh');
+			//redirect(site_url() . '/load_dashboard/' . $session_data['login_user'] , 'refresh');
 		endif;
 	}
 

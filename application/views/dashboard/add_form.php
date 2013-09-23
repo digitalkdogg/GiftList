@@ -23,6 +23,9 @@
 				echo form_label($input['label_value'], $input['name']);
 				echo form_textarea($input). '<br />';
 			break;
+			case 'hidden':
+				echo form_hidden($input['name']);
+			break;
 		}	
 	}
 
