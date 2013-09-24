@@ -46,7 +46,7 @@ class Dashboard extends CI_Controller {
 		  			$content .= "<div class = 'dash_title'>Lists<button class='gift' data-id = ". $owner['owner_id'] .">New Gift List</button></div>";
 		  			foreach ($list_items as $list) :
 		  				$items = $this->db_model->get_giftitems_list($list->list_id);
-		  				$content .= $this->load->view('dashboard/dashboard_gift_start', array('title' => $list->title, 'list_id'=>$list->list_id, 'class'=>'gift'), true);
+		  				$content .= $this->load->view('dashboard/dashboard_gift_start', array('title' => $list->title, 'list_id'=>$list->list_id, 'owner'=>$name, 'class'=>'gift'), true);
 		  				foreach ($items as $item) :
 		  					$content .= $this->load->view('dashboard/dashboard_gift_dets', array('items' => $item), true);
 		  				endforeach;
