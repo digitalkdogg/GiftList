@@ -14,7 +14,7 @@ $(document).ready(function () {
 
   	e.preventDefault();
   	id = $(this).siblings('span').data('id');
-    url = 'http://' + window.location.hostname + '/giftlist/list.php/dash_add_form';
+    url = 'http://' + window.location.hostname + '/list.php/dash_add_form';
   	$.ajax({
 	 	type: "POST",
      	dataType: "html",
@@ -27,6 +27,10 @@ $(document).ready(function () {
                showPopup(return_data);
                $('#wrapper').css('opacity', '1');
              }
+
+          $('input[name=image]').on('change', function (event) {
+              $('input[name=img]').val($('input[name=image]').val().replace(/C:\\fakepath\\/i, ''));
+           });
          	 $('.closeme').on('click', function (event) {
          	 	closePopup();
          	 });
@@ -36,7 +40,7 @@ $(document).ready(function () {
 
     $('h3.gift>.edit').click(function (e) {
     e.preventDefault();
-    url = 'http://' + window.location.hostname + '/giftlist/list.php/dash_add_form';
+    url = 'http://' + window.location.hostname + '/list.php/dash_add_form';
     id = $(this).siblings('span').data('id');
     $.ajax({
     type: "POST",
@@ -58,7 +62,7 @@ $(document).ready(function () {
 
   $('.item>.edit').click(function (e) {
     e.preventDefault();
-    url = 'http://' + window.location.hostname + '/giftlist/list.php/dash_add_form';
+    url = 'http://' + window.location.hostname + '/list.php/dash_add_form';
     gift_id = $(this).parent().data('id');
     id = $(this).parent().parent().siblings('h3').children('span').data('id');
     $.ajax({
@@ -72,6 +76,9 @@ $(document).ready(function () {
                showPopup(return_data);
                $('#wrapper').css('opacity', '1');
              }
+           $('input[name=image]').on('change', function (event) {
+              $('input[name=img]').val($('input[name=image]').val().replace(/C:\\fakepath\\/i, ''));
+           });
            $('.closeme').on('click', function (event) {
             closePopup();
            });
@@ -115,7 +122,7 @@ $(document).ready(function () {
 
    $('.item>.delete').click(function (e) {
     e.preventDefault();
-    url = 'http://' + window.location.hostname + '/giftlist/list.php/dash_add_form';
+    url = 'http://' + window.location.hostname + '/list.php/dash_add_form';
     gift_id = $(this).parent().data('id');
     id = $(this).parent().parent().siblings('h3').children('span').data('id');
    
@@ -139,7 +146,7 @@ $(document).ready(function () {
 
   $('h3.gift>.delete').click(function (e) {
     e.preventDefault();
-    url = 'http://' + window.location.hostname + '/giftlist/list.php/dash_add_form';
+    url = 'http://' + window.location.hostname + '/list.php/dash_add_form';
     id = $(this).siblings('span').data('id');
     $.ajax({
     type: "POST",
@@ -162,7 +169,7 @@ $(document).ready(function () {
     $('button.gift').click(function (e) {
     e.preventDefault();
     id = $(this).data('id');
-    url = 'http://' + window.location.hostname + '/giftlist/list.php/dash_add_form';
+    url = 'http://' + window.location.hostname + '/list.php/dash_add_form';
    // id = $(this).siblings('span').data('id');
     $.ajax({
     type: "POST",
@@ -184,7 +191,7 @@ $(document).ready(function () {
 
     $('#login_submit').click(function (e) {
       e.preventDefault();
-      url = 'http://' + window.location.hostname + '/giftlist/list.php/logmein';
+      url = 'http://' + window.location.hostname + '/list.php/logmein';
       password = $('input[name=password]').val();
       $('.message').text('Connecting!');
       $.ajax({
@@ -208,7 +215,7 @@ $(document).ready(function () {
 
  $('h3.owner>.edit').click(function (e) {
     e.preventDefault();
-    url = 'http://' + window.location.hostname + '/giftlist/list.php/dash_add_form';
+    url = 'http://' + window.location.hostname + '/list.php/dash_add_form';
     id = $(this).siblings('span').data('id');
     $.ajax({
     type: "POST",
@@ -230,7 +237,7 @@ $(document).ready(function () {
 
  $('h3.owner>.delete').click(function (e) {
     e.preventDefault();
-    url = 'http://' + window.location.hostname + '/giftlist/list.php/dash_add_form';
+    url = 'http://' + window.location.hostname + '/list.php/dash_add_form';
     id = $(this).siblings('span').data('id');
     $.ajax({
     type: "POST",
@@ -253,7 +260,7 @@ $(document).ready(function () {
 
  $('h3.admin>.edit').click(function (e) {
     e.preventDefault();
-    url = 'http://' + window.location.hostname + '/giftlist/list.php/dash_add_form';
+    url = 'http://' + window.location.hostname + '/list.php/dash_add_form';
     id = $(this).siblings('span').data('id');
     $.ajax({
     type: "POST",
@@ -281,7 +288,7 @@ $(document).ready(function () {
 function addGiftLink (id) {
   gift_title = $('input[name=gift_title]').val();
   gift_url = $('input[name=gift_url]').val()
-  url = 'http://' + window.location.hostname + '/giftlist/list.php/addGiftLink';
+  url = 'http://' + window.location.hostname + '/list.php/addGiftLink';
    $.ajax({
         type: "POST",
         dataType: "JSON",
@@ -299,7 +306,7 @@ function addGiftLink (id) {
 function editGiftLink (id, giftid) {
   gift_title = $('input[name=gift_title]').val();
   gift_url = $('input[name=gift_url]').val();
-  url = 'http://' + window.location.hostname + '/giftlist/list.php/editGiftLink';
+  url = 'http://' + window.location.hostname + '/list.php/editGiftLink';
    $.ajax({
         type: "POST",
         dataType: "JSON",
@@ -324,7 +331,7 @@ function editGiftLink (id, giftid) {
 function deleteGiftLink (id, giftid) {
   gift_title = $('input[name=gift_title]').val();
   gift_url = $('input[name=gift_url]').val();
-  url = 'http://' + window.location.hostname + '/giftlist/list.php/deleteGiftLink';
+  url = 'http://' + window.location.hostname + '/list.php/deleteGiftLink';
    $.ajax({
         type: "POST",
         dataType: "JSON",
