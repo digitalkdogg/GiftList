@@ -157,8 +157,8 @@ class Dashboard extends CI_Controller {
 
 					break;
 				case 'dash_add_list' :
-					$actionurl = $action . '/' . $id;
 					$id = $_POST['list_id']; 
+					$actionurl = $action . '/' . $id;
 					$owner = $this->db_model->get_owner_by_listid ($id);
 					$inputs = array('1'=>array('name'=>'title', 'type'=>'text', 'label_value'=>'Title :', 'options'=>null, 'value'=>''));
 					$form_title = 'Add New List';
@@ -267,7 +267,7 @@ class Dashboard extends CI_Controller {
 			$data = $this->input->post();
 			$this->db_model->get_list_by_listid ($id, $data);
 			$owner = $this->db_model->get_owner_by_listid ($id);
-			//redirect(site_url() . '/load_dashboard/' . $session_data['login_user'] , 'refresh');
+			redirect(site_url() . '/load_dashboard/' . $session_data['login_user'] , 'refresh');
 		endif;
 	}
 
@@ -366,6 +366,13 @@ class Dashboard extends CI_Controller {
 		$data['id']=$_POST['id'];
 		$rows = $this->db_model->delete_gift_link ($data['id']);
 		echo json_encode($rows);
+	}
+
+	public function get_config() 
+	{
+		$response = array('server' => $this->config->item('server'),
+						 'path'=> $this->config->item('path'));
+		echo json_encode($response);
 	}
 
 	public function logout() 
