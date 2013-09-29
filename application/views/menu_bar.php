@@ -1,7 +1,7 @@
 <?php 
 switch ($name) {
 case 'Home' :
-	$home_url = site_url() . '/' . $url . '/' . $user_name; ?>
+	$home_url = site_url() . '/' . $url . '/' . $user_name . '/' . $list_id; ?>
 
 	<a class = 'style1' alt = '<?php echo $alt; ?> ' href = '<?php echo $home_url; ?>'> <?php echo $name; ?> </a>
 <?php 
@@ -12,12 +12,12 @@ case 'Gift List Admin' :
 <?php
 	break;
 case 'What Is Taken' :
-	$taken_url = site_url() . '/' . $url . '/1/' . $user_name; ?>
+	$taken_url = site_url() . '/' . $url . '/1/' . $list_id . '/' . $user_name; ?>
 	<a class = 'style1' alt = '<?php echo $alt; ?>' href = '<?php echo $taken_url; ?>'><?php echo $name ?></a>
 <?php
 	break;
 case 'What Is Available' :
-	$available_url = site_url() . '/' . $url . '/2/' . $user_name;?>
+	$available_url = site_url() . '/' . $url . '/2/' . $list_id . '/' . $user_name;?>
 	<a class = 'style1' alt = '<?php echo $alt; ?>' href = '<?php echo $available_url; ?>'><?php echo $name ?></a>
 
 <?php	

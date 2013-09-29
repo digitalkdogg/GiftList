@@ -253,13 +253,15 @@ class Db_model extends CI_Model {
 	@params: owner_id and teken
 	@reutrn : results of taken gifts
 	*/
-	public function get_giftid_taken($owner_id, $taken)
+	public function get_giftid_taken($owner_id, $taken, $list_id)
 	{	
-				$this->db->select('gift_id');
+				$this->db->select('gift.gift_id');
 				$this->db->from('gift')
 	 				->where ('status_id', 1)
 					->where ('owner_id', $owner_id)
-					->where ('taken_id', $taken);
+					->where ('taken_id', $taken)
+					->where ('list_id', $list_id);
+				$this->db->join('gift_list', 'gift_list.gift_id=gift.gift_id');
            $this->db->order_by("num", "asc");
 		$query = $this->db->get()->result();
 		return $query;
@@ -355,10 +357,10 @@ class Db_model extends CI_Model {
 
 	*/
 
-	public function get_gift_menu($status)
+	public function get_gift_menu($status, $list_id)
 	{
 		$owner_id = $this->session->userdata('owner_id');
-		$gift_id = $this->get_giftid_taken($owner_id, $status);
+		$gift_id = $this->get_giftid_taken($owner_id, $status, $list_id);
 		foreach ($gift_id as $gift):
 			$gift_item = $this->get_gift_item($gift->gift_id);
 			$gift_links = $this->get_gift_links($gift->gift_id);

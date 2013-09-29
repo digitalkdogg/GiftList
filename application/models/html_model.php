@@ -7,11 +7,10 @@ class Html_model extends CI_Model {
     }
 	
 	
-	function load_html_begin($owner)
+	function load_html_begin($owner, $list_id=null)
 	{
 	$this->load->view('html_begin');
 	$this->load->view('css_jquery_files');
-	//$this->load->view('css_jquery_files');
 	$this->load->view('body_header', array('first_name'=>$owner['first_name'],
 									 'last_name'=>$owner['last_name'],
 									 'user_name'=> $owner['user_name'],
@@ -20,7 +19,12 @@ class Html_model extends CI_Model {
 	$this->load->view('print_html', $html);
 	$data = $this->db_model->print_menu();
 	foreach ($data as $row) :
-		$this->load->view('menu_bar', $row, $owner);
+		$view_data = array('name'=>$row->name,
+					'url'=>$row->url,
+					'alt'=>$row->alt,
+					'owner'=>$owner,
+					'list_id'=>$list_id);
+		$this->load->view('menu_bar', $view_data);
 	endforeach;
 	$html = array ('html' => "</center></div><div id ='side_bar'>");
 	$this->load->view('print_html', $html);	

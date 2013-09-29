@@ -30,7 +30,7 @@ function __construct()
 			if (isset($name)):
 				$owner = $this->db_model->get_owner($name);
 				if (!$owner==null) :
-					$this->html_model->load_html_begin($owner);
+					$this->html_model->load_html_begin($owner, $list_id);
 					$this->gift_model->load_content_begin();
 					$this->db_model->print_gift_item($gift);
 					$this->html_model->load_html_close();
@@ -359,7 +359,7 @@ function __construct()
 	@params: status 1 or 2, owner_name
 	@return : list of items 
 	*/
-	function menu_taken($status, $owner_name)
+	function menu_taken($status, $list_id, $owner_name)
 	{
 		if ($this->session->userdata('owner_user_name') == $owner_name) {
 			$owner = array ('first_name' => $this->session->userdata('owner_first_name'), 
@@ -369,10 +369,10 @@ function __construct()
 		} else {
 			$owner=$this->db_model->get_owner($owner_name);
 		}
-			$this->html_model->load_html_begin($owner);
+			$this->html_model->load_html_begin($owner, $list_id);
 			$html = array ('html' => "<div id = 'content'>");
 			$this->load->view('print_html', $html);	
-			$this->db_model->get_gift_menu($status);		
+			$this->db_model->get_gift_menu($status, $list_id);		
 		
 	}
 	/*
