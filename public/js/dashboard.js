@@ -22,7 +22,7 @@ $(document).ready(function () {
     success: function(data)  {
       if (data) {
         var json = $.parseJSON(data);
-        url = 'http://' + json.server + '/' + json.path + '/list.php/';
+        url = 'http://' + json.server + '/' + json.path + 'list.php/';
       }   
     }
    });
