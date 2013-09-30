@@ -197,12 +197,13 @@ class Db_model extends CI_Model {
 	params : gift_id, owner_id
 	return : row of gift
 	*/
-	function get_gift_by_giftid($gift_id, $owner_id)
+	function get_gift_by_giftid($gift_id, $owner_id=null)
 	{
 	$query = $this->db->from('gift')
-					->where ('gift_id', $gift_id)
-					->where ('owner_id', $owner_id)
-					->join ('taken', 'gift.taken_id=taken.taken_id');
+					->where ('gift.gift_id', $gift_id)
+				//	->where ('owner_id', $owner_id)
+					->join ('taken', 'gift.taken_id=taken.taken_id')
+					->join ('gift_list', 'gift_list.gift_id=gift.gift_id');
 					
 	$query = $this->db->get()->row();
 	if ($query) :
@@ -226,7 +227,8 @@ class Db_model extends CI_Model {
 					->where('user_name', $username)
 					->where('status_id', '1')
 					->join ('owner', 'gift.owner_id=owner.owner_id')
-					->join ('taken', 'taken.taken_id=gift.taken_id');
+					->join ('taken', 'taken.taken_id=gift.taken_id')
+					->join ('gift_list', 'gift_list.gift_id=gift.gift_id');
 		$query = $this->db->get()->row();
 		return $query;		
 	}

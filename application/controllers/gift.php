@@ -75,10 +75,11 @@ function __construct()
 		else:
 			$owner=$this->db_model->get_owner($owner_name);
 		endif;
-		$this->html_model->load_html_begin($owner);
+		$gift_item = $this->db_model->get_gift_by_giftid($gift_id, $this->session->userdata('owner_id') );
+		$list = $this->db_model->get_gift_by_username_num($owner_name, $gift_item->num);
+		$this->html_model->load_html_begin($owner, $list->list_id);
 		$html = array ('html' => "<div id = 'content'>");
 		$this->load->view('print_html', $html);	
-	    $gift_item = $this->db_model->get_gift_by_giftid($gift_id, $this->session->userdata('owner_id') );
 	    $gift_item->reff = '_one';
 		$this->load->view('gift', $gift_item);
 		$gift_links = $this->db_model->get_gift_links($gift_item->gift_id);
@@ -86,13 +87,9 @@ function __construct()
 		 		$this->load->view('gift_link', $link);
 		 	endforeach;
 		$this->load->view('link_wrapper_end');
-		// $html=array('html' => "");
-		// $this->load->view('print_html', $html);	
 		$html = array ('html' => "</div>");
 		$this->load->view('print_html', $html);	
 		$this->db_model->print_comments($gift_item->gift_id, 100);
-		// $this->db_model->print_gift_popup();
-		// $this->db_model->print_share_popup();
 		$this->html_model->load_html_close();
 	}
 	
@@ -105,8 +102,9 @@ function __construct()
 
 	public function comment_form($gift_id)
 	{
+		$gift= $this->db_model->get_gift_by_giftid($gift_id);
 		$owner = array ('first_name' => $this->session->userdata('owner_first_name'), 'last_name' => $this->session->userdata('owner_last_name'), 'user_name'=>$this->session->userdata('owner_user_name'));
-		$this->html_model->load_html_begin($owner);
+		$this->html_model->load_html_begin($owner, $gift->list_id);
 		$html = array ('html' => "<p id = 'status' style = 'display: none;'>Staus goes here</p>");
 		$this->load->view('print_html', $html);	
 		$this->email_form($gift_id, '');
@@ -165,7 +163,7 @@ function __construct()
 	@params : name
 	@return: 
 	*/
-	public function gift_list_admin($name)
+	public function gift_list_admin($name, $list_id)
 	{
 		$owner = $this->db_model->get_owner($name);
 		if ($this->session->userdata('owner_id')) :
@@ -173,7 +171,7 @@ function __construct()
 			$owner = array ('first_name' => $this->session->userdata('owner_first_name'), 
 							'last_name' => $this->session->userdata('owner_last_name'), 
 							'user_name' => $this->session->userdata('owner_user_name'));
-			$this->html_model->load_html_begin($owner);
+			$this->html_model->load_html_begin($owner, $list_id);
 			$admin = $this->db_model->get_giftlist_admin($owner_id);
 			$this->load->view('gift_list_admin', $admin);
 			$this->html_model->load_html_close();
@@ -185,7 +183,7 @@ function __construct()
 	@params: Gift_id, Owner_name
 	@return: taken view
 	*/
-	public function item_taken($gift_id, $ownwer_name)
+	public function item_taken($gift_id, $owner_name)
 	{
 		if ($this->session->userdata('owner_id')) :
 			$owner = array ('first_name' => $this->session->userdata('owner_first_name'), 
@@ -197,10 +195,9 @@ function __construct()
 			$owner = $this->db_model->get_owner_by_giftid($gift_id);
 			$owner_id = $owner['owner_id'];
 		endif;
-		$this->html_model->load_html_begin($owner);
-		
 		$gift = $this->db_model->get_gift_by_giftid($gift_id,  $owner_id);
-		
+		$gift = $this->db_model->get_gift_by_username_num($owner_name, $gift->num);
+		$this->html_model->load_html_begin($owner, $gift->list_id);
 		$gift_title = array ('gift_title' => $gift->title, 'reff'=>'taken');
 		$gift->reff = 'taken';
 		$this->load->view('taken', $gift_title);

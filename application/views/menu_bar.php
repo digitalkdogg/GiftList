@@ -7,7 +7,7 @@ case 'Home' :
 <?php 
 	break;
 case 'Gift List Admin' :
-	$admin_url = site_url() . '/' . $url . '/' . $user_name; ?>
+	$admin_url = site_url() . '/' . $url . '/' . $user_name . '/' . $list_id; ?>
 	<a class = 'style1' alt = '<?php echo $alt; ?>' href = '<?php echo $admin_url; ?> '> <?php echo $name; ?></a>
 <?php
 	break;
