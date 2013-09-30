@@ -22,6 +22,12 @@ case 'What Is Available' :
 
 <?php	
 	break;
+case 'Search' :
+	$search_url = base_url(); ?>
+	<a class = 'style1' alt = '<?php echo $alt; ?>' href = '<?php echo $search_url; ?>'><?php echo $name ?></a>
+	
+<?php	
+	break;
 	
 default: ?>
 	<a class = 'style1' alt = '<?php echo $alt; ?>' href = '<?php echo $url;?>'><?php echo $name;?></a>

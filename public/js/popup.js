@@ -5,10 +5,13 @@
     		type = $(this).attr('id');
     		num = $(this).attr('name');
             href = $(this).attr('href');
+
             if (type == 'dets' || type=='share'){ //from home page
                 url = '../../popup/'+href+'_content';
-            } else { //from some other page
+            } else if (type.indexOf('ets_')>0 ||  type.indexOf('hare_')>0) {
                 url = '../../popup/'+href+'_content';
+            } else { //from some other page
+                url = '../../../popup/'+href+'_content';
             }
 
     		$.ajax({

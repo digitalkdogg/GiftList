@@ -15,8 +15,10 @@ class Html_model extends CI_Model {
 									 'last_name'=>$owner['last_name'],
 									 'user_name'=> $owner['user_name'],
 									  'header_title'=>'Christmas Gift List 2012 Edition'));
+	
 	$html = array ( 'html' => "    <div id = 'menu'><center>");
 	$this->load->view('print_html', $html);
+	if ($list_id != null){
 	$data = $this->db_model->print_menu();
 	foreach ($data as $row) :
 		$view_data = array('name'=>$row->name,
@@ -26,11 +28,28 @@ class Html_model extends CI_Model {
 					'list_id'=>$list_id);
 		$this->load->view('menu_bar', $view_data);
 	endforeach;
-	$html = array ('html' => "</center></div><div id ='side_bar'>");
-	$this->load->view('print_html', $html);	
-	$this->db_model->print_side_bar();
-	$html = array ('html' => "</div> <!-- end sidebar -->");
-	$this->load->view('print_html', $html);	
+	
+			$html = array ('html' => "</center></div><div id ='side_bar'>");
+			$this->load->view('print_html', $html);	
+			$this->db_model->print_side_bar();
+			$html = array ('html' => "</div> <!-- end sidebar -->");
+			$this->load->view('print_html', $html);	
+		} else {
+			$view_data = array(array('name'=>'Home',
+									'url'=>'gift',
+									'alt'=>'Home',
+									'list_id'=>''),
+								array('name'=>'Search',
+									  'url'=>'adsflkd',
+									  'alt'=>'search',
+									  'list_id'=>''));
+			foreach ($view_data as $menu) {
+				$this->load->view('menu_bar', $menu);
+			}
+			
+			$html= array('html'=>"</center></div>");
+			$this->load->view('print_html', $html);
+		}
 	}
 	
 	function load_html_close($dashboard=null)

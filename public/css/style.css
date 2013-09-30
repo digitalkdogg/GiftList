@@ -139,13 +139,19 @@ color:red;
 }
 
 /*gift section */
-#gift_item {
+#gift_item, #gift_list {
 	background: white;
 	background: rgba(255, 255, 255, 0.8);
 	border: 1px solid #333;
 	margin: 10px 0 15px 5%;
 	padding: 10px 5px 20px 10px;
 	border-radius: 10px;
+}
+
+#gift_list {
+	top:50px;
+	position: relative;
+	margin:0 0 0 22%;
 }
 
 #gift_item_disabled {
