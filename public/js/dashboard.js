@@ -209,7 +209,6 @@ $(document).ready(function () {
 
     $('#login_submit').click(function (e) {
       e.preventDefault();
-      console.log(navigator.userAgent.indexOf('Firefox'));
       password = $('input[name=password]').val();
       $('.message').text('Connecting!');
       $.ajax({

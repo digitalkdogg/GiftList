@@ -5,9 +5,8 @@
     		type = $(this).attr('id');
     		num = $(this).attr('name');
             href = $(this).attr('href');
-
             if (type == 'dets' || type=='share'){ //from home page
-                url = '../popup/'+href+'_content';
+                url = '../../popup/'+href+'_content';
             } else { //from some other page
                 url = '../../popup/'+href+'_content';
             }
