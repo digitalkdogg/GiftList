@@ -31,7 +31,7 @@ class Html_model extends CI_Model {
 	
 			$html = array ('html' => "</center></div><div id ='side_bar'>");
 			$this->load->view('print_html', $html);	
-			$this->db_model->print_side_bar();
+			$this->db_model->print_side_bar($list_id);
 			$html = array ('html' => "</div> <!-- end sidebar -->");
 			$this->load->view('print_html', $html);	
 		} else {
@@ -63,12 +63,12 @@ class Html_model extends CI_Model {
 	endif;
 	}
 	
-	function load_quick_list($data)
+	function load_quick_list($data, $list_id)
 	{
 		
 		$html= array('html' => "<div class = 'side_bar_wrapper'><div class = 'side_bar_header'>" . $data['title'] . "</div> <!-- end side_bar_header --><div class = 'side_bar_content' id = 'quick_list'>");
 		$this->load->view('print_html', $html);
-		$data = $this->db_model->get_quick_list();
+		$data = $this->db_model->get_quick_list($list_id);
 		foreach ($data as $row) :
 		$gift_item['gift_id'] = $row->gift_id;
 		$gift_item['title'] = $row->title;

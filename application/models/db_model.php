@@ -103,7 +103,7 @@ class Db_model extends CI_Model {
 
 	*/
 	
-	function print_side_bar()
+	function print_side_bar($list_id=null)
   	{
 		$owner= $this->session->userdata('owner_id');
 		$query = $this->db->query('SELECT title, content FROM side_bar where status_id = 1');
@@ -115,7 +115,7 @@ class Db_model extends CI_Model {
 				);
 				
 		if ($data['title'] == 'Quick List') {
-			$this->html_model->load_quick_list($data);
+			$this->html_model->load_quick_list($data, $list_id);
 		} else if ($data['title'] == 'New Features') {
 			$data['id']= 'new_feat_side_bar';
 			$this->load->view('side_bar', $data);
@@ -343,11 +343,13 @@ class Db_model extends CI_Model {
 	@return: results order by num of gift items for owner
 	*/
 
-	public function get_quick_list()
+	public function get_quick_list($list_id = null)
 	{
 		$owner_id = $this->session->userdata('owner_id');
 		$query = $this->db->from('gift')
+					->join('gift_list', 'gift_list.gift_id=gift.gift_id')
 	 				->where ('status_id', 1)
+	 				->where ('gift_list.list_id', $list_id)
 					->where ('owner_id', $owner_id);
 		$this->db->order_by("num", "asc"); 
 		$query = $this->db->get()->result();
