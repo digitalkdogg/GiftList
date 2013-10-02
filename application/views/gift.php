@@ -18,7 +18,7 @@
 	    <div class = "gift_status">
 	    	<p><?php echo $taken_text; ?></p>
 	    </div><!--end gif_status -->
-	    <a alt = 'email' href = '<?php echo base_url(); ?>/list.php/email_admin/<?php echo $gift_id . "/" . $this->session->userdata("owner_user_name"); ?>'>
+	    <a alt = 'email' href = '<?php echo base_url(); ?>list.php/email_admin/<?php echo $gift_id . "/" . $this->session->userdata("owner_user_name"); ?>'>
 	    	<div class = 'gift_button'>
 	    	<span class = 'email'>
 	    		<img src = '<?php echo base_url(); ?>/public/img/email_icon.png' alt = 'email' />
