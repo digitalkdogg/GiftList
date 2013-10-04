@@ -384,4 +384,25 @@ class Dashboard extends CI_Controller {
 
 	}
 
+	public function signup () 
+	{
+		$content = $this->load->view('dashboard/dashboard_home', '', true);	
+		$content .= $this->load->view('dashboard/signup', '', true);
+		echo $content;
+	}
+
+	public function get_next_signup()
+	{
+		switch($_GET['id']) {
+			case '1' :
+				$data = $this->load->view('dashboard/signup2', '', true);
+				echo $data;
+				break; 
+			case '2' :
+				$data = $this->load->view('dashboard/signup3', '', true);
+				echo $data;
+				break;
+		}
+	}
+
  }//end dashboard class
