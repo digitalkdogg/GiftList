@@ -342,51 +342,50 @@ function deleteGiftLink (id, giftid) {
       });
 }
 
-$('#signup1').click(function () {
-  $('.inner_signup').html('');
-  var id = null;
-  $.ajax({
-        type: "GET",
-        dataType: "HTML",
-        url: 'dashboard/get_next_signup',
-        data: {'id':1},
-        failure: function() {alert ('bad');},
-        success: function(data) {
-        if (data) {
-          $('.inner_signup').html(data);  
-          $('.inner_signup').animate({
-            backgroundColor:'#BBE0E0',
-            color: '#333'
-          }, 300);     
+$('#signup1').click(function (e) {
+  e.preventDefault();
+  var validate = validateMe($('.required'), 'required');
+  if (validate==0) {
+    $('.inner_signup').html('');
+    var id = null;
+    $.ajax({
+          type: "GET",
+          dataType: "HTML",
+          url: 'dashboard/get_next_signup',
+          data: {'id':1},
+          failure: function() {alert ('bad');},
+          success: function(data) {
+          if (data) {
+            $('.inner_signup').html(data);  
+            $('.inner_signup').animate({
+              backgroundColor:'#BBE0E0',
+              color: '#333'
+            }, 300);     
 
-           $('#signup2').click(function () {
-            var id = null;
-              $('.inner_signup').html('');
-              $.ajax({
-                    type: "GET",
-                    dataType: "HTML",
-                    url: 'dashboard/get_next_signup',
-                    data: {'id':2},
-                    failure: function() {alert ('bad');},
-                    success: function(data2) {
-                    if (data2) {
-                      $('.inner_signup').html(data2);  
-                      $('.inner_signup').animate({
-                        backgroundColor:'#9AB9C7',
-                        color: '#333'
-                      }, 300);     
+             $('#signup2').click(function () {
+              var id = null;
+                $('.inner_signup').html('');
+                $.ajax({
+                      type: "GET",
+                      dataType: "HTML",
+                      url: 'dashboard/get_next_signup',
+                      data: {'id':2},
+                      failure: function() {alert ('bad');},
+                      success: function(data2) {
+                      if (data2) {
+                        $('.inner_signup').html(data2);  
+                        $('.inner_signup').animate({
+                          backgroundColor:'#9AB9C7',
+                          color: '#333'
+                        }, 300);     
+                      }
                     }
-                  }
-                  });     
-                  });
-
-
-
-
+                    });     
+                    });
+            }
           }
-        }
-      });
-
+        });
+  }
 });
 });
 

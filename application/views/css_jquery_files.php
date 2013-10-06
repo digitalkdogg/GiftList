@@ -10,7 +10,7 @@
 <script type='text/javascript' src='<?php echo base_url(); ?>/public/js/menu_hover.js'></script>
 <script type='text/javascript' src = '<?php echo base_url(); ?>/public/js/btn_hover.js'></script>
 <script type = 'text/javascript' src = '<?php echo base_url(); ?>/public/js/status_hover.js'></script>
-<script type = 'text/javascript' src = '<?php echo base_url(); ?>/public/js/form_validation.js'></script>
+<script type = 'text/javascript' src = '<?php echo base_url(); ?>/public/js/validate.js'></script>
 <script type = 'text/javascript' src = '<?php echo base_url(); ?>/public/js/ajax_js.js'></script>
 <script type = 'text/javascript' src = '<?php echo base_url(); ?>/public/js/popup.js'></script>
 <script type = 'text/javascript' src = '<?php echo base_url(); ?>/public/js/crypt.js'></script></head>
