@@ -23,10 +23,10 @@ $(document).ready(function () {
       if (data) {
         var json = $.parseJSON(data);
         url = 'http://' + json.server + '/' + json.path + 'list.php/';
-      }   
+      }
     }
    });
- 
+
   $('h3>span').click(function () {
     var gift = ($(this).parent().next('div'));
 
@@ -47,7 +47,7 @@ $(document).ready(function () {
 	     failure: function() {alert ('bad');},
          success: function(return_data)  {
          	if (return_data) {
-          
+
                showPopup(return_data);
                $('#wrapper').css('opacity', '1');
              }
@@ -135,8 +135,8 @@ $(document).ready(function () {
                 deleteGiftLink(id, giftid);
               });
            });
-           
-          
+
+
 
      }
    });
@@ -146,7 +146,7 @@ $(document).ready(function () {
     e.preventDefault();
     gift_id = $(this).parent().data('id');
     id = $(this).parent().parent().siblings('h3').children('span').data('id');
-   
+
     $.ajax({
     type: "POST",
       dataType: "html",
@@ -272,10 +272,75 @@ $(document).ready(function () {
    });
   });
 
+ $('.signup_btn').click(function (e) {
+  e.preventDefault();
+  $('.err').text('');
+  var userForm = window.FormValidator($("#step1 input"));
+  userForm.addValidation("first_name", {
+    required: true
+  });
+   userForm.addValidation("last_name", {
+    required: true
+  });
+  userForm.addValidation("username", {
+    min_length: 6,
+    required: true
+  });
+   userForm.addValidation("email", {
+    required: true,
+    email: true
+  });
+  userForm.addValidation("password1", {
+     required: true//,
+     //matches: $('#password2').val()
+  });
+  userForm.addValidation("password2", {
+     required: true,
+     matches: $('#password1').val()
+  });
+var userForm2 = window.FormValidator($("#step2 input"));
+userForm2.addValidation("list_title", {
+  required: true
+});
+
+if ($('#step1').css('visibility')=='visible') {
+  var validationResult = userForm.runValidations();
+  console.log(validationResult);
+  if(validationResult.valid) {
+      flip_div($('#step1'), $('#step2'));
+  } else {
+    var errors = validationResult;
+    for (i = 0;i<validationResult.messages.length;i++) {
+      for (var item in validationResult.fields) {
+        if (validationResult.messages[i].indexOf(item)>0) {
+          $('#'+item).after('<span class = "err">' +validationResult.messages[i]+'</span>');
+        }
+      }
+    }
+  }
+} else if ($('#step2').css('visibility')=='visible') {
+  var validationResult = userForm2.runValidations();
+  if(validationResult.valid) {
+      popuplate();
+      flip_div($('#step2'), $('#step3'));
+  } else {
+    var errors = validationResult;
+    for (i = 0;i<validationResult.messages.length;i++) {
+      for (var item in validationResult.fields) {
+        if (validationResult.messages[i].indexOf(item)>0) {
+          $('#'+item).after('<span class = "err">' +validationResult.messages[i]+'</span>');
+        }
+      }
+    }
+  }
+}
+});
 
     $('input[name=user_name]').focus(function () {
        $('.message').text();
     });
+
+ });
 
 function addGiftLink (id) {
   gift_title = $('input[name=gift_title]').val();
@@ -289,7 +354,7 @@ function addGiftLink (id) {
         success: function(data) {
           if (data > 0) {
             $('.links a:first').prepend("<a href = '" + gift_url + "'>" + gift_title + "</a><br />").fadeIn('slow');
-          } 
+          }
         }
       });
 }
@@ -313,7 +378,7 @@ function editGiftLink (id, giftid) {
             $('input[name=gift_url]').val('');
             $('input[name=gift_title]').val('');
             $('input[name=gift_url]').after("<a class = 'add icon-pencil form' href = '#'></a>");
-           } 
+           }
         }
       });
 }
@@ -337,55 +402,34 @@ function deleteGiftLink (id, giftid) {
             $('input[name=gift_url]').val('');
             $('input[name=gift_title]').val('');
             $('input[name=gift_url]').after("<a class = 'add icon-pencil form' href = '#'></a>");
-           } 
+           }
         }
       });
 }
 
-$('#signup1').click(function (e) {
-  e.preventDefault();
-  var validate = validateMe($('.required'), 'required');
-  if (validate==0) {
-    $('.inner_signup').html('');
-    var id = null;
-    $.ajax({
-          type: "GET",
-          dataType: "HTML",
-          url: 'dashboard/get_next_signup',
-          data: {'id':1},
-          failure: function() {alert ('bad');},
-          success: function(data) {
-          if (data) {
-            $('.inner_signup').html(data);  
-            $('.inner_signup').animate({
-              backgroundColor:'#BBE0E0',
-              color: '#333'
-            }, 300);     
+function flip_div(olddiv, newdiv) {
+  $(olddiv).removeClass('rotate_right_90');
+  $(olddiv).removeClass('rotate_right_0');
+  setTimeout(function () {
+    $(olddiv).addClass('rotate_right_90');
+      },100);
+      setTimeout(function () {
+        $(olddiv).css('visibility', 'hidden');
+      },1000);
+      setTimeout(function () {
+         $(newdiv).css('visibility', 'visible');
+      }, 1000);
+      setTimeout(function () {
+         $(newdiv).addClass('rotate_right_0');
+       },1000);
+}
 
-             $('#signup2').click(function () {
-              var id = null;
-                $('.inner_signup').html('');
-                $.ajax({
-                      type: "GET",
-                      dataType: "HTML",
-                      url: 'dashboard/get_next_signup',
-                      data: {'id':2},
-                      failure: function() {alert ('bad');},
-                      success: function(data2) {
-                      if (data2) {
-                        $('.inner_signup').html(data2);  
-                        $('.inner_signup').animate({
-                          backgroundColor:'#9AB9C7',
-                          color: '#333'
-                        }, 300);     
-                      }
-                    }
-                    });     
-                    });
-            }
-          }
-        });
-  }
-});
-});
-
+function popuplate() {
+  var thispage = $('#step3>#signup>.inner_signup');
+  var fields = $('#form input[type=text]');
+  fields.each(function () {
+    var field = $(this).attr('name');
+    $(thispage).append(field+': '+$('#'+field).val()+'<br />');
+  });
+  $(thispage).append('<form id = "conf_submit"><input type = "submit"></form>');
+}

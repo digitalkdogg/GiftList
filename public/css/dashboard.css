@@ -1,5 +1,5 @@
 .item_wrapper{
-  border: 1px solid black; 
+  border: 1px solid black;
   width: 100%;
   border-radius:10px;
   margin: 5px 0;
@@ -114,8 +114,11 @@ p.links>.icon-pencil {
   border: 4px solid green;
   border-radius: 5px;
   position: relative;
-  top: 70px;
+  top: 30px;
   padding: 10px;
+  height:475px;
+  width:80%;
+  background:white;
 }
 
 #signup h1 {
@@ -128,6 +131,8 @@ p.links>.icon-pencil {
   font-size:1.2em;
   padding:10px;
   color:white;
+  height:375px;
+  width:96%;
 }
 
 #selectors {
@@ -142,8 +147,8 @@ p.links>.icon-pencil {
   background:white;
   border-radius:100%;
   display:inline-table;
+  border:1px solid black;
 }
-
 .one {
   background: green;
 }
@@ -151,7 +156,6 @@ p.links>.icon-pencil {
 .label {
   display:inline-block;
   min-width:170px;
-  margin-left: 30px;
 }
 
 field {
@@ -159,6 +163,42 @@ field {
   display:block;
 }
 
-.err_msg {
+.err {
   font-size:.8em;
+}
+
+#step2, #step3, #step1 {
+  top:350px;
+  position: absolute;
+  width:100%;
+}
+
+#step2 {
+  visibility: hidden;
+}
+
+#step3 {
+  visibility: hidden;
+}
+
+.rotate_right_90 {
+  -moz-transition: -moz-transform 1s linear;
+  -webkit-transition: -webkit-transform 1s linear;
+  transition: transform 1s linear;
+  -moz-transform: rotatey(90deg);
+  -webkit-transform: rotatey(90deg);
+  transform: rotatey(90deg);
+}
+
+.rotate_right_0 {
+ -moz-transition: -moz-transform 1s linear;
+ -webkit-transition: -webkit-transform 1s linear;
+  transition: transform 1s linear;
+  -moz-transform: rotatey(0deg);
+  -webkit-transform: rotatey(0deg);
+  transform: rotatey(0deg);
+}
+
+#form {
+  margin: 0 4%;
 }

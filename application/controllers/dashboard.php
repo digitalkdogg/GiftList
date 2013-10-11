@@ -387,12 +387,23 @@ class Dashboard extends CI_Controller {
 	public function signup () 
 	{
 		$content = $this->load->view('dashboard/dashboard_home', '', true);	
-		$content .= $this->load->view('dashboard/signup', '', true);
+		$content .= $this->load->view('dashboard/signup_form', '', true);
 		echo $content;
 	}
 
 	public function get_next_signup()
 	{
+		if(isset($_GET['first_name']))
+		{
+			$this->save_signup_data($_GET['first_name'], 'first_name');
+		}
+
+		if(isset($_GET['title']))
+		{
+			
+			$this->save_signup_data($_GET['title'], 'title');
+		}
+		
 		switch($_GET['id']) {
 			case '1' :
 				$data = $this->load->view('dashboard/signup2', '', true);
@@ -403,6 +414,14 @@ class Dashboard extends CI_Controller {
 				echo $data;
 				break;
 		}
+	}
+
+	public function save_signup_data($data, $field)
+	{
+		$session_data = array($field=>$data[$field]);
+		$this->session->set_userdata($session_data);
+		var_dump($this->session->all_userdata());
+		//var_dump($this->session->userdata('title'));
 	}
 
  }//end dashboard class
