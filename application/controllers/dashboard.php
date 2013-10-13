@@ -391,37 +391,16 @@ class Dashboard extends CI_Controller {
 		echo $content;
 	}
 
-	public function get_next_signup()
+	public function submit_new_account()
 	{
-		if(isset($_GET['first_name']))
-		{
-			$this->save_signup_data($_GET['first_name'], 'first_name');
-		}
-
-		if(isset($_GET['title']))
-		{
-			
-			$this->save_signup_data($_GET['title'], 'title');
-		}
-		
-		switch($_GET['id']) {
-			case '1' :
-				$data = $this->load->view('dashboard/signup2', '', true);
-				echo $data;
-				break; 
-			case '2' :
-				$data = $this->load->view('dashboard/signup3', '', true);
-				echo $data;
-				break;
-		}
-	}
-
-	public function save_signup_data($data, $field)
-	{
-		$session_data = array($field=>$data[$field]);
-		$this->session->set_userdata($session_data);
-		var_dump($this->session->all_userdata());
-		//var_dump($this->session->userdata('title'));
+		var_dump($_POST['data'][5]);
+		$data =array('first_name' => $_POST['data'][0],
+					'last_name' => $_POST['data'][1],
+					'username' => $_POST['data'][2],
+					'email'=> $_POST['data'][3],
+					'password'=> $_POST['data'][4]);
+		$owner = $this->db_model->save_new_user($data);
+		$this->db_model->insert_list ($owner, array('title'=>$_POST['data'][5]));
 	}
 
  }//end dashboard class

@@ -649,5 +649,18 @@ class Db_model extends CI_Model {
 		return $this->db->get()->result();
 	}
 
+	public function save_new_user($data) {
+		$user = array (
+			'owner_id' => null,
+			'user_name' => $data['username'],
+			'first_name' => $data['first_name'],
+			'last_name' => $data['last_name'],
+			'email'=>$data['email'],
+			'password'=>$data['password']
+		);
+		$this->db->insert('owner', $user);
+		return $this->db->insert_id();
+	}
+
 } // end db_model class
 ?>

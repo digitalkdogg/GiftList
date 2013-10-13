@@ -74,7 +74,40 @@
 <div id = 'step3' class = 'rotate_right_90'>
 	<div id = 'signup' name = 'signup'><h1>Confirm the data</h1>
 		<div class='inner_signup'>
-
+				<form id = "conf_submit" action = "dashboard/submit_new_account" type = 'POST'>
+				<field>
+				<span class = 'label'>First Name : </span>
+				<span class = 'input'>
+					<input type = 'text' id = 'conf_first_name' readonly />
+				</span>
+				</field>
+				<field>
+				<span class = 'label'>Last Name : </span>
+				<span class = 'input'>
+					<input type = 'text' id = 'conf_last_name' readonly />
+				</span>
+			</field>
+			<field>
+				<span class = 'label'>UserName : </span>
+				<span class = 'input'>
+					<input type = 'text' id = 'conf_username' readonly />
+				</span>
+			</field>
+			<field>
+				<span class = 'label'>Email : </span>
+				<span class = 'input'>
+					<input type = 'text' id = 'conf_email' readonly />
+				</span>
+			</field>
+			<field>
+				<span class = 'label'>List Title : </span>
+				<span class = 'input'>
+					<input type = 'text' id = 'conf_list_title' readonly />
+				</span>
+			</field>
+				
+				<input type = 'submit' class ='conf_submit' />
+			</form> 
 		</div>
 		<div id = 'selectors'>
 			<span class = 'selector'></span>

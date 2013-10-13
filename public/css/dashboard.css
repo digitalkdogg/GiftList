@@ -184,21 +184,33 @@ field {
 .rotate_right_90 {
   -moz-transition: -moz-transform 1s linear;
   -webkit-transition: -webkit-transform 1s linear;
+  -ms-transition: -ms-transform 1s linear;
   transition: transform 1s linear;
   -moz-transform: rotatey(90deg);
   -webkit-transform: rotatey(90deg);
+  -ms-transform: rotatey(90deg);
   transform: rotatey(90deg);
 }
 
 .rotate_right_0 {
  -moz-transition: -moz-transform 1s linear;
  -webkit-transition: -webkit-transform 1s linear;
+ -ms-transition: -ms-transform 1s linear;
   transition: transform 1s linear;
   -moz-transform: rotatey(0deg);
   -webkit-transform: rotatey(0deg);
+  -ms-transform: rotatey(0deg);
   transform: rotatey(0deg);
 }
 
 #form {
   margin: 0 4%;
+}
+
+#conf_submit input[type=text] {
+    background: none repeat scroll 0 0 transparent;
+    border: medium none;
+    width: 250px;
+    color:white;
+    font-size: 1.2em;
 }
