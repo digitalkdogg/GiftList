@@ -425,11 +425,11 @@ function flip_div(olddiv, newdiv) {
 }
 
 function popuplate() {
-  var thispage = $('#step3>#signup>.inner_signup');
+  var thispage = $('#step3>#signup>.inner_signup field');
   var fields = $('#form input[type=text]');
-  fields.each(function () {
-    var field = $(this).attr('name');
-    $(thispage).append(field+': '+$('#'+field).val()+'<br />');
+  fields.each(function() {
+      var field = $(this).attr('name');
+       console.log(field);
+      $('#conf_'+field).val($(this).val());
   });
-  $(thispage).append('<form id = "conf_submit"><input type = "submit"></form>');
 }
