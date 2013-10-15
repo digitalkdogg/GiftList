@@ -310,18 +310,25 @@ if ($('#step1').css('visibility')=='visible') {
       flip_div($('#step1'), $('#step2'));
   } else {
     var errors = validationResult;
+    console.log(validationResult.messages.length);
     for (i = 0;i<validationResult.messages.length;i++) {
       for (var item in validationResult.fields) {
         if (validationResult.messages[i].indexOf(item)>0) {
           $('#'+item).after('<span class = "err">' +validationResult.messages[i]+'</span>');
-        }
-      }
-    }
-  }
+        } else if (validationResult.messages[i] == 'passwords must match each other') {
+               if (item=='password1' || item=='password2') {
+                  if ($('.err').text()=='') {
+                    $('#password1').after('<span class = "err">passwords must match</span>');
+                    $('#password2').after('<span class = "err">passwords must match</span>');
+                  } //end if err
+              }//end if password=item
+          }//end messages[i]='password'
+      }//end for item in
+    }//end for i<validationresult.message.len
+  }//end validation valid
 } else if ($('#step2').css('visibility')=='visible') {
   var validationResult = userForm2.runValidations();
   if(validationResult.valid) {
-      popuplate();
       flip_div($('#step2'), $('#step3'));
   } else {
     var errors = validationResult;
@@ -333,6 +340,10 @@ if ($('#step1').css('visibility')=='visible') {
       }
     }
   }
+} else if ($('#step3').css('visibility')=='visible') {
+
+    popuplate();
+    flip_div($('#step3'), $('#step4'));
 }
 });
 
@@ -425,11 +436,11 @@ function flip_div(olddiv, newdiv) {
 }
 
 function popuplate() {
-  var thispage = $('#step3>#signup>.inner_signup field');
-  var fields = $('#form input[type=text]');
+  var thispage = $('#step4>#signup>.inner_signup field');
+  var fields = $('#form input[type=text]:not([readonly])');
   fields.each(function() {
+      console.log('this: ' + $(this).attr('name'));
       var field = $(this).attr('name');
-       console.log(field);
       $('#conf_'+field).val($(this).val());
   });
 }

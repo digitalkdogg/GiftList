@@ -74,6 +74,34 @@
 <div id = 'step3' class = 'rotate_right_90'>
 	<div id = 'signup' name = 'signup'><h1>Confirm the data</h1>
 		<div class='inner_signup'>
+				<form action = "#" type = 'POST'>
+				<field>
+				<span class = 'label'>List Admin Name: </span>
+				<span class = 'input'>
+					<input type = 'text' name = 'gift_admin_name' id = 'gift_admin_name'  size = '40' />
+				</span>
+				</field>
+				<field>
+				<span class = 'label'>List Admin Email : </span>
+				<span class = 'input'>
+					<input type = 'text' name='gift_admin_email' id = 'gift_admin_email' size='40' />
+				</span>
+			</field>
+				<input type = 'submit' class ='signup_btn' />
+			</form>
+		</div>
+		<div id = 'selectors'>
+			<span class = 'selector'></span>
+			<span class = 'selector'></span>
+			<span class = 'selector one'></span>
+		</div>
+
+	</div>
+</div>
+
+<div id = 'step4' class = 'rotate_right_90'>
+	<div id = 'signup' name = 'signup'><h1>Confirm the data</h1>
+		<div class='inner_signup'>
 				<form id = "conf_submit" action = "dashboard/submit_new_account" type = 'POST'>
 				<field>
 				<span class = 'label'>First Name : </span>
@@ -103,6 +131,18 @@
 				<span class = 'label'>List Title : </span>
 				<span class = 'input'>
 					<input type = 'text' id = 'conf_list_title' readonly />
+				</span>
+			</field>
+			<field>
+				<span class = 'label'>List Name : </span>
+				<span class = 'input'>
+					<input type = 'text' id = 'conf_gift_admin_name' readonly />
+				</span>
+			</field>
+			<field>
+				<span class = 'label'>List Title : </span>
+				<span class = 'input'>
+					<input type = 'text' id = 'conf_gift_admin_email' readonly />
 				</span>
 			</field>
 
