@@ -272,7 +272,7 @@ $(document).ready(function () {
    });
   });
 
- $('.signup_btn').click(function (e) {
+ $('.next_btn').click(function (e) {
   e.preventDefault();
   $('.err').text('');
   var userForm = window.FormValidator($("#step1 input"));
@@ -302,19 +302,25 @@ var userForm2 = window.FormValidator($("#step2 input"));
 userForm2.addValidation("list_title", {
   required: true
 });
+var userForm3 = window.FormValidator($("#step3 input"));
+userForm3.addValidation("gift_admin_name", {
+  required: true
+});
+userForm3.addValidation("gift_admin_email", {
+  required: true,
+  email: true
+});
 
 if ($('#step1').css('visibility')=='visible') {
   var validationResult = userForm.runValidations();
-  console.log(validationResult);
   if(validationResult.valid) {
       flip_div($('#step1'), $('#step2'));
   } else {
     var errors = validationResult;
-    console.log(validationResult.messages.length);
     for (i = 0;i<validationResult.messages.length;i++) {
       for (var item in validationResult.fields) {
         if (validationResult.messages[i].indexOf(item)>0) {
-          $('#'+item).after('<span class = "err">' +validationResult.messages[i]+'</span>');
+          $('#'+item).after('<span class = "err"> - ' +validationResult.messages[i]+ '</span>');
         } else if (validationResult.messages[i] == 'passwords must match each other') {
                if (item=='password1' || item=='password2') {
                   if ($('.err').text()=='') {
@@ -341,10 +347,34 @@ if ($('#step1').css('visibility')=='visible') {
     }
   }
 } else if ($('#step3').css('visibility')=='visible') {
+    var validationResult = userForm3.runValidations();
+    if (validationResult.valid) {
+       flip_div($('#step3'), $('#step4')); 
+       popuplate();  
+    } else {
+      var errors = validationResult;
+      for (i = 0;i<validationResult.messages.length;i++) {
+        for (var item in validationResult.fields) {
+          if (validationResult.messages[i].indexOf(item)>0) {
+            $('#'+item).after('<span class = "err">' +validationResult.messages[i]+'</span>');
+          }
+        }
+      }
+    }
 
-    popuplate();
-    flip_div($('#step3'), $('#step4'));
 }
+});
+
+
+$('.prev_btn').click(function (e) {
+  e.preventDefault();
+  if ($('#step2').css('visibility')=='visible') {
+      flip_div($('#step2'), $('#step1'));
+  } else if ($('#step3').css('visibility')=='visible') {
+     flip_div($('#step3'), $('#step2'));
+  } else if ($('#step4').css('visibility')=='visible') {
+     flip_div($('#step4'), $('#step3'));
+  }
 });
 
     $('input[name=user_name]').focus(function () {
@@ -441,6 +471,6 @@ function popuplate() {
   fields.each(function() {
       console.log('this: ' + $(this).attr('name'));
       var field = $(this).attr('name');
-      $('#conf_'+field).val($(this).val());
+      $('#conf_'+field).text($(this).val());
   });
 }
