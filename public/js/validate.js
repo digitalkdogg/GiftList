@@ -239,7 +239,7 @@
       }
     },
     matches: {
-      message: "Passwords $F must match",
+      message: "passwords must match each other",
       fn: function(val, arg) {
         return val === arg;
       }

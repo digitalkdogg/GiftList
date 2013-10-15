@@ -310,11 +310,19 @@ if ($('#step1').css('visibility')=='visible') {
       flip_div($('#step1'), $('#step2'));
   } else {
     var errors = validationResult;
+    console.log(validationResult.messages.length);
     for (i = 0;i<validationResult.messages.length;i++) {
       for (var item in validationResult.fields) {
         if (validationResult.messages[i].indexOf(item)>0) {
           $('#'+item).after('<span class = "err">' +validationResult.messages[i]+'</span>');
-        }
+        } else if (validationResult.messages[i] == 'passwords must match each other') {
+               if (item=='password1' || item=='password2') {
+                  if ($('.err').text()=='') {
+                    $('#password1').after('<span class = "err">passwords must match</span>');
+                    $('#password2').after('<span class = "err">passwords must match</span>');
+                  }
+              }
+          }
       }
     }
   }
