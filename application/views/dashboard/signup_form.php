@@ -5,37 +5,37 @@
 			<form action = 'test.html' type='POST' id = 'signup_form'>
 			<field><span class = 'label'>First Name : </span>
 				<span class = 'input'>
-					<input type = 'text' id='first_name' name = 'first_name' class='required' />
+					<input type = 'text' id='first_name' name = 'first_name' class='required' size='30' />
 				</span>
 			</field>
 			<field>
 				<span class = 'label'>Last Name : </span>
 				<span class = 'input'>
-					<input type = 'text' id='last_name' name = 'last_name' class='required' />
+					<input type = 'text' id='last_name' name = 'last_name' class='required' size = '30' />
 				</span>
 			</field>
 			<field>
 				<span class = 'label'>User Name : </span>
 				<span class = 'input'>
-					<input type = 'text' id='username' name = 'username' class='required' />
+					<input type = 'text' id='username' name = 'username' class='required' size='30' />
 				</span>
 			</field>
 			<field>
 				<span class = 'label'>Email : </span>
 				<span class = 'input'>
-					<input type = 'text' id = 'email' name = 'email' class="required" id = "email" />
+					<input type = 'text' id = 'email' name = 'email' class="required" id = "email" size = '40' />
 				</span>
 			</field>
 			<field>
 				<span class = 'label'>Password : </span>
 				<span class = 'input'>
-					<input type = 'password' id = 'password1' name = 'password1' class = 'required' />
+					<input type = 'password' id = 'password1' name = 'password1' class = 'required' size = '30' />
 				</span>
 			</field>
 			<field>
 				<span class = 'label'>Confirm Password : </span>
 				<span class = 'input'>
-					<input type = 'password' id = 'password2' name = 'password2' class = 'required'/>
+					<input type = 'password' id = 'password2' name = 'password2' class = 'required' size = '30' />
 				</span>
 			</field>
 			<input type = 'submit' class ='signup_btn' />
@@ -57,9 +57,9 @@
 			<field>
 				<span class = 'label'>Gift List : </span>
 				<span class = 'input'>
-					<input type = 'text' name = 'list_title' id = 'list_title' />
+					<input type = 'text' name = 'list_title' id = 'list_title' size = '30' />
 				</span>
-			</field>	
+			</field>
 			<input type = 'submit' class ='signup_btn' />
 			</form>
 		</div>
@@ -105,9 +105,9 @@
 					<input type = 'text' id = 'conf_list_title' readonly />
 				</span>
 			</field>
-				
+
 				<input type = 'submit' class ='conf_submit' />
-			</form> 
+			</form>
 		</div>
 		<div id = 'selectors'>
 			<span class = 'selector'></span>
