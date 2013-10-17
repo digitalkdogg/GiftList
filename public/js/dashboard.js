@@ -320,7 +320,7 @@ if ($('#step1').css('visibility')=='visible') {
     for (i = 0;i<validationResult.messages.length;i++) {
       for (var item in validationResult.fields) {
         if (validationResult.messages[i].indexOf(item)>0) {
-          $('#'+item).after('<span class = "err"> - ' +validationResult.messages[i]+ '</span>');
+          $('#'+item).after('<span class = "err">-' +validationResult.messages[i]+ '</span>');
         } else if (validationResult.messages[i] == 'passwords must match each other') {
                if (item=='password1' || item=='password2') {
                   if ($('.err').text()=='') {
@@ -349,8 +349,8 @@ if ($('#step1').css('visibility')=='visible') {
 } else if ($('#step3').css('visibility')=='visible') {
     var validationResult = userForm3.runValidations();
     if (validationResult.valid) {
-       flip_div($('#step3'), $('#step4')); 
-       popuplate();  
+       flip_div($('#step3'), $('#step4'));
+       popuplate();
     } else {
       var errors = validationResult;
       for (i = 0;i<validationResult.messages.length;i++) {

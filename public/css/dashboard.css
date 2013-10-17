@@ -155,16 +155,23 @@ p.links>.icon-pencil {
 
 .label {
   display:inline-block;
-  min-width:140px;
+  min-width:18%;
 }
 
 field {
-  padding:5px;
+  position:relative;
+  top: 10px;
+  margin: 10px 0;
   display:block;
+  height: 40px;
 }
 
 .err {
-  font-size:.8em;
+width: 50%;
+display: block;
+left: 45%;
+position: relative;
+top: -28px;
 }
 
 #step2, #step3, #step1 {
