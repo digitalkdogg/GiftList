@@ -45,6 +45,7 @@
 			<span class = 'selector one'></span>
 			<span class = 'selector'></span>
 			<span class = 'selector'></span>
+			<span class = 'selector'></span>
 		</div>
 	</div>
 </div>
@@ -67,6 +68,7 @@
 		<div id = 'selectors'>
 			<span class = 'selector'></span>
 			<span class = 'selector one'></span>
+			<span class = 'selector'></span>
 			<span class = 'selector'></span>
 		</div>
 	</div>
@@ -96,6 +98,7 @@
 			<span class = 'selector'></span>
 			<span class = 'selector'></span>
 			<span class = 'selector one'></span>
+			<span class = 'selector'></span>
 		</div>
 
 	</div>
@@ -152,6 +155,7 @@
 			</form>
 		</div>
 		<div id = 'selectors'>
+			<span class = 'selector'></span>
 			<span class = 'selector'></span>
 			<span class = 'selector'></span>
 			<span class = 'selector one'></span>
