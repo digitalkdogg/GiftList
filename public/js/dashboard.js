@@ -386,18 +386,9 @@ $('.conf_submit').click(function(e) {
   data['email'] = $('#conf_email').text();
   data['password'] = CryptoJS.MD5($('#password1').val()).toString();
   data['list_title'] = $('#conf_list_title').text();
-    data['gift_admin_name'] = $('#gift_admin_name').val();
-      data['gift_admin_email'] = $('#gift_admin_email').val();;
-   $.ajax({
-        type: "POST",
-        dataType: "JSON",
-        url: url + 'dashboard/submit_new_account',
-        data: {'data': data},
-        failure: function() {alert ('bad');},
-        success: function(return_data) {
-
-        }
-      });
+  data['gift_admin_name'] = $('#gift_admin_name').val();
+  data['gift_admin_email'] = $('#gift_admin_email').val();;
+  doAjax("POST", "JSON", 'dashboard/submit_new_account', data, '');
 });
 
     $('input[name=user_name]').focus(function () {
@@ -405,6 +396,19 @@ $('.conf_submit').click(function(e) {
     });
 
  });
+
+function doAjax (type, dataType, ajaxurl, ajaxdata, success){
+  $.ajax({
+        type: type,
+        dataType: dataType,
+        url: 'http://localhost/giftlist/list.php/' + ajaxurl,
+        data: {'data': ajaxdata},
+        failure: function() {alert ('bad');},
+        success: function(return_data) {
+
+        }
+      });
+}
 
 function addGiftLink (id) {
   gift_title = $('input[name=gift_title]').val();
