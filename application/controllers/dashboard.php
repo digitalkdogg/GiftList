@@ -9,27 +9,27 @@ class Dashboard extends CI_Controller {
     {
 
        	parent::__construct();
-       	$this->load->model('db_model');	
+       	$this->load->model('db_model');
 		$this->load->model('html_model');
 		$this->load->model('gift_model');
 		$this->load->library('session');
-		
+
     }
 
 
 
-	public function index () 
+	public function index ()
 	{
-		$content = $this->load->view('dashboard/dashboard_home', '', true);	
+		$content = $this->load->view('dashboard/dashboard_home', '', true);
 		$content .= $this->load->view('dashboard/login_form', '', true);
 		echo $content;
 //$this->session->unset_userdata('login');
-	
+
 	}
 
 	public function load_dashboard($name) {
 		 $session_data = ($this->session->all_userdata());
-		 $owner = $this->db_model->get_owner($name);	
+		 $owner = $this->db_model->get_owner($name);
 	     $content = $this->load->view('dashboard/dashboard_home', array('owner'=>$owner), true);
        	 $side_bar = $this->db_model->get_side_bar_type(2);
        	 $content .= "<div id = 'side_bar'>";
@@ -61,7 +61,7 @@ class Dashboard extends CI_Controller {
 		 			$content .= $this->load->view('dashboard/dashboard_owner_start', array('title' => $owner['user_name'], 'class'=>'owner'), true);
 		 			$content .= $this->load->view('dashboard/dashboard_owner_dets', array('owner'=>$owner), true);
 		 			$content .="</div><!--end item --></div><!--end item wrapper> -->";
-		 			$content .= "</div><!--end class items -->";	
+		 			$content .= "</div><!--end class items -->";
 		 		endif;
 
 		  		$admin = $this->db_model->get_giftlist_admin($owner['owner_id']);
@@ -71,8 +71,8 @@ class Dashboard extends CI_Controller {
 		 			$content .= $this->load->view('dashboard/dashboard_admin_start', array('title' => $admin->first_name.' '. $admin->last_name, 'class'=>'admin'), true);
 		 			$content .= $this->load->view('dashboard/dashboard_admin_dets', array('admin'=>$admin), true);
 		 			$content .="</div><!--end item --></div><!--end item wrapper> -->";
-		 			$content .= "</div><!--end class items -->";	
-		 		endif; 
+		 			$content .= "</div><!--end class items -->";
+		 		endif;
 		 	else:
 		 		redirect('dashboard', 'refresh');
 		 endif;
@@ -104,12 +104,12 @@ class Dashboard extends CI_Controller {
 	}
 
 
-	public function get_dashboard_add_form() 
+	public function get_dashboard_add_form()
 	{
 		$session_data = ($this->session->all_userdata());
 		$links = null;
 		$id = null;
-		if (isset($session_data['login'])): 
+		if (isset($session_data['login'])):
 			$action = $_POST['action'];
 			switch ($action) {
 				case 'dash_add_gift' :
@@ -121,7 +121,7 @@ class Dashboard extends CI_Controller {
 						$options[$i] = $i;
 					}
 
-					$inputs = array('1'=>array('name'=>'title', 'type'=>'text', 'label_value'=>'Title :', 'options'=>null, 'value'=>''), 
+					$inputs = array('1'=>array('name'=>'title', 'type'=>'text', 'label_value'=>'Title :', 'options'=>null, 'value'=>''),
 							'2'=>array('name'=>'desc', 'type'=>'textarea', 'label_value'=>'Description :', 'value'=>'', 'cols'=>'80', 'rows'=>'5'),
 							'3'=>array('name'=>'num', 'type'=>'dropdown', 'label_value'=>'List Number :', 'options' => $options, 'value'=>'', 'selected'=>$list_num),
 							'4'=>array('name'=>'image', 'type'=>'image', 'label_value'=>'Image :', 'options'=>null, 'value'=>''),
@@ -132,24 +132,24 @@ class Dashboard extends CI_Controller {
 					break;
 
 				case 'dash_edit_gift' :
-					$id = $_POST['list_id']; 
+					$id = $_POST['list_id'];
 					$actionurl = $action . '/' . $id;
 					$owner = $this->db_model->get_owner_by_listid ($id);
 					$list = $this->db_model->get_list_for_listid($id);
-					$inputs = array('1'=>array('name'=>'title', 'type'=>'text', 'label_value'=>'Title :', 'options'=>null, 'value'=>$list[0]->title), 
+					$inputs = array('1'=>array('name'=>'title', 'type'=>'text', 'label_value'=>'Title :', 'options'=>null, 'value'=>$list[0]->title),
 							'2'=>array('name'=>'date', 'type'=>'text', 'label_value'=>'Create Date :', 'text_value'=>$list[0]->creation_date)
 							);
-					
+
 					$form_title = 'Edit Gift List';
 					$btn = "Edit List!";
 					break;
 
 				case 'dash_delete_gift' :
-					$id = $_POST['list_id']; 
+					$id = $_POST['list_id'];
 					$actionurl = $action . '/' . $id;
 					$owner = $this->db_model->get_owner_by_listid ($id);
 					$list = $this->db_model->get_list_for_listid($id);
-					$inputs = array('1'=>array('name'=>'title', 'type'=>'text', 'label_value'=>'Title :', 'options'=>null, 'value'=>$list[0]->title), 
+					$inputs = array('1'=>array('name'=>'title', 'type'=>'text', 'label_value'=>'Title :', 'options'=>null, 'value'=>$list[0]->title),
 							'2'=>array('name'=>'date', 'type'=>'text', 'label_value'=>'Create Date :', 'text_value'=>$list[0]->creation_date)
 							);
 					$form_title = 'Remove Gift List';
@@ -157,7 +157,7 @@ class Dashboard extends CI_Controller {
 
 					break;
 				case 'dash_add_list' :
-					$id = $_POST['list_id']; 
+					$id = $_POST['list_id'];
 					$actionurl = $action . '/' . $id;
 					$owner = $this->db_model->get_owner_by_listid ($id);
 					$inputs = array('1'=>array('name'=>'title', 'type'=>'text', 'label_value'=>'Title :', 'options'=>null, 'value'=>''));
@@ -167,22 +167,22 @@ class Dashboard extends CI_Controller {
 				case 'dash_edit_gift_item' :
 					$id = $_POST['gift_id'];
 					$actionurl = $action . '/' . $id;
-					$list_id = $_POST['list_id']; 
+					$list_id = $_POST['list_id'];
 					$owner = $this->db_model->get_owner_by_listid ($list_id);
-				
+
 					for ($i = 1; $i <= 20; $i++) {
 						$options[$i] = $i;
 					}
-					
+
 					$gift_id = $_POST['gift_id'];
 					$list = $this->db_model->get_gift_by_giftid($gift_id, $owner[0]->owner_id);
-					$inputs = array('1'=>array('name'=>'title', 'type'=>'text', 'label_value'=>'Title :', 'options'=>null, 'value'=>$list->title), 
+					$inputs = array('1'=>array('name'=>'title', 'type'=>'text', 'label_value'=>'Title :', 'options'=>null, 'value'=>$list->title),
 							'2'=>array('name'=>'description', 'type'=>'textarea', 'label_value'=>'Description :', 'value'=>$list->description , 'cols'=>'80', 'rows'=>'5'),
 							'3'=>array('name'=>'image', 'type'=>'image', 'label_value'=>'Image :', 'value'=>$list->image),
 							'4'=>array('name'=>'num', 'type'=>'dropdown', 'label_value'=>'Number :', 'value'=>$list->num, 'options' => $options, 'selected'=>$list->num),
 							'5'=>array('name'=>'img', 'type'=>'hidden', 'label_value'=>'', 'value'=>'')
 							);
-					
+
 					$form_title = 'Edit Gift Item';
 					$btn = "Edit Gift Item!";
 					$links = $this->db_model->get_gift_links($id);
@@ -192,17 +192,17 @@ class Dashboard extends CI_Controller {
 				case 'dash_delete_gift_item' :
 					$id = $_POST['gift_id'];
 					$actionurl = $action . '/' . $id;
-					$list_id = $_POST['list_id']; 
+					$list_id = $_POST['list_id'];
 					$owner = $this->db_model->get_owner_by_listid ($list_id);
-					
+
 					$gift_id = $_POST['gift_id'];
 					$list = $this->db_model->get_gift_by_giftid($gift_id, $owner[0]->owner_id);
-					$inputs = array('1'=>array('name'=>'title', 'type'=>'text', 'label_value'=>'Title :', 'options'=>null, 'value'=>$list->title), 
+					$inputs = array('1'=>array('name'=>'title', 'type'=>'text', 'label_value'=>'Title :', 'options'=>null, 'value'=>$list->title),
 							'2'=>array('name'=>'description', 'type'=>'textarea', 'label_value'=>'Description :', 'value'=>$list->description, 'cols'=>'80', 'rows'=>'5'),
 							'3'=>array('name'=>'image', 'type'=>'image', 'label_value'=>'Image :', 'value'=>$list->image),
 							'4'=>array('name'=>'num', 'type'=>'text', 'label_value'=>'Number :', 'value'=>$list->num)
 							);
-					
+
 					$form_title = 'Remove Gift Item';
 					$btn = "Remove This Gift Item!";
 					break;
@@ -236,9 +236,9 @@ class Dashboard extends CI_Controller {
 					$btn = 'Update Owner';
 					break;
 			}
-			
-			$data = array('id' => $id, 'owner'=>$owner, 
-						 	'inputs'=>$inputs, 
+
+			$data = array('id' => $id, 'owner'=>$owner,
+						 	'inputs'=>$inputs,
 							'form_title'=> $form_title,
 							'action' => $actionurl,
 							'btn' => $btn,
@@ -248,7 +248,7 @@ class Dashboard extends CI_Controller {
 		endif;
 	}
 
-	public function add_list($id) 
+	public function add_list($id)
 	{
 		$session_data = ($this->session->all_userdata());
 		if (isset($session_data['login'])):
@@ -260,7 +260,7 @@ class Dashboard extends CI_Controller {
 	}
 
 
-	public function add_gift($id) 
+	public function add_gift($id)
 	{
 		$session_data = ($this->session->all_userdata());
 		if (isset($session_data['login'])):
@@ -271,7 +271,7 @@ class Dashboard extends CI_Controller {
 		endif;
 	}
 
-	public function edit_gift($id) 
+	public function edit_gift($id)
 	{
 		$session_data = ($this->session->all_userdata());
 		if (isset($session_data['login'])):
@@ -282,7 +282,7 @@ class Dashboard extends CI_Controller {
 		endif;
 	}
 
-	public function edit_gift_item($id) 
+	public function edit_gift_item($id)
 	{
 		$session_data = ($this->session->all_userdata());
 		if (isset($session_data['login'])):
@@ -294,7 +294,7 @@ class Dashboard extends CI_Controller {
 	}
 
 
-	public function delete_gift($id) 
+	public function delete_gift($id)
 	{
 		$session_data = ($this->session->all_userdata());
 		if (isset($session_data['login'])):
@@ -305,7 +305,7 @@ class Dashboard extends CI_Controller {
 		endif;
 	}
 
-	public function delete_gift_item($id) 
+	public function delete_gift_item($id)
 	{
 		$session_data = ($this->session->all_userdata());
 		if (isset($session_data['login'])):
@@ -368,14 +368,14 @@ class Dashboard extends CI_Controller {
 		echo json_encode($rows);
 	}
 
-	public function get_config() 
+	public function get_config()
 	{
 		$response = array('server' => $this->config->item('server'),
 						 'path'=> $this->config->item('path'));
 		echo json_encode($response);
 	}
 
-	public function logout() 
+	public function logout()
 	{
 		$this->session->unset_userdata('login');
 		$this->session->unset_userdata('login_user');
@@ -384,23 +384,28 @@ class Dashboard extends CI_Controller {
 
 	}
 
-	public function signup () 
+	public function signup ()
 	{
-		$content = $this->load->view('dashboard/dashboard_home', '', true);	
+		$content = $this->load->view('dashboard/dashboard_home', '', true);
 		$content .= $this->load->view('dashboard/signup_form', '', true);
 		echo $content;
 	}
 
 	public function submit_new_account()
 	{
-		var_dump($_POST['data'][5]);
-		$data =array('first_name' => $_POST['data'][0],
-					'last_name' => $_POST['data'][1],
-					'username' => $_POST['data'][2],
-					'email'=> $_POST['data'][3],
-					'password'=> $_POST['data'][4]);
+		var_dump($_POST);
+		$data =array('first_name' => $_POST['data']['first_name'],
+					'last_name' => $_POST['data']['last_name'],
+					'username' => $_POST['data']['user_name'],
+					'email'=> $_POST['data']['email'],
+					'password'=> $_POST['data']['password'],
+					'list_title'=> $_POST['data']['list_title'],
+					'gift_admin_name' => $_POST['data']['gift_admin_name'],
+					'gift_admin_email' => $_POST['data']['gift_admin_email']
+					);
 		$owner = $this->db_model->save_new_user($data);
-		$this->db_model->insert_list ($owner, array('title'=>$_POST['data'][5]));
+		$this->db_model->add_new_admin($data, $owner);
+		$this->db_model->insert_list ($owner, array('title'=>$_POST['data']['list_title']));
 	}
 
  }//end dashboard class

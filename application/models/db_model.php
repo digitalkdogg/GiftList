@@ -10,14 +10,14 @@ class Db_model extends CI_Model {
 	@purpose: get the owner information and save it to a session
 	@params : name
 	@return : array(owner_id, user_name, first_name, last_name, email)
-*/	
+*/
 	function get_owner($name)
 	{
 	$query = $this->db->from('owner')
 	 				->where ('user_name', $name);
 	$query = $this->db->get()->row();
 	if (!$query==null) :
-	$data = array( 
+	$data = array(
 		'owner_id' => $query->owner_id,
 		'user_name' => $query->user_name,
 		'password' => $query->password,
@@ -25,7 +25,7 @@ class Db_model extends CI_Model {
 		'last_name' => $query->last_name,
 		'email' => $query->email
 	 );
-	 $newdata = array('owner_id'  => $data['owner_id'], 
+	 $newdata = array('owner_id'  => $data['owner_id'],
 	 				  'owner_user_name' => $data['user_name'],
 	 				  'owner_first_name' => $data['first_name'],
 	 				  'owner_last_name' => $data['last_name'],
@@ -50,7 +50,7 @@ class Db_model extends CI_Model {
 					->where('list.status_id', '1')
 					->join ('owner', 'owner.owner_id=list.owner_id');
 		$query = $this->db->get()->result();
-		return $query;		
+		return $query;
 	}
 
 		/*
@@ -65,9 +65,9 @@ class Db_model extends CI_Model {
 					->where('list.status_id', '1')
 					->join ('owner', 'owner.owner_id=list.owner_id');
 		$query = $this->db->get()->result();
-		return $query;		
+		return $query;
 	}
-	
+
 
 	/*
 	@pupose : gets one list for that list_id
@@ -80,7 +80,7 @@ class Db_model extends CI_Model {
 					->where('list.list_id', $list_id)
 					->where('list.status_id', '1');
 		$query = $this->db->get()->result();
-		return $query;		
+		return $query;
 	}
 
 	/*
@@ -102,7 +102,7 @@ class Db_model extends CI_Model {
 	@return the series of quicklist in html output
 
 	*/
-	
+
 	function print_side_bar($list_id=null)
   	{
 		$owner= $this->session->userdata('owner_id');
@@ -113,7 +113,7 @@ class Db_model extends CI_Model {
 				'content' => $row['content'],
 				'id' => 'reg_side_bar'
 				);
-				
+
 		if ($data['title'] == 'Quick List') {
 			$this->html_model->load_quick_list($data, $list_id);
 		} else if ($data['title'] == 'New Features') {
@@ -125,7 +125,7 @@ class Db_model extends CI_Model {
 			}
 		endforeach;
 		$html = array ('html' => "</div><!--end side bar -->");
-		$this->load->view('print_html', $html);	
+		$this->load->view('print_html', $html);
 	}
 
 /*
@@ -134,18 +134,18 @@ class Db_model extends CI_Model {
 	@return the contents from the db for that side bar type
 
 	*/
-	
+
 	function get_side_bar_type($type)
   	{
 		$this->db->from('side_bar')
 	 		->where ('type_id', 2)
 	 		->where ('status_id', 1);
-		$this->db->order_by("side_bar_id", "asc"); 
+		$this->db->order_by("side_bar_id", "asc");
 		$query = $this->db->get()->result_array();
 		return $query;
 	}
 
-	
+
 	/*
 	purpose : gets the gift items and returns the html including the gift links
 	param : none
@@ -154,7 +154,7 @@ class Db_model extends CI_Model {
 	*/
 
 	function print_gift_item($gifts)
-	{			
+	{
 		$owner_id = $this->session->userdata('owner_id');
 		foreach ($gifts as $gift):
 			$gift_item = $this->get_gift_item($gift->gift_id);
@@ -168,11 +168,11 @@ class Db_model extends CI_Model {
 			$this->load->view('gift_end', array('div' => 1));
 		endforeach;
 	}
-	
+
 	function print_comments($gift, $limit)
 	{
 		$query = $this->db->query("select *  from comment where gift_id = " .  $gift . " order by date_time desc limit " . $limit);
-		if ($query->num_rows() > 0) :	
+		if ($query->num_rows() > 0) :
 			$gift_item = $this->get_gift_by_giftid($gift, $this->session->userdata('owner_id'));
 			$this->load->view('comment_begin', $gift_item);
 			foreach ($query->result_array() as $row) :
@@ -184,11 +184,11 @@ class Db_model extends CI_Model {
 			$this->load->view('comment_end');
 		else:
 			$html = array ('html' => "<div id = 'comment_wrapper'>");
-			$this->load->view('print_html', $html);	
+			$this->load->view('print_html', $html);
 			$html = array ('html' => "<div class = 'comments'><div class = 'comments_new'>There are no comments at this time</div></div>");
-			$this->load->view('print_html', $html);	
+			$this->load->view('print_html', $html);
 			$html = array ('html' => "</div>");
-			$this->load->view('print_html', $html);	
+			$this->load->view('print_html', $html);
 		endif;
 	}
 
@@ -204,7 +204,7 @@ class Db_model extends CI_Model {
 				//	->where ('owner_id', $owner_id)
 					->join ('taken', 'gift.taken_id=taken.taken_id')
 					->join ('gift_list', 'gift_list.gift_id=gift.gift_id');
-					
+
 	$query = $this->db->get()->row();
 	if ($query) :
 		return $query;
@@ -230,7 +230,7 @@ class Db_model extends CI_Model {
 					->join ('taken', 'taken.taken_id=gift.taken_id')
 					->join ('gift_list', 'gift_list.gift_id=gift.gift_id');
 		$query = $this->db->get()->row();
-		return $query;		
+		return $query;
 	}
 
 	/*
@@ -245,18 +245,18 @@ class Db_model extends CI_Model {
 				$this->db->from('gift')
 	 				->where ('status_id', 1)
 					->where ('owner_id', $owner_id);
-				$this->db->order_by("num", "asc"); 
+				$this->db->order_by("num", "asc");
 		$query = $this->db->get()->result();
 		return $query;
 	}
-	
+
 	/*
 	@purpos: get gifts that are taken for that owner
 	@params: owner_id and teken
 	@reutrn : results of taken gifts
 	*/
 	public function get_giftid_taken($owner_id, $taken, $list_id)
-	{	
+	{
 				$this->db->select('gift.gift_id');
 				$this->db->from('gift')
 	 				->where ('status_id', 1)
@@ -268,9 +268,9 @@ class Db_model extends CI_Model {
 		$query = $this->db->get()->result();
 		return $query;
 	}
-	
+
 	/*
-	@purpose: get gift item 
+	@purpose: get gift item
 	@params: gift_id
 	@return: row of the gift
 	*/
@@ -284,7 +284,7 @@ class Db_model extends CI_Model {
 		$query = $this->db->get()->row();
 		return $query;
 	}
-	
+
 	/*
 	@purpose : get likes for that gift
 	@params : gift_id
@@ -302,14 +302,14 @@ class Db_model extends CI_Model {
 	return $query->like_count;
 	endif;
 	}
-	
+
 	/*
 	purpose: get the gift links for that gift
 	params : gift_id
 	return : results fo gift Links
 	*/
 
-	public function get_gift_links($gift_id) 
+	public function get_gift_links($gift_id)
 	{
 		$this->db->select('*');
 		$this->db->from('gift_link')
@@ -317,7 +317,7 @@ class Db_model extends CI_Model {
 		$query = $this->db->get()->result();
 		return $query;
 	}
-	
+
 	/*
 	@purpose: get the owner info by the gift Id
 	@params : gift_id
@@ -334,9 +334,9 @@ class Db_model extends CI_Model {
 					->where ('owner_id', $owner_id);
 	$query = $this->db->get()->row();
 	return $query;
-	
+
 	}
-	
+
 	/*
 	@purpose: get the data for the quick list
 	@paramas : none
@@ -351,13 +351,13 @@ class Db_model extends CI_Model {
 	 				->where ('status_id', 1)
 	 				->where ('gift_list.list_id', $list_id)
 					->where ('owner_id', $owner_id);
-		$this->db->order_by("num", "asc"); 
+		$this->db->order_by("num", "asc");
 		$query = $this->db->get()->result();
 		return $query;
 	}
-	
+
 	/*
-	@purpose : 
+	@purpose :
 
 	*/
 
@@ -385,15 +385,15 @@ class Db_model extends CI_Model {
 	@params: owner_id
 	@return: row of the giftlist admin
 	*/
-	
+
 	public function get_giftlist_admin($owner_id)
-	{			
+	{
 		$query = $this->db->from('admin')
 					->where ('owner_id', $owner_id);
 		$query = $this->db->get()->row();
 		return $query;
 	}
-	
+
 	/*
 	@purpose : get the gift items for that list
 	@params : list_id
@@ -474,7 +474,7 @@ class Db_model extends CI_Model {
 	*/
 	public function delete_gift_link ($id)
 	{
-		$this->db->delete('gift_link', array('link_id' => $id)); 
+		$this->db->delete('gift_link', array('link_id' => $id));
 		return $this->db->affected_rows();
 	}
 
@@ -503,7 +503,7 @@ class Db_model extends CI_Model {
    			'status_id' => 1,
    			'taken_id' => 2
 		);
-		$this->db->insert('gift', $gift); 
+		$this->db->insert('gift', $gift);
 	}
 
 	/*
@@ -520,7 +520,7 @@ class Db_model extends CI_Model {
                'creation_date' => $data['date'],
                'last_updated_date' => date('Y-m-d H:i:s')
             );
-		$this->db->update('list', $object); 
+		$this->db->update('list', $object);
 		return $this->db->affected_rows();
 	}
 
@@ -537,7 +537,7 @@ class Db_model extends CI_Model {
                'status_id' => 2,
                'last_updated_date' => date('Y-m-d H:i:s')
             );
-	$this->db->update('list', $object); 
+	$this->db->update('list', $object);
 	return $this->db->affected_rows();
 
 	}
@@ -552,14 +552,14 @@ class Db_model extends CI_Model {
 	{
 		$this->db->from('gift')
 				->where('gift_id', $id);
-		
+
 	 $object = array(
                'title' => $data['title'],
                'description' => $data['description'],
                'num' => $data['num'],
                'image' => $data['image']
             );
-	 	$this->db->update('gift', $object); 
+	 	$this->db->update('gift', $object);
 		return $this->db->affected_rows();
 	}
 
@@ -572,13 +572,13 @@ class Db_model extends CI_Model {
 	{
 		$this->db->from('owner')
 				->where('owner_id', $data['owner_id']);
-		
+
 	 $object = array(
                'first_name' => $data['first_name'],
                'last_name' => $data['last_name'],
                'email' => $data['email']
             );
-	 	$this->db->update('owner', $object); 
+	 	$this->db->update('owner', $object);
 		return $this->db->affected_rows();
 	}
 
@@ -591,13 +591,13 @@ class Db_model extends CI_Model {
 	{
 		$this->db->from('admin')
 				->where('admin_id', $data['admin_id']);
-		
+
 	 $object = array(
                'first_name' => $data['first_name'],
                'last_name' => $data['last_name'],
                'email' => $data['email']
             );
-	 	$this->db->update('admin', $object); 
+	 	$this->db->update('admin', $object);
 		return $this->db->affected_rows();
 	}
 
@@ -614,7 +614,7 @@ class Db_model extends CI_Model {
 	$object = array(
                'status_id' => 2
             );
-	$this->db->update('gift', $object); 
+	$this->db->update('gift', $object);
 	return $this->db->affected_rows();
 
 	}
@@ -660,6 +660,17 @@ class Db_model extends CI_Model {
 		);
 		$this->db->insert('owner', $user);
 		return $this->db->insert_id();
+	}
+
+	public function add_new_admin ($data, $owner) {
+		$admin = array (
+				'admin_id' => null,
+				'first_name' => $data['gift_admin_name'],
+				'email' => $data['gift_admin_email'],
+				'owner_id' => $owner
+			);
+		$this->db->insert('admin', $admin);
+		return;
 	}
 
 } // end db_model class

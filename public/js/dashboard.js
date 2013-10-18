@@ -377,6 +377,29 @@ $('.prev_btn').click(function (e) {
   }
 });
 
+$('.conf_submit').click(function(e) {
+  e.preventDefault();
+  data = {};
+  data['first_name'] = $('#conf_first_name').text();
+  data['last_name'] = $('#conf_last_name').text();
+  data['user_name'] = $('#conf_username').text();
+  data['email'] = $('#conf_email').text();
+  data['password'] = CryptoJS.MD5($('#password1').val()).toString();
+  data['list_title'] = $('#conf_list_title').text();
+    data['gift_admin_name'] = $('#gift_admin_name').val();
+      data['gift_admin_email'] = $('#gift_admin_email').val();;
+   $.ajax({
+        type: "POST",
+        dataType: "JSON",
+        url: url + 'dashboard/submit_new_account',
+        data: {'data': data},
+        failure: function() {alert ('bad');},
+        success: function(return_data) {
+
+        }
+      });
+});
+
     $('input[name=user_name]').focus(function () {
        $('.message').text();
     });

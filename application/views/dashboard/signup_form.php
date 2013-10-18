@@ -23,7 +23,7 @@
 			<field>
 				<span class = 'label'>Email : </span>
 				<span class = 'input'>
-					<input type = 'text' id = 'email' name = 'email' class="required" id = "email" size = '40' />
+					<input type = 'text' id = 'email' name = 'email' class="required" id = "email" size = '30' />
 				</span>
 			</field>
 			<field>
@@ -38,7 +38,7 @@
 					<input type = 'password' id = 'password2' name = 'password2' class = 'required' size = '30' />
 				</span>
 			</field>
-			<input type = 'submit' class ='signup_btn' />
+			<button class ='next_btn'>Next</button>
 			</form>
 		</div>
 		<div id = 'selectors'>
@@ -60,7 +60,8 @@
 					<input type = 'text' name = 'list_title' id = 'list_title' size = '30' />
 				</span>
 			</field>
-			<input type = 'submit' class ='signup_btn' />
+			<button class ='prev_btn'>Back</button>
+			<button class ='next_btn'>Next</button>
 			</form>
 		</div>
 		<div id = 'selectors'>
@@ -72,7 +73,7 @@
 </div>
 
 <div id = 'step3' class = 'rotate_right_90'>
-	<div id = 'signup' name = 'signup'><h1>Confirm the data</h1>
+	<div id = 'signup' name = 'signup'><h1>Pick A Gift List Admin</h1>
 		<div class='inner_signup'>
 				<form action = "#" type = 'POST'>
 				<field>
@@ -87,7 +88,8 @@
 					<input type = 'text' name='gift_admin_email' id = 'gift_admin_email' size='40' />
 				</span>
 			</field>
-				<input type = 'submit' class ='signup_btn' />
+				<button class ='prev_btn'>Back</button>
+				<button class ='next_btn'>Next</button>
 			</form>
 		</div>
 		<div id = 'selectors'>
@@ -106,46 +108,46 @@
 				<field>
 				<span class = 'label'>First Name : </span>
 				<span class = 'input'>
-					<input type = 'text' id = 'conf_first_name' readonly />
+					<span id = 'conf_first_name'></span>
 				</span>
 				</field>
 				<field>
 				<span class = 'label'>Last Name : </span>
 				<span class = 'input'>
-					<input type = 'text' id = 'conf_last_name' readonly />
+					<span id = 'conf_last_name'></span
 				</span>
 			</field>
 			<field>
 				<span class = 'label'>UserName : </span>
 				<span class = 'input'>
-					<input type = 'text' id = 'conf_username' readonly />
+					<span id = 'conf_username'></span
 				</span>
 			</field>
 			<field>
 				<span class = 'label'>Email : </span>
 				<span class = 'input'>
-					<input type = 'text' id = 'conf_email' readonly />
+					<span id = 'conf_email'></span>
 				</span>
 			</field>
 			<field>
 				<span class = 'label'>List Title : </span>
 				<span class = 'input'>
-					<input type = 'text' id = 'conf_list_title' readonly />
+					<span id = 'conf_list_title'></span>
 				</span>
 			</field>
 			<field>
 				<span class = 'label'>List Name : </span>
 				<span class = 'input'>
-					<input type = 'text' id = 'conf_gift_admin_name' readonly />
+					<span id = 'conf_gift_admin_name'></span>
 				</span>
 			</field>
 			<field>
 				<span class = 'label'>List Title : </span>
 				<span class = 'input'>
-					<input type = 'text' id = 'conf_gift_admin_email' readonly />
+					<span id = 'conf_gift_admin_email'></span>
 				</span>
 			</field>
-
+				<button class ='prev_btn'>Back</button>
 				<input type = 'submit' class ='conf_submit' />
 			</form>
 		</div>
