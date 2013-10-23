@@ -673,5 +673,12 @@ class Db_model extends CI_Model {
 		return;
 	}
 
+	public function check_user_name($data) {
+		$query = $this->db->select('user_name')
+				->from('owner')
+				->where('owner.user_name', $data);
+		return $this->db->get()->result();
+	}
+
 } // end db_model class
 ?>

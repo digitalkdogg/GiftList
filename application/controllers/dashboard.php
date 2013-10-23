@@ -393,7 +393,6 @@ class Dashboard extends CI_Controller {
 
 	public function submit_new_account()
 	{
-		var_dump($_POST);
 		$data =array('first_name' => $_POST['data']['first_name'],
 					'last_name' => $_POST['data']['last_name'],
 					'username' => $_POST['data']['user_name'],
@@ -406,6 +405,15 @@ class Dashboard extends CI_Controller {
 		$owner = $this->db_model->save_new_user($data);
 		$this->db_model->add_new_admin($data, $owner);
 		$this->db_model->insert_list ($owner, array('title'=>$_POST['data']['list_title']));
+	}
+
+	public function check_user_name() {
+		$data = $_POST['user_name'];
+		$rtn = $this->db_model->check_user_name($data);
+		var_dump($rtn);
+		if (!$rtn) {
+			echo json_encode('username alreay exists');
+		}
 	}
 
  }//end dashboard class

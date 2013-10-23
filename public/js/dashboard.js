@@ -1,6 +1,7 @@
+  var url = null;
 $(document).ready(function () {
   $('.list').hide();
-  var url = null;
+
   var config = null;
   if (navigator.userAgent.indexOf('Firefox')) {
     if (window.location.href.indexOf('load_dashboard') > 0 ) {
@@ -388,7 +389,23 @@ $('.conf_submit').click(function(e) {
   data['list_title'] = $('#conf_list_title').text();
   data['gift_admin_name'] = $('#gift_admin_name').val();
   data['gift_admin_email'] = $('#gift_admin_email').val();;
-  doAjax("POST", "JSON", 'dashboard/submit_new_account', data, '');
+  doAjax("POST", 
+        "JSON", 
+        'dashboard/submit_new_account',
+         data, 
+         '');
+});
+
+$('input[name=username]').blur(function () {
+    doAjax("POST", 
+        "JSON", 
+        'dashboard/check_user_name',
+         {'user_name': $(this).val()}, 
+         function () {
+            alert ('form');
+         }
+       
+    );
 });
 
     $('input[name=user_name]').focus(function () {
@@ -401,12 +418,12 @@ function doAjax (type, dataType, ajaxurl, ajaxdata, success){
   $.ajax({
         type: type,
         dataType: dataType,
-        url: 'http://localhost/giftlist/list.php/' + ajaxurl,
-        data: {'data': ajaxdata},
+        url: url + ajaxurl,
+        data: ajaxdata,
         failure: function() {alert ('bad');},
-        success: function(return_data) {
-
-        }
+        complete: //function(return_data) {
+            success
+        //}
       });
 }
 
