@@ -410,10 +410,13 @@ class Dashboard extends CI_Controller {
 	public function check_user_name() {
 		$data = $_POST['user_name'];
 		$rtn = $this->db_model->check_user_name($data);
-		var_dump($rtn);
-		if (!$rtn) {
-			echo json_encode('username alreay exists');
-		}
+		// if ($rtn>0) {
+		// 	$response = (array
+		// 				('responseText' => 'Username ' . $data . ' alreay exists',
+		// 				'num'=>$rtn)
+		// 				);
+			echo json_encode($rtn);
+		//}
 	}
 
  }//end dashboard class

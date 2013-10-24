@@ -389,22 +389,26 @@ $('.conf_submit').click(function(e) {
   data['list_title'] = $('#conf_list_title').text();
   data['gift_admin_name'] = $('#gift_admin_name').val();
   data['gift_admin_email'] = $('#gift_admin_email').val();;
-  doAjax("POST", 
-        "JSON", 
+  doAjax("POST",
+        "JSON",
         'dashboard/submit_new_account',
-         data, 
+         data,
          '');
 });
 
 $('input[name=username]').blur(function () {
-    doAjax("POST", 
-        "JSON", 
+    doAjax("POST",
+        "JSON",
         'dashboard/check_user_name',
-         {'user_name': $(this).val()}, 
-         function () {
-            alert ('form');
+         {'user_name': $(this).val()},
+         function (return_data) {
+          $('.dup').html('');
+          if (parseInt(return_data.responseText) > parseInt(0)){
+            $('input[name=username]').after('<span class="dup">username '+ $('input[name=username]').val() + ' already exists</span>')
+            $('input[name=username]').val('');
+          }
          }
-       
+
     );
 });
 
