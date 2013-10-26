@@ -39,7 +39,8 @@
 */
 
 //$route['gift'] = 'gift/display_gift';
-$route['default_controller'] = 'welcome'; //Our default Controller
+$route['default_controller'] = 'search'; //Our default Controller
+$route['/'] = 'search';
 //$route['default_controller'] = 'welcome';
 
 $route['gift'] = 'welcome';
@@ -52,7 +53,7 @@ $route["taken/(.*)"] = 'gift/item_taken/$1';
 $route["one_item/(.*)"] = 'gift/display_gift_one_item/$1';
 $route["menu_taken/(.*)"] = 'gift/menu_taken/$1';
 $route["admin/(.*)"] = 'gift/gift_list_admin/$1';
-$route["home/(.*)"] = 'gift/display_gift/$1';
+//$route["home/(.*)"] = 'gift/display_gift/$1';
 $route["add_comment/(.*)"] = 'gift/add_comment/$1';
 $route["email_admin/(.*)"] = 'gift/email_admin/$1';
 $route["send_email_admin/(.*)"] = 'gift/send_email_admin/$1';
@@ -77,6 +78,8 @@ $route["dash_edit_admin"] = "dashboard/edit_admin";
 $route["config"]= "dashboard/get_config";
 $route["signup"] = "dashboard/signup";
 $route['404_override'] = '';
+
+$route["home"] = "search/index";
 
 
 /* End of file routes.php */

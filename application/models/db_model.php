@@ -681,5 +681,19 @@ class Db_model extends CI_Model {
 		return $query->num_rows();
 	}
 
+	public function find_person($data) {
+		foreach($data as $value) :
+			$first_name = $this->db->from('owner')
+					 ->where('owner.first_name', $value)
+					 ->or_where('owner.last_name', $value)
+					 ->or_where('owner.email',$value)
+					 ->or_where('owner.user_name', $value)
+					 ->get();
+			if ($first_name->num_rows()>0 ) {
+				return $first_name->result_array();
+			}	
+		endforeach;
+	}
+
 } // end db_model class
 ?>
