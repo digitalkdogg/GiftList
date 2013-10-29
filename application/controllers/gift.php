@@ -76,8 +76,7 @@ function __construct()
 			$owner=$this->db_model->get_owner($owner_name);
 		endif;
 		$gift_item = $this->db_model->get_gift_by_giftid($gift_id, $this->session->userdata('owner_id') );
-		$list = $this->db_model->get_gift_by_username_num($owner_name, $gift_item->num);
-		$this->html_model->load_html_begin($owner, $list->list_id);
+		$this->html_model->load_html_begin($owner, $gift_item->list_id);
 		$html = array ('html' => "<div id = 'content'>");
 		$this->load->view('print_html', $html);	
 	    $gift_item->reff = '_one';
