@@ -161,7 +161,7 @@ color:red;
 	margin: 20px 0 15px 5%;
 	padding: 10px 5px 20px 10px;
 	border-radius: 10px;
-	
+
 }
 
 .gift_item_popup {
@@ -444,12 +444,12 @@ border-top: 1px solid black;
 
 /*popup css */
 
-      
-.modal_window{  
-    position:absolute;  /*important so we can position it on center later */  
-    display:none; /* don't show it */   
+
+.modal_window{
+    position:absolute;  /*important so we can position it on center later */
+    display:none; /* don't show it */
 	border: 3px solid black;
-    color:#333;  
+    color:#333;
 	background: white;
 	padding: 20px;
 	border-radius: 20px;
@@ -478,4 +478,12 @@ border-top: 1px solid black;
 
 .closeme:hover {
  color: #307e8b;
+}
+
+.white_box {
+	background: white;
+	margin-top: 30px;
+	padding: 0 10px 10px;
+	border-radius: 10px;
+	border: 1px solid black;
 }
