@@ -88,10 +88,11 @@ class Db_model extends CI_Model {
 	@param: none
 	@return: resuts (select * from menu where status_id = 1)
 	*/
-	function print_menu()
+	function print_menu($type = 1)
 	{
 		$query = $this->db->from('menu')
-	 				->where ('status_id', 1);
+	 				->where ('status_id', 1)
+	 				->where ('type_id', $type);
 		$query = $this->db->get()->result();
 		return $query;
 	}

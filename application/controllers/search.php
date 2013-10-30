@@ -13,8 +13,9 @@ function __construct()
 
 	public function index()
 	{
-		
+
 		$content = $this->load->view('dashboard/dashboard_home', '', true);
+		$content .= $this->html_model->load_menu();
 		$content .= $this->load->view('search', array('display'=>'false'), true);
 		echo $content;
 	}
@@ -24,6 +25,7 @@ function __construct()
 		$content = $this->load->view('dashboard/dashboard_home', '', true);
 		$data = explode(" ", $_POST['name']);
 		$persons = $this->db_model->find_person($data);
+		$content .= $this->html_model->load_menu();
 		$content .= $this->load->view('search', array('result'=>$persons), true);
 
 		echo $content;

@@ -27,7 +27,8 @@ class Html_model extends CI_Model {
 	if ($list_id != null){
 	$data = $this->db_model->print_menu();
 	foreach ($data as $row) :
-		$view_data = array('name'=>$row->name,
+		$view_data = array('id'=>$row->menu_id,
+					'name'=>$row->name,
 					'url'=>$row->url,
 					'alt'=>$row->alt,
 					'owner'=>$owner,
@@ -41,17 +42,27 @@ class Html_model extends CI_Model {
 			$html = array ('html' => "</div> <!-- end sidebar -->");
 			$this->load->view('print_html', $html);	
 		} else {
-			$view_data = array(array('name'=>'Home',
-									'url'=>'gift',
-									'alt'=>'Home',
-									'list_id'=>''),
-								array('name'=>'Search',
-									  'url'=>'adsflkd',
-									  'alt'=>'search',
-									  'list_id'=>''));
-			foreach ($view_data as $menu) {
-				$this->load->view('menu_bar', $menu);
-			}
+			$data = $this->db_model->print_menu(2);
+			foreach ($data as $row) :
+				$view_data = array('id'=>$row->menu_id,
+					'name'=>$row->name,
+					'url'=>$row->url,
+					'alt'=>$row->alt,
+					'owner'=>$owner,
+					'list_id'=>$list_id);
+				$this->load->view('menu_bar', $view_data);
+			endforeach;
+			// $view_data = array(array('name'=>'Home',
+			// 						'url'=>'gift',
+			// 						'alt'=>'Home',
+			// 						'list_id'=>''),
+			// 					array('name'=>'Search',
+			// 						  'url'=>'adsflkd',
+			// 						  'alt'=>'search',
+			// 						  'list_id'=>''));
+			// foreach ($view_data as $menu) {
+			// 	$this->load->view('menu_bar', $menu);
+			// }
 			
 			$html= array('html'=>"</center></div>");
 			$this->load->view('print_html', $html);
@@ -85,6 +96,22 @@ class Html_model extends CI_Model {
 		$this->load->view('print_html', $html);
 	}
 	
+	public function load_menu() {
+		$content = "<div id = 'menu'><center>";
+			
+	 	$data = $this->db_model->print_menu(2);
+		 	foreach ($data as $row) :
+		 		$view_data = array('id'=>$row->menu_id,
+		 			'name'=>$row->name,
+		 			'url'=>$row->url,
+	 				'alt'=>$row->alt,
+		 			'owner'=>null,
+		 			'list_id'=>null);
+		$content .= $this->load->view('menu_bar', $view_data, true);
+		endforeach;
+		$content .= "</center></div>";
+		return $content;
+	}
 }
 
 ?>
