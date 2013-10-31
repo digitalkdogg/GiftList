@@ -53,19 +53,6 @@
 
   .dash_title button {
     float: right;
-    margin: -7px 10px 0px 0px;
-    border-radius: 10px;
-    border: 2px solid green;
-    font-weight: bold;
-    cursor: pointer;
-    background: red;
-    color: white;
-    padding: 5px;
-
-}
-
-.dash_title button:hover {
-  background: green;
 }
 
 .login {
@@ -73,6 +60,7 @@
   background: white;
   top: 30px;
   position: relative;
+  border: 1px solid black;
 }
 
 form {
@@ -82,6 +70,8 @@ form {
 .login_title {
   background: red;
   height: 30px;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
 }
 
 .right, .left {
@@ -221,4 +211,8 @@ color:red;
     width: 250px;
     color:white;
     margin:0;
+}
+
+.link_label {
+  font-size: .7em;
 }
