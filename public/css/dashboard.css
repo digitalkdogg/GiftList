@@ -102,9 +102,9 @@ p.links>.icon-pencil {
 
 #signup {
   border: 4px solid black;
-  border-radius: 5px;
+  border-radius: 15px;
   position: relative;
-  top: 30px;
+  top: 90px;
   padding: 10px;
   height:505px;
   width:80%;

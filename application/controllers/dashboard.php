@@ -21,6 +21,7 @@ class Dashboard extends CI_Controller {
 	public function index ()
 	{
 		$content = $this->load->view('dashboard/dashboard_home', '', true);
+		$content .= $this->html_model->load_menu();
 		$content .= $this->load->view('dashboard/login_form', '', true);
 		echo $content;
 //$this->session->unset_userdata('login');
@@ -31,6 +32,7 @@ class Dashboard extends CI_Controller {
 		 $session_data = ($this->session->all_userdata());
 		 $owner = $this->db_model->get_owner($name);
 	     $content = $this->load->view('dashboard/dashboard_home', array('owner'=>$owner), true);
+       	 $content .= $this->html_model->load_menu();
        	 $side_bar = $this->db_model->get_side_bar_type(2);
        	 $content .= "<div id = 'side_bar'>";
         	foreach ($side_bar as $result):
@@ -387,6 +389,7 @@ class Dashboard extends CI_Controller {
 	public function signup ()
 	{
 		$content = $this->load->view('dashboard/dashboard_home', '', true);
+		$content .= $this->html_model->load_menu();
 		$content .= $this->load->view('dashboard/signup_form', '', true);
 		echo $content;
 	}
@@ -410,13 +413,7 @@ class Dashboard extends CI_Controller {
 	public function check_user_name() {
 		$data = $_POST['user_name'];
 		$rtn = $this->db_model->check_user_name($data);
-		// if ($rtn>0) {
-		// 	$response = (array
-		// 				('responseText' => 'Username ' . $data . ' alreay exists',
-		// 				'num'=>$rtn)
-		// 				);
-			echo json_encode($rtn);
-		//}
+		echo json_encode($rtn);
 	}
 
  }//end dashboard class
