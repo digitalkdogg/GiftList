@@ -81,13 +81,13 @@
 				<field>
 				<span class = 'label'>List Admin Name: </span>
 				<span class = 'input'>
-					<input type = 'text' name = 'gift_admin_name' id = 'gift_admin_name'  size = '40' />
+					<input type = 'text' name = 'gift_admin_name' id = 'gift_admin_name'  size = '30' />
 				</span>
 				</field>
 				<field>
 				<span class = 'label'>List Admin Email : </span>
 				<span class = 'input'>
-					<input type = 'text' name='gift_admin_email' id = 'gift_admin_email' size='40' />
+					<input type = 'text' name='gift_admin_email' id = 'gift_admin_email' size='30' />
 				</span>
 			</field>
 				<button class ='prev_btn'>Back</button>

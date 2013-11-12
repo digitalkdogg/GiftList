@@ -309,7 +309,8 @@ userForm3.addValidation("gift_admin_name", {
 });
 userForm3.addValidation("gift_admin_email", {
   required: true,
-  email: true
+  email: true,
+  admin_email: $('#step1 input#email').val()
 });
 
 if ($('#step1').css('visibility')=='visible') {
@@ -356,7 +357,10 @@ if ($('#step1').css('visibility')=='visible') {
       var errors = validationResult;
       for (i = 0;i<validationResult.messages.length;i++) {
         for (var item in validationResult.fields) {
+          console.log(item);
+          console.log('i : ' + validationResult.messages[i].indexOf('gift_admin_email'));
           if (validationResult.messages[i].indexOf(item)>0) {
+          //  console.log(validationResult.messages);
             $('#'+item).after('<span class = "err">' +validationResult.messages[i]+'</span>');
           }
         }

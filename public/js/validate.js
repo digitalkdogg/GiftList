@@ -249,6 +249,12 @@
       fn: function(val, arg) {
           return (val.indexOf('@')>0 && val.indexOf('@')!=val.length-1);
       }
+    },
+    admin_email: {
+      message: "The gift_admin_email can't be the same as your email",
+      fn: function(val, arg) {
+        return (val != arg);
+      }
     }
   };
 
