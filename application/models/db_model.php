@@ -235,6 +235,27 @@ class Db_model extends CI_Model {
 	}
 
 	/*
+	purpose : returns one gift by the list_id and num....used in popup
+	params : list and number
+	return : row of gift
+
+	*/
+	function get_gift_by_list_num($list, $num)
+	//
+	{
+		$query = $this->db->from('gift')
+					->where('num', $num)
+					->where('gift_list.list_id', $list)
+					->where('status_id', '1')
+					->join ('owner', 'gift.owner_id=owner.owner_id')
+					->join ('taken', 'taken.taken_id=gift.taken_id')
+					->join ('gift_list', 'gift_list.gift_id=gift.gift_id');
+		$query = $this->db->get()->row();
+		return $query;
+	}
+
+
+	/*
 	@purpose: get gift items by the owner_id
 	@params: owner_id
 	@return: results of gift_items for the owner
@@ -280,8 +301,9 @@ class Db_model extends CI_Model {
 		$this->db->select('*');
 		$this->db->from('gift')
 	 		->where ('status_id', 1)
-			->where ('gift_id', $gift_id);
+			->where ('gift.gift_id', $gift_id);
 		$this->db->join('taken', 'gift.taken_id = taken.taken_id');
+		$this->db->join('gift_list', 'gift_list.gift_id = gift.gift_id');
 		$query = $this->db->get()->row();
 		return $query;
 	}
@@ -692,7 +714,7 @@ class Db_model extends CI_Model {
 					 ->get();
 			if ($first_name->num_rows()>0 ) {
 				return $first_name->result_array();
-			}	
+			}
 		endforeach;
 	}
 

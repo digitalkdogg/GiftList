@@ -9,11 +9,13 @@ function __construct()
     }
 
 public function dets_content() {
-	
+
 	$username= $this->session->userdata('owner_user_name');
 	$link_content = null;
 	$gift_id = $_GET['gift_id'];
-	$data = $this->db_model->get_gift_by_username_num($username, $gift_id);
+	$list_id = $_GET['list_id'];
+	$data = $this->db_model->get_gift_by_list_num($list_id, $gift_id);
+	//$data = $this->db_model->get_gift_by_username_num($username, $gift_id);
 	$gift_links = $this->db_model->get_gift_links($data->gift_id);
 	$content = $this->load->view('gift_is_popup', $data, true);
 	foreach ($gift_links as $link) :

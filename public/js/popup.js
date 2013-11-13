@@ -1,5 +1,5 @@
     $(document).ready(function(){
-       	
+
     	$('.popmeup').click(function (e) {
     		e.preventDefault();
     		type = $(this).attr('id');
@@ -18,10 +18,10 @@
   				type: "GET",
 		    	dataType: "html",
 			    url: url,
-			    data: {'gift_id': num},
+			    data: {'gift_id': num, 'list_id': $(this).closest('.gift'+num).data('list')},
 			    failure: function() {alert ('bad');},
 		        success: function(return_data)  {
-		        	if (return_data) { 
+		        	if (return_data) {
                         showPopup(return_data, num);
                     }
 		        	$('.closeme').on('click', function (event) {
@@ -37,7 +37,7 @@
 			$('.side_bar_content').toggle('slow');
 			$('#'+div_id).slideToggle("slow");
 		});
-    });   
+    });
 
     function showPopup(data){
 		$('#popup_wrapper').append(JSON.parse(data));

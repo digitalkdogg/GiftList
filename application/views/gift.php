@@ -1,20 +1,20 @@
 
 
 <!--**************     Start a Gift  ******** -->
-<?php 
+<?php
 	if ($taken_id == 2) :
-		echo "<div id = 'gift_item' class = 'gift" . $num . "'>";
+		echo "<div id = 'gift_item' class = 'gift" . $num . "' data-list = '". $list_id . "'>";
 	else :
-		echo "<div id = 'gift_item_disabled' class = 'gift" . $num . "'>";
+		echo "<div id = 'gift_item_disabled' class = 'gift" . $num . "' data-list = '" .$list_id. "'>";
 	endif; ?>
-	
+
     <div class = 'right_wrapper'>
 	    <span class = "icons">
 	    	<a class = 'popmeup' id = 'share<?php echo $reff; ?>' name = '<?php echo $num; ?>' href = 'share'><img src = '<?php echo base_url(); ?>/public/img/share_icon.png' alt = 'Share' /></a>
 	    	<a href = '<?php echo base_url(); ?>list.php/taken/<?php echo $gift_id . "/" . $this->session->userdata('owner_user_name'); ?>'><img src = '<?php echo base_url(); ?>/public/img/purchased_icon.png' alt = 'buy' /></a>
 	    	<a class = 'popmeup' id = 'dets<?php echo $reff; ?>' name = '<?php echo $num; ?>' href = 'dets'><img src = '<?php echo base_url(); ?>/public/img/details_icon.png' alt = 'Details' /></a>
 	    	<a href = '<?php echo base_url(); ?>list.php/comment/<?php echo $gift_id; ?>'><img src = '<?php echo base_url(); ?>/public/img/comment_icon.png' alt = 'Comment' /></a>
-	    </span> 
+	    </span>
 	    <div class = "gift_status">
 	    	<p><?php echo $taken_text; ?></p>
 	    </div><!--end gif_status -->
@@ -41,9 +41,9 @@
 	<div class = "desc_wrapper">
 		<?php echo $description; ?>
 
-	</div> <!--end desc_wrapper-->   
+	</div> <!--end desc_wrapper-->
 	<div class = "link_wrapper_full">
-		<span class = "link_preview"><?php echo "<img src= '" . base_url() . "/public/gift_img/" . $image . "' alt = '" . $image . "' />"; ?></span>		
+		<span class = "link_preview"><?php echo "<img src= '" . base_url() . "/public/gift_img/" . $image . "' alt = '" . $image . "' />"; ?></span>
 		<span class = "link_section">
     		<ul>
 
