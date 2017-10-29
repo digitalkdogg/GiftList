@@ -157,6 +157,7 @@ class Db_model extends CI_Model {
 	function print_gift_item($gifts)
 	{
 		$owner_id = $this->session->userdata('owner_id');
+		if (sizeof($gifts)!= 0) {
 		foreach ($gifts as $gift):
 			$gift_item = $this->get_gift_item($gift->gift_id);
 			$gift_links = $this->get_gift_links($gift->gift_id);
@@ -168,6 +169,9 @@ class Db_model extends CI_Model {
 			$this->load->view('link_wrapper_end');
 			$this->load->view('gift_end', array('div' => 1));
 		endforeach;
+	} else {
+		$this->load->view('nogifts');
+	}
 	}
 
 	function print_comments($gift, $limit)
